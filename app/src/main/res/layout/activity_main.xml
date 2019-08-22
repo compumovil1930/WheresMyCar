@@ -50,10 +50,7 @@
 
     <Button
         android:id="@+id/buttonIniciar"
-        android:bottomRightRadius="200dp"
-        android:bottomLeftRadius="200dp"
-        android:topLeftRadius="200dp"
-        android:topRightRadius="200dp"
+        android:background="@drawable/rounded_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
