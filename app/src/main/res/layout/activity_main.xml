@@ -38,6 +38,7 @@
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPersonName"
+        android:password="true"
         android:textColor="@android:color/background_light"
         android:textColorHighlight="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
