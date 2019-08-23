@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PreparandoChefActivity"></activity>
+        <activity android:name=".ChefFormActivity"></activity>
+        <activity android:name=".HistoryServiceActivity" />
+        <activity android:name=".UpdateUserProfileActivity" />
+        <activity android:name=".PreparandoChefActivity" />
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateHidden" />
