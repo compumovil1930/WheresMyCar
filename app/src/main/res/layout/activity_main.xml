@@ -28,15 +28,13 @@
         android:layout_width="221dp"
         android:layout_height="43dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="244dp"
         android:background="@drawable/rounded_button"
         android:text="Iniciar Sesión"
         app:layout_constraintBottom_toTopOf="@+id/textViewNueva"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextContra" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextUser"
@@ -44,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Usuario"
@@ -53,17 +52,18 @@
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextContra"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="292dp" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextContra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Contraseña"
@@ -73,8 +73,9 @@
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDataUpdate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
