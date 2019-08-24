@@ -1,7 +1,9 @@
 package com.ratatouille;
 
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ingresar.findViewById(R.id.buttonIniciar);
+        ingresar = findViewById(R.id.buttonIniciar);
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
