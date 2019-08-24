@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ingresar = findViewById(R.id.buttonIniciar);
+        ingresar = findViewById(R.id.buttonDataUpdate);
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
