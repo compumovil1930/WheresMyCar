@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Ratatouille</string>
     <string name="title_activity_mapa_direccion">Ingresa tu dirección</string>
+    <string name="sel_ubi">Seleccionar ubicación</string>
+    <string name="dir">Dirección</string>
+    <string name="confirm">Confirmar Servicio</string>
 </resources>

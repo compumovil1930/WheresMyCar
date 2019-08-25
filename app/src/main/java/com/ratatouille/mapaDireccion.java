@@ -2,7 +2,10 @@ package com.ratatouille;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class mapaDireccion extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    Button sel_dir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,14 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        sel_dir=findViewById(R.id.btnDir);
+        sel_dir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), mapaServicio.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
