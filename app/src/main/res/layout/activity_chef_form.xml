@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
+        android:fontFamily="@font/roboto"
         android:padding="15dp"
         android:text="Si quieres trabajar con nosotros completa los siguientes datos!"
         android:textAlignment="center"
@@ -42,14 +43,15 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="36dp"
         android:layout_weight="1"
+        android:fontFamily="@font/roboto"
         android:padding="15dp"
         android:text="¿Por qué quieres trabajar con nosotros?"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="-78dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -73,6 +75,8 @@
             android:ems="10"
             android:hint="Escuela donde estudiaste"
             android:inputType="text"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:textColor="#868686"
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textColorHint="#A8A8A8"
@@ -88,6 +92,8 @@
             android:ems="10"
             android:hint="Especialidad"
             android:inputType="text"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:textColor="#868686"
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textColorHint="#A8A8A8"
@@ -103,13 +109,42 @@
             android:ems="10"
             android:hint="Escuela donde estudiaste"
             android:inputType="text"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:textColor="#868686"
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textColorHint="#A8A8A8"
             android:textColorLink="@android:color/background_light"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000FF"
+            android:backgroundTint="#000000FF"
+            android:text="Click aqui para adjuntar tu CV" />
+
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_medium"
+        android:hint="Agregar descripción"
+        android:inputType="textPersonName"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSendForm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.209" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
