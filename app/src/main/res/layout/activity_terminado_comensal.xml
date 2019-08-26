@@ -27,16 +27,17 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="Gracias por confiar otra vez en nosotros!"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewCostoFinalParaComensal"
+                android:id="@+id/textView27"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto"
-                android:text="Costo final del servicio: $100.000"
+                android:text="Costo final del servicio:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewGracias" />
 
@@ -48,7 +49,7 @@
                 android:fontFamily="@font/roboto"
                 android:text="Dinos, que tal te pareció el servicio prestado por nuestro chefsito?"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCostoFinalParaComensal" />
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
             <EditText
                 android:id="@+id/editTextOpinionComensal"
@@ -100,6 +101,7 @@
                 android:layout_marginTop="64dp"
                 android:fontFamily="@font/roboto"
                 android:text="El Barto"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView11"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -114,6 +116,17 @@
                 android:textAllCaps="false"
                 app:layout_constraintTop_toBottomOf="@+id/editTextOpinionComensal"
                 tools:layout_editor_absoluteX="195dp" />
+
+            <TextView
+                android:id="@+id/textViewPrecioFinal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="16dp"
+                android:text="$100.000"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGracias" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
