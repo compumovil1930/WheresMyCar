@@ -24,7 +24,7 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapa_direccion);
+        setContentView(R.layout.activity_mapa_servicio);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -41,7 +41,6 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -56,6 +55,6 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         LatLng puj = new LatLng(4.626882, -74.064094);
         mMap.addMarker(new MarkerOptions().position(puj).title("Javeriana"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(puj));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puj,17));
     }
 }
