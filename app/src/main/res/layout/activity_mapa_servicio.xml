@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".mapaServicio">
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -29,7 +29,8 @@
         <Spinner
             android:id="@+id/spiSrv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:entries="@array/servicios" />
 
         <Button
             android:id="@+id/btnConfirm"
@@ -38,4 +39,5 @@
             android:background="@drawable/rounded_button"
             android:text="@string/confirm" />
     </LinearLayout>
+
 </FrameLayout>
