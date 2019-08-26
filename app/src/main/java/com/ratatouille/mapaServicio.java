@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +19,7 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     Button confirm;
+    TextView txtDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,9 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        confirm=findViewById(R.id.btnConfirm);
+        txtDir = findViewById(R.id.txtDir);
+        txtDir.setText(getIntent().getStringExtra("direccion"));
+        confirm = findViewById(R.id.btnConfirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -22,11 +22,10 @@
         android:padding="15dp">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edTxtDir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/dir"
             android:inputType="textPostalAddress" />
 
         <Button
