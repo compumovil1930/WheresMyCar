@@ -38,11 +38,12 @@
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimaryDark"
                 android:drawingCacheQuality="auto"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:gravity="center|start|top"
                 android:hint="Si lo deseas puedes dejar tu opinión acá!"
                 android:inputType="textMultiLine"
@@ -85,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/roboto"
                 android:text="Califica a tu comensal!"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -94,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/roboto"
                 android:text="James Bond"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
                 android:text="Por el servicio recibiste: $100.000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -116,7 +120,8 @@
                 android:layout_height="wrap_content"
                 android:text="Gracias por llevar tu comida a nuevos comensales!"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/roboto" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

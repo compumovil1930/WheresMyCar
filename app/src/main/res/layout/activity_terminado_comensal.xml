@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TerminadoComensalActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="32dp"
+            android:paddingLeft="32dp"
+            android:paddingTop="32dp"
+            android:paddingEnd="32dp"
+            android:paddingRight="32dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/textViewGracias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Gracias por confiar otra vez en nosotros!"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewCostoFinalParaComensal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
+                android:text="Costo final del servicio: $100.000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGracias" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/roboto"
+                android:text="Dinos, que tal te pareció el servicio prestado por nuestro chefsito?"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCostoFinalParaComensal" />
+
+            <EditText
+                android:id="@+id/editTextOpinionComensal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:gravity="start|top"
+                android:hint="Si lo deseas puedes dejar tu opinion acá!"
+                android:inputType="textMultiLine"
+                android:paddingStart="8dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="93dp"
+                android:layout_height="86dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <RatingBar
+                android:id="@+id/ratingBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:progressTint="#221D1D"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+            <TextView
+                android:id="@+id/textViewNombreChef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="64dp"
+                android:fontFamily="@font/roboto"
+                android:text="El Barto"
+                app:layout_constraintStart_toEndOf="@+id/imageView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+            <Button
+                android:id="@+id/buttonEnviarCalififacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_button"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Enviar calificación"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@+id/editTextOpinionComensal"
+                tools:layout_editor_absoluteX="195dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
