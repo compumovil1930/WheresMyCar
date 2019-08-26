@@ -19,21 +19,23 @@
         android:layout_gravity="bottom"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="32dp">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edTxtDir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/dir"
-            android:inputType="textPostalAddress" />
+            android:fontFamily="@font/roboto"
+            android:inputType="textPostalAddress"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnDir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/sel_ubi" />
 
     </LinearLayout>
