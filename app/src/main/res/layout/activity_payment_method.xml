@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HistoryServiceActivity">
+    tools:context=".PaymentMethodActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -18,7 +18,7 @@
             android:id="@+id/imageView14"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@android:drawable/ic_menu_revert"
+            app:srcCompat="@android:drawable/sym_contact_card"
             tools:layout_editor_absoluteX="9dp"
             tools:layout_editor_absoluteY="42dp" />
 
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="10dp"
-            android:text="Historial de servicios"
+            android:text="Métodos de pago"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -41,14 +41,35 @@
         android:padding="32dp"
         android:scrollbarStyle="outsideInset">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Orden #2\n19/07/17\nPrecio: 1h 23m 06s\nAtendido por: Homero Simpson\nCalificación: 4.5/5" />
-        
-    </ScrollView>
+        <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="Tarjeta de crédito\nFranquicia: Mastercard\nTermina en: **34"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_button"
+                android:text="Eliminar" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
