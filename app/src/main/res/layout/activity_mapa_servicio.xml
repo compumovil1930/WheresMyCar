@@ -24,7 +24,8 @@
         <TextView
             android:id="@+id/txtDir"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto" />
 
         <Spinner
             android:id="@+id/spiSrv"
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="29dp"
             android:background="@drawable/rounded_button"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/confirm" />
     </LinearLayout>
 
