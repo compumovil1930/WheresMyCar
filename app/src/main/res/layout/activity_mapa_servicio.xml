@@ -19,7 +19,7 @@
         android:layout_gravity="bottom"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="32dp">
 
         <TextView
             android:id="@+id/txtDir"
