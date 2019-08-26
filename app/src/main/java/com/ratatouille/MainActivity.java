@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), mapaDireccion.class);
+                Intent intent = new Intent(view.getContext(), PayMethods.class);
                 startActivity(intent);
             }
         });

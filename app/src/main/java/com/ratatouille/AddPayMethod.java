@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MetodosDePago extends AppCompatActivity {
+public class AddPayMethod extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_metodos_de_pago);
+        setContentView(R.layout.activity_agregar_metodo_de_pago);
     }
 }
