@@ -24,7 +24,7 @@
         -->
         <activity
             android:name=".mapaDireccion"
-            android:label="@string/title_activity_mapa_direccion" /> <!-- TODO: Agregar Key -->
+            android:label="@string/title_activity_mapa_direccion" />
         <activity android:name=".ChefFormActivity" />
         <activity android:name=".HistoryServiceActivity" />
         <activity android:name=".UpdateUserProfileActivity" />
