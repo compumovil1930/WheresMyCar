@@ -46,16 +46,16 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         android:layout_weight="1"
         android:fontFamily="@font/roboto"
         android:padding="15dp"
-        android:text="Gracias por llevar tu comida a nuestros comensales!"
+        android:text="Gracias por confiar en nosotros!"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -76,7 +76,7 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:fontFamily="@font/roboto"
         android:padding="15dp"

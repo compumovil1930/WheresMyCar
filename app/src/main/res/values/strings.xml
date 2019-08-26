@@ -4,6 +4,7 @@
     <string name="sel_ubi">Seleccionar ubicación</string>
     <string name="dir">Dirección</string>
     <string name="confirm">Confirmar Servicio</string>
+    <string name="title_activity_map_service_available">Map</string>
     <string-array name="servicios">
         <item>Tengo ingredientes y utensilios</item>
         <item>Tengo utensilios pero no ingredientes</item>
