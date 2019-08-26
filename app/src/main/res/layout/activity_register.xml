@@ -15,19 +15,27 @@ tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingStart="32dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="32dp"
+        android:paddingEnd="32dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="32dp">
 
-        <EditText
-            android:id="@+id/editTextContraseña"
+        <Button
+            android:id="@+id/buttonNuevo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPersonName"
-            android:paddingTop="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCorreo"
-            tools:layout_editor_absoluteX="0dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Crear cuenta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTelefono" />
 
         <EditText
             android:id="@+id/editTextUsuario"
@@ -35,6 +43,7 @@ tools:context=".MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:hint="Usuario"
             android:inputType="textPersonName"
             android:paddingTop="16sp"
@@ -47,6 +56,7 @@ tools:context=".MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:hint="Teléfono"
             android:inputType="textPersonName"
             android:paddingTop="16sp"
@@ -59,9 +69,11 @@ tools:context=".MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:hint="Repite tu contraseña"
             android:inputType="textPersonName"
             android:paddingTop="16sp"
+            android:password="true"
             app:layout_constraintTop_toBottomOf="@+id/editTextContraseña"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -71,10 +83,50 @@ tools:context=".MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:hint="Número de C.C"
             android:inputType="textPersonName"
             android:paddingTop="16sp"
             app:layout_constraintTop_toBottomOf="@+id/editTextContraseña4"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+            android:id="@+id/editTextNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:layout_editor_absoluteX="98dp"
+            android:fontFamily="@font/roboto" />
+
+        <EditText
+            android:id="@+id/editTextCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:hint="Correo"
+            android:inputType="textPersonName"
+            android:paddingTop="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUsuario"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+            android:id="@+id/editTextContraseña"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:hint="Contraseña"
+            android:inputType="textPersonName"
+            android:paddingTop="16sp"
+            android:password="true"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCorreo"
             tools:layout_editor_absoluteX="0dp" />
 
         <ImageView
@@ -88,44 +140,6 @@ tools:context=".MainActivity">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ratatouille_logo" />
-
-        <EditText
-            android:id="@+id/editTextNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:ems="10"
-            android:hint="Nombre"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:layout_editor_absoluteX="98dp" />
-
-        <EditText
-            android:id="@+id/editTextCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Correo"
-            android:inputType="textPersonName"
-            android:paddingTop="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUsuario"
-            tools:layout_editor_absoluteX="0dp" />
-
-        <Button
-            android:id="@+id/buttonNuevo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Crear cuenta"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTelefono" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
