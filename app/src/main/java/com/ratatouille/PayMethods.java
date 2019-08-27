@@ -8,25 +8,31 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class PayMethods extends AppCompatActivity {
 
-    ListView listView;
-    TextView textView;
-    String[] listItem;
+
+    ListView listItem;
+    String[] metodos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metodos_de_pago);
+        metodos = getResources().getStringArray(R.array.mediosPago);
+        ArrayList<String> list = new ArrayList<String>();
+        Collections.addAll(list, getResources().getStringArray(R.array.mediosPago));
 
-        listView =  findViewById(R.id.listView);
-       // textView =  findViewById(R.id.textViewList);
-        listItem = getResources().getStringArray(R.array.mediosPago);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, listItem);
-        listView.setAdapter(adapter);
+
+        //instantiate custom adapter
+        MyCustomAdapter adapter = new MyCustomAdapter(list, this);
+
+        //handle listview and assign adapter
+        listItem = (ListView)findViewById(R.id.listView);
+        listItem.setAdapter(adapter);
 
 
     }
