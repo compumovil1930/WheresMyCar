@@ -28,9 +28,11 @@
             android:fontFamily="@font/roboto" />
 
         <Spinner
-            android:id="@+id/spiSrv"
+            android:id="@+id/spinnerDirecciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:entries="@array/servicios" />
 
         <Button
