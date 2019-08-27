@@ -27,7 +27,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="Gracias por confiar otra vez en nosotros!"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +40,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="Costo final del servicio:"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewGracias" />
 
@@ -124,6 +127,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="16dp"
                 android:text="$100.000"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView27"
                 app:layout_constraintTop_toBottomOf="@+id/textViewGracias" />
