@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(), mapaTipoServicio.class);
+                Intent intent=new Intent(v.getContext(), PreparandoComensalActivity.class);
                 startActivity(intent);
             }
         });

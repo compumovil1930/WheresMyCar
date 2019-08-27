@@ -23,7 +23,7 @@ public class PayMethods extends AppCompatActivity {
 
         listView =  findViewById(R.id.listView);
        // textView =  findViewById(R.id.textViewList);
-        listItem = getResources().getStringArray(R.array.MetodosPago);
+        listItem = getResources().getStringArray(R.array.mediosPago);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, listItem);
         listView.setAdapter(adapter);
