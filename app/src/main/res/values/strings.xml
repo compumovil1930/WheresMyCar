@@ -5,6 +5,9 @@
     <string name="dir">Dirección</string>
     <string name="confirm">Confirmar Servicio</string>
     <string name="title_activity_map_service_available">Map</string>
+    <string name="enviar_calificaci_n">Enviar calificación</string>
+    <string name="james_bond">James Bond</string>
+    <string name="por_el_servicio_recibiste">Por el servicio recibiste:</string>
     <string-array name="servicios">
         <item>Tengo ingredientes y utensilios</item>
         <item>Tengo utensilios pero no ingredientes</item>
