@@ -7,7 +7,14 @@
     <string name="title_activity_map_service_available">Map</string>
     <string name="enviar_calificaci_n">Enviar calificación</string>
     <string name="james_bond">James Bond</string>
+    <string name="AgregarMetodoPAgo">Agregar método de pago</string>
+    <string name="MetodoPAgo">Seleccionar método de pago</string>
+    <string name="ServicioConfirmado">¡Su servicio ha sido confirmado!</string>
     <string name="por_el_servicio_recibiste">Por el servicio recibiste:</string>
+    <string name="resumenServicio">Resumen de tu servicio:</string>
+    <string name="Dia">Día:</string>
+    <string name="TipoServicio">Tipo de Servicio:</string>
+    <string name="TipoDePago">Método de Pago</string>
     <string-array name="servicios">
         <item>Tengo ingredientes y utensilios</item>
         <item>Tengo utensilios pero no ingredientes</item>

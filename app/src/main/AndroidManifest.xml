@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaymentMethodActivity"></activity>
+        <activity android:name=".ResumenServicioPedido"></activity>
+        <activity android:name=".PaymentMethodActivity" />
         <activity android:name=".CommensalRateActivity" />
         <activity android:name=".PreparandoComensalActivity" />
         <activity android:name=".mapaTipoServicio"
@@ -40,6 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PayMethods" />
+        <activity android:name=".AddPayMethod" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
