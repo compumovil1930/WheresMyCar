@@ -13,4 +13,14 @@
         <item>Tengo utensilios pero no ingredientes</item>
         <item>Ni utensilios ni ingredientes, Catering</item>
     </string-array>
+    <string-array name="direcciones">
+        <item>Av Siempre Viva #37-61</item>
+        <item>We Work Calle 75</item>
+        <item>Edificio Maldonado, Universidad Javeriana</item>
+    </string-array>
+    <string-array name="mediosPago">
+        <item>MasterCard **34</item>
+        <item>Efectivo</item>
+        <item>Visa **34</item>
+    </string-array>
 </resources>
