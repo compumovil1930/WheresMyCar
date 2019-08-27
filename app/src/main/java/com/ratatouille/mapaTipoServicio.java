@@ -3,6 +3,7 @@ package com.ratatouille;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,7 @@ import java.util.List;
 public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    Button tipoServicio;
+    Button pedirEnTipoServicio;
     String[] arreglo;
 
     @Override
@@ -31,6 +32,7 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_tipo_servicio);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -49,11 +51,11 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter3);
 
-        tipoServicio= findViewById(R.id.buttonPedirServicio);
-        tipoServicio.setOnClickListener(new View.OnClickListener() {
+        pedirEnTipoServicio= findViewById(R.id.buttonPedirServicio);
+        pedirEnTipoServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), mapaServicio.class);
+                Intent intent = new Intent(view.getContext(), PreparandoComensalActivity.class);
                 startActivity(intent);
             }
         });

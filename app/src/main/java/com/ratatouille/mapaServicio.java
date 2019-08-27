@@ -5,7 +5,9 @@ import androidx.fragment.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,11 +33,17 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         txtDir = findViewById(R.id.txtDir);
         txtDir.setText(getIntent().getStringExtra("direccion"));
+
+        Spinner spinner=(Spinner)findViewById(R.id.spinnerDirecciones);
+        ArrayAdapter adapter3 = ArrayAdapter.createFromResource(this, R.array.servicios, android.R.layout.simple_list_item_1);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter3);
+
         confirm = findViewById(R.id.btnConfirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), mapaServicio.class);
+                Intent intent = new Intent(view.getContext(), mapaTipoServicio.class);
                 startActivity(intent);
             }
         });
