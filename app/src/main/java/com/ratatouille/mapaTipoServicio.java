@@ -1,5 +1,7 @@
 package com.ratatouille;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.fragment.app.FragmentActivity;
@@ -26,6 +29,7 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
     private GoogleMap mMap;
     Button pedirEnTipoServicio;
     String[] arreglo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,17 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PreparandoComensalActivity.class);
+                AlertDialog alertDialog = new AlertDialog.Builder(mapaTipoServicio.this).create();
+                //alertDialog.setTitle("");
+                alertDialog.setMessage("Tu pedido fue aceptado, en cuanto uno de nuestros chefsitos tome tu pedido te avisaremos!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialog.show();
                 startActivity(intent);
             }
         });

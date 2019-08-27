@@ -12,7 +12,8 @@
         <activity android:name=".PaymentMethodActivity"></activity>
         <activity android:name=".CommensalRateActivity" />
         <activity android:name=".PreparandoComensalActivity" />
-        <activity android:name=".mapaTipoServicio" />
+        <activity android:name=".mapaTipoServicio"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".TerminadoComensalActivity" />
         <activity
             android:name=".MapServiceAvailableActivity"
