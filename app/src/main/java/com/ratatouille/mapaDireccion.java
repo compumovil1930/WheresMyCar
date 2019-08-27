@@ -19,7 +19,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     Button sel_dir;
-    EditText txtDir;
+    EditText edTxtDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,12 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         sel_dir = findViewById(R.id.btnDir);
-        txtDir = findViewById(R.id.edTxtDir);
+        edTxtDir = findViewById(R.id.edTxtDir);
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), mapaServicio.class);
-                intent.putExtra("direccion", txtDir.getText());
+                intent.putExtra("direccion", edTxtDir.getText().toString());
                 startActivity(intent);
             }
         });
@@ -56,6 +56,6 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
         LatLng puj = new LatLng(4.626882, -74.064094);
         mMap.addMarker(new MarkerOptions().position(puj).title("Javeriana"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(puj));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puj,17));
     }
 }

@@ -6,45 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/atatouil"
+    android:paddingStart="32dp"
+    android:paddingLeft="32dp"
+    android:paddingTop="32dp"
+    android:paddingEnd="32dp"
+    android:paddingRight="32dp"
+    android:paddingBottom="32dp"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/textViewNueva"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
-        android:background="#DAE7DFDF"
-        android:gravity="center"
-        android:text="No tienes cuenta? Crea una aquí"
-        android:textColor="@android:color/background_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonDataUpdate"
-        android:layout_width="221dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="244dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:background="@drawable/rounded_button"
+        android:fontFamily="@font/roboto_medium"
         android:text="Iniciar Sesión"
-        app:layout_constraintBottom_toTopOf="@+id/textViewNueva"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextContra"
+        tools:layout_editor_absoluteX="32dp" />
 
     <EditText
         android:id="@+id/editTextUser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="120dp"
         android:backgroundTint="@android:color/background_light"
         android:ems="10"
+        android:fontFamily="@font/roboto_medium"
         android:hint="Usuario"
         android:inputType="textPersonName"
         android:textColor="@android:color/background_light"
@@ -52,20 +40,17 @@
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextContra"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="64dp" />
 
     <EditText
         android:id="@+id/editTextContra"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/background_light"
         android:ems="10"
+        android:fontFamily="@font/roboto_medium"
         android:hint="Contraseña"
         android:inputType="textPersonName"
         android:textColor="@android:color/background_light"
@@ -73,9 +58,29 @@
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDataUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUser"
+        tools:layout_editor_absoluteX="32dp" />
+
+    <TextView
+        android:id="@+id/textViewNueva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DAE7DFDF"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="No tienes cuenta? Crea una aquí"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <Button
+        android:id="@+id/buttonTestPerformer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Perform test"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

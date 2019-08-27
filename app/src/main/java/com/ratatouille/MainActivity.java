@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView nuevaCuenta;
     Button ingresar;
+    Button test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PayMethods.class);
+                startActivity(intent);
+            }
+        });
+
+
+        test=findViewById(R.id.buttonTestPerformer);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), PreparandoComensalActivity.class);
                 startActivity(intent);
             }
         });
