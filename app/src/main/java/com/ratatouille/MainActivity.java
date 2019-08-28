@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(), PreparandoComensalActivity.class);
+                Intent intent=new Intent(v.getContext(), ChefFormActivity.class);
                 startActivity(intent);
             }
         });

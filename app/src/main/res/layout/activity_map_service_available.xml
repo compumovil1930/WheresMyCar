@@ -44,7 +44,7 @@ tools:context=".mapaDireccion">
             android:layout_marginRight="32dp"
             android:background="#fff"
             android:fontFamily="@font/roboto_medium"
-            android:text="Denegar"
+            android:text="Aceptar"
             android:textAllCaps="false" />
 
         <Button
@@ -56,7 +56,7 @@ tools:context=".mapaDireccion">
             android:layout_marginRight="32dp"
             android:background="#fff"
             android:fontFamily="@font/roboto_medium"
-            android:text="Aceptar"
+            android:text="Denegar"
             android:textAllCaps="false" />
 
     </LinearLayout>
