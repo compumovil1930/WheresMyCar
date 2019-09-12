@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".mapaServicio">
 
+    <Button
+        android:id="@+id/btn_menu_ser"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/menu_icon" />
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -31,9 +37,9 @@
             android:id="@+id/spinnerDirecciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:entries="@array/servicios"
             android:spinnerMode="dropdown"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
-            android:entries="@array/servicios" />
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
         <Button
             android:id="@+id/btnConfirm"
