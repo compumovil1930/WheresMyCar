@@ -21,6 +21,7 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     Button confirm;
+    Button btn_menu;
     TextView txtDir;
 
     @Override
@@ -33,12 +34,11 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         txtDir = findViewById(R.id.txtDir);
         txtDir.setText(getIntent().getStringExtra("direccion"));
-
+        btn_menu = findViewById(R.id.btn_menu_ser);
         Spinner spinner=(Spinner)findViewById(R.id.spinnerDirecciones);
         ArrayAdapter adapter3 = ArrayAdapter.createFromResource(this, R.array.servicios, android.R.layout.simple_list_item_1);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter3);
-
         confirm = findViewById(R.id.btnConfirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,17 +47,14 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: agregar actividad de lista de items de menú
+            }
+        });
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
