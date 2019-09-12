@@ -50,7 +50,8 @@ public class mapaServicio extends FragmentActivity implements OnMapReadyCallback
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: agregar actividad de lista de items de menú
+                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -40,7 +40,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: agregar actividad de lista de items de menú
+                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                startActivity(intent);
             }
         });
     }
