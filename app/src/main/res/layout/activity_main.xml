@@ -5,7 +5,7 @@
     android:id="@+id/ConstraintLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/atatouil"
+    android:background="@drawable/signin"
     tools:context=".MainActivity">
 
     <ScrollView
@@ -27,13 +27,13 @@
                 android:id="@+id/buttonDataUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Iniciar Sesión"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextContra" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
             <Button
                 android:id="@+id/buttonTestPerformer"
@@ -46,43 +46,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDataUpdate" />
 
-            <EditText
-                android:id="@+id/editTextContra"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@android:color/background_light"
-                android:ems="10"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="Contraseña"
-                android:inputType="textPersonName"
-                android:textColor="@android:color/background_light"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="@android:color/background_light"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
-
-            <EditText
-                android:id="@+id/editTextUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="130dp"
-                android:backgroundTint="@android:color/background_light"
-                android:ems="10"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="Usuario"
-                android:inputType="textPersonName"
-                android:textColor="@android:color/background_light"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="@android:color/background_light"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewNueva"
@@ -97,6 +60,47 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonTestPerformer" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:theme="@style/EditTextHintInicio"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
+                android:textColorHint="@android:color/background_light"
+                android:theme="@style/EditTextHintInicio"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="91dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F3EFEF"
+                    android:hint="Usuario"
+                    android:textColor="@android:color/background_light"
+                    android:textColorHighlight="@android:color/background_light"
+                    android:textColorHint="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
