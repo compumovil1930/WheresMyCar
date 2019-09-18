@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="32dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="32dp"
+    android:layout_marginRight="32dp"
+    android:orientation="vertical"
     tools:context=".EscogerRecetaActivity">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="Siguiente"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
-        app:layout_constraintVertical_bias="0.469" />
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonNoTengoNada"
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Escoge la receta que deseas que nuestro chefsito prepare!" />
+
+            <Spinner
+                android:id="@+id/spinnerTiposReceta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_button"
-                android:text="No tengo nada"
-                android:textAllCaps="false"
-                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+                android:entries="@array/tiposReceta" />
+
+            <Spinner
+                android:id="@+id/spinnerRecetas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:entries="@array/todasRecetas" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
+                android:text="Selecciona los ingredientes y utensilios que posees para la receta" />
 
             <LinearLayout
                 android:id="@+id/layoutDividido"
                 android:layout_width="match_parent"
-                android:layout_height="128dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/buttonNoTengoNada">
+                android:orientation="horizontal">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -91,30 +97,14 @@
 
             </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spinnerTiposReceta"
+            <Button
+                android:id="@+id/buttonNoTengoNada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:entries="@array/tiposReceta"
-                app:layout_constraintTop_toBottomOf="@+id/textView32"
-                tools:layout_editor_absoluteX="0dp" />
-
-            <Spinner
-                android:id="@+id/spinner6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:entries="@array/tiposChef"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-            <Spinner
-                android:id="@+id/spinnerRecetas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:entries="@array/todasRecetas"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerTiposReceta" />
+                android:background="@drawable/rounded_button"
+                android:text="No tengo nada"
+                android:textAllCaps="false" />
 
             <TextView
                 android:id="@+id/textView35"
@@ -122,31 +112,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto"
-                android:text="Selecciona el tipo de chef que deseas"
-                app:layout_constraintTop_toBottomOf="@+id/layoutDividido" />
+                android:text="Selecciona el tipo de chef que deseas" />
 
-            <TextView
-                android:id="@+id/textView33"
+            <Spinner
+                android:id="@+id/spinnerTiposChefs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:entries="@array/tiposChef" />
+
+            <Button
+                android:id="@+id/buttonSiguiente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto"
-                android:text="Selecciona los ingredientes y utensilios que posees para la receta"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerRecetas" />
+                android:background="@drawable/rounded_button"
+                android:text="Siguiente"
+                android:textAllCaps="false" />
 
-            <TextView
-                android:id="@+id/textView32"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:text="Esocge la receta que deseas que nuestro chefsito prepare!"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
