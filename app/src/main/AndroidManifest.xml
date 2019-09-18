@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ServicioAceptadoChef"></activity>
+        <activity android:name=".EscogerRecetaActivity"></activity>
+        <activity android:name=".EscogerTipoActivity" />
+        <activity android:name=".ServicioAceptadoChef" />
         <activity android:name=".ResumenServicioPedido" />
         <activity android:name=".PaymentMethodActivity" />
         <activity android:name=".CommensalRateActivity" />
