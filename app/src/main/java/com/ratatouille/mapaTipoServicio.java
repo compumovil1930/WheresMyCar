@@ -40,10 +40,7 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        initArray();
-        ArrayAdapter<String>adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arreglo);
-        ListView listView=(ListView)findViewById(R.id.listTipoServicio);
-        listView.setAdapter(adapter);
+
 
         Spinner spinner=(Spinner)findViewById(R.id.spinnerDirecciones);
         ArrayAdapter adapter2 = ArrayAdapter.createFromResource(this, R.array.direcciones, android.R.layout.simple_list_item_1);
@@ -59,7 +56,7 @@ public class mapaTipoServicio extends FragmentActivity implements OnMapReadyCall
         pedirEnTipoServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PreparandoComensalActivity.class);
+                Intent intent = new Intent(view.getContext(), ChefEnCaminoActivity.class);
                 AlertDialog alertDialog = new AlertDialog.Builder(mapaTipoServicio.this).create();
                 //alertDialog.setTitle("");
                 alertDialog.setMessage("Tu pedido fue aceptado, en cuanto uno de nuestros chefsitos tome tu pedido te avisaremos!");

@@ -34,9 +34,9 @@
             android:fontFamily="@font/roboto_medium"
             android:text="Pedir servicio"
             android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editText2"
@@ -49,15 +49,6 @@
             android:inputType="textMultiLine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-        <ListView
-            android:id="@+id/listTipoServicio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="#3C4E4E52"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <Spinner
             android:id="@+id/spinnerDirecciones"
@@ -86,17 +77,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
         <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Escoge el servicio que deseas"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerDirecciones" />
-
-        <TextView
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,12 +101,12 @@
             android:id="@+id/textView21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Medio de pago"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listTipoServicio" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerDirecciones" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

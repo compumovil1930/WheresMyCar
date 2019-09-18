@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EscogerRecetaActivity"></activity>
+        <activity android:name=".ChefEnCaminoActivity"></activity>
+        <activity android:name=".EscogerRecetaActivity" />
         <activity android:name=".EscogerTipoActivity" />
         <activity android:name=".ServicioAceptadoChef" />
         <activity android:name=".ResumenServicioPedido" />
@@ -24,7 +25,6 @@
             android:name=".MapServiceAvailableActivity"
             android:label="@string/title_activity_map_service_available" />
         <activity android:name=".ChefRatingActivity" />
-        <activity android:name=".mapaServicio" />
         <activity
             android:name=".mapaDireccion"
             android:label="@string/title_activity_mapa_direccion" />

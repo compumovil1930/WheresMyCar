@@ -34,7 +34,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), mapaServicio.class);
+                Intent intent = new Intent(view.getContext(), mapaTipoServicio.class);
                 intent.putExtra("direccion", edTxtDir.getText().toString());
                 startActivity(intent);
             }
