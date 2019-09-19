@@ -30,4 +30,19 @@
         <item>Efectivo</item>
         <item>Visa **34</item>
     </string-array>
+    <string-array name="tiposReceta">
+        <item>Postres</item>
+        <item>Entradas</item>
+        <item>Italiana</item>
+        <item>Arabe</item>
+        <item>Japonesa</item>
+    </string-array>
+    <string-array name="todasRecetas">
+        <item>Helado de brownie</item>
+        <item>Torta de chocolate</item>
+    </string-array>
+    <string-array name="tiposChef">
+        <item>Chef principiante  $20.000/h </item>
+        <item>Chef profesional   $10.000/h </item>
+    </string-array>
 </resources>

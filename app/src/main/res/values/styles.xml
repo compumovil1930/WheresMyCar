@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+
+    <style name="EditTextHintInicio" parent="TextAppearance.AppCompat">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/background_light</item>
+        <item name="colorControlNormal">@android:color/background_light</item>
+        <item name="colorControlActivated">@android:color/background_light</item>
+        <item name="colorControlHighlight">@android:color/background_light</item>
     </style>
 
 </resources>
