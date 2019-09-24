@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     tools:context=".MenuActivity">
 
     <LinearLayout
@@ -13,21 +12,23 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="152dp"
+            android:layout_height="152dp"
             android:contentDescription="user profile picture"
-            tools:srcCompat="@tools:sample/avatars[0]" />
+            tools:srcCompat="@drawable/username" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/user_name"
@@ -46,46 +47,57 @@
                 android:layout_weight="1"
                 android:text="Calificación"
                 android:textSize="24sp" />
+
         </LinearLayout>
 
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/list_menu"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_header">
 
-        <LinearLayout
-            android:id="@+id/list_menu"
+        <TextView
+            android:id="@+id/item_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Perfil"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/item_payments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Métodos de pago"
+            android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/item_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Perfil"
-                android:textSize="24sp" />
+        <TextView
+            android:id="@+id/items_services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de servicios"
+            android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/item_payments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Métodos de pago"
-                android:textSize="24sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/items_services"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Historial de servicios"
-                android:textSize="24sp" />
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_button"
+        android:text="Cerrar sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
