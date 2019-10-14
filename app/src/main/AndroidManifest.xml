@@ -16,6 +16,7 @@
         <activity android:name=".ResumenServicioPedido" />
         <activity android:name=".PaymentMethodActivity" />
         <activity android:name=".CommensalRateActivity" />
+        <activity android:name=".MenuActivity" />
         <activity android:name=".PreparandoComensalActivity" />
         <activity
             android:name=".mapaTipoServicio"
