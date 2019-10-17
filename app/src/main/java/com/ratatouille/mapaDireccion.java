@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     Button sel_dir;
+    Button btn_menu;
     EditText edTxtDir;
 
     @Override
@@ -30,6 +32,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         sel_dir = findViewById(R.id.btnDir);
+        btn_menu = findViewById(R.id.btn_menu_dir);
         edTxtDir = findViewById(R.id.edTxtDir);
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,18 +42,15 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                 startActivity(intent);
             }
         });
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

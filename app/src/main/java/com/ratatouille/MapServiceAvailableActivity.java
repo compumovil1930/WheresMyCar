@@ -18,6 +18,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
 
     private GoogleMap mMap;
     Button accept;
+    Button btn_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +28,24 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        accept=findViewById(R.id.buttonAccept);
+        accept = findViewById(R.id.buttonAccept);
+        btn_menu = findViewById(R.id.btn_menu_chef);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),PreparandoChefActivity.class);
+                Intent intent = new Intent(v.getContext(), PreparandoChefActivity.class);
+                startActivity(intent);
+            }
+        });
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MenuActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
