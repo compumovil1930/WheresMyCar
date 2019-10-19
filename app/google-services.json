@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "892032839754",
-    "firebase_url": "https://ratatouille-83159.firebaseio.com",
-    "project_id": "ratatouille-83159",
-    "storage_bucket": "ratatouille-83159.appspot.com"
+    "project_number": "260897313439",
+    "firebase_url": "https://ratatouille-d6acf.firebaseio.com",
+    "project_id": "ratatouille-d6acf",
+    "storage_bucket": "ratatouille-d6acf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:892032839754:android:a5e68001d6cc51fc18f6b3",
+        "mobilesdk_app_id": "1:260897313439:android:35ff4120c145f87b1a08aa",
         "android_client_info": {
           "package_name": "com.ratatouille"
         }
       },
       "oauth_client": [
         {
-          "client_id": "892032839754-f5l80495h8r40r96o01hrn9datukmd0e.apps.googleusercontent.com",
+          "client_id": "260897313439-6f2lj59srkl91qpb6b9kk4h961jl01s2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ratatouille",
+            "certificate_hash": "55750ca5bd50161c95847b178b0188615a601ab9"
+          }
+        },
+        {
+          "client_id": "260897313439-2e3k8f28bot6575jl5ccmejjsnla0tn6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCF05hNVVKBnM9ufX37PykP6QcLKbm5Q8M"
+          "current_key": "AIzaSyC3jrn9LVES_rdqJzupqTve58bwMm_Nr5M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "892032839754-f5l80495h8r40r96o01hrn9datukmd0e.apps.googleusercontent.com",
+              "client_id": "260897313439-2e3k8f28bot6575jl5ccmejjsnla0tn6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
