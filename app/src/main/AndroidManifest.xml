@@ -14,8 +14,6 @@
         <activity android:name=".EscogerTipoActivity" />
         <activity android:name=".ServicioAceptadoChef" />
         <activity android:name=".ResumenServicioPedido" />
-        <activity android:name=".PaymentMethodActivity" />
-        <activity android:name=".CommensalRateActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".PreparandoComensalActivity" />
         <activity
