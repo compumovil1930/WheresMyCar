@@ -65,6 +65,7 @@
             android:layout_weight="1"
             android:ems="5"
             android:hint="MM/AA"
+            android:inputType="date"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <EditText
@@ -74,7 +75,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="CCV"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
     </LinearLayout>
 
     <EditText
