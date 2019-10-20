@@ -41,6 +41,7 @@
         <item>Helado de brownie</item>
         <item>Torta de chocolate</item>
     </string-array>
+    <!--    TODO: Cambiar plata por créditos de la app-->
     <string-array name="tiposChef">
         <item>Chef principiante  $20.000/h </item>
         <item>Chef profesional   $10.000/h </item>
