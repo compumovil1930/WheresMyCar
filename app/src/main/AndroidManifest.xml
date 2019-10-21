@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ChefEnCaminoActivity"></activity>
         <activity android:name=".EscogerRecetaActivity" />
+        <activity android:name=".ImagenActivity" />
         <activity android:name=".EscogerTipoActivity" />
         <activity android:name=".ServicioAceptadoChef" />
         <activity android:name=".ResumenServicioPedido" />
@@ -56,5 +57,8 @@
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
 </manifest>
