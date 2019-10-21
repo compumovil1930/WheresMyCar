@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -30,6 +33,7 @@
         <activity android:name=".mapRestaurantes" />
         <activity android:name=".ChefEnCaminoActivity" />
         <activity android:name=".EscogerRecetaActivity" />
+        <activity android:name=".ImagenActivity" />
         <activity android:name=".EscogerTipoActivity" />
         <activity android:name=".ServicioAceptadoChef" />
         <activity android:name=".ResumenServicioPedido" />
