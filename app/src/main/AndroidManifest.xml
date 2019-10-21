@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ratatouille">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,52 +12,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChefEnCaminoActivity"></activity>
-        <activity android:name=".EscogerRecetaActivity" />
-        <activity android:name=".EscogerTipoActivity" />
-        <activity android:name=".ServicioAceptadoChef" />
-        <activity android:name=".ResumenServicioPedido" />
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".PreparandoComensalActivity" />
-        <activity
-            android:name=".mapaTipoServicio"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".TerminadoComensalActivity" />
-        <activity
-            android:name=".MapServiceAvailableActivity"
-            android:label="@string/title_activity_map_service_available" />
-        <activity android:name=".ChefRatingActivity" />
-        <activity
-            android:name=".mapaDireccion"
-            android:label="@string/title_activity_mapa_direccion" />
-        <activity android:name=".ChefFormActivity" />
-        <activity android:name=".HistoryServiceActivity" />
-        <activity android:name=".UpdateUserProfileActivity" />
-        <activity android:name=".TerminadoChefActivity" />
-        <activity android:name=".PreparandoChefActivity" />
-        <activity
-            android:name=".RegisterActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".PayMethods" />
-        <activity android:name=".AddPayMethod" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-    </application>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".mapRestaurantes" />
+        <activity android:name=".ChefEnCaminoActivity" />
+        <activity android:name=".EscogerRecetaActivity" />
+        <activity android:name=".EscogerTipoActivity" />
+        <activity android:name=".ServicioAceptadoChef" />
+        <activity android:name=".ResumenServicioPedido" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".PreparandoComensalActivity" />
+        <activity android:name=".mapaTipoServicio" />
+        <activity android:name=".TerminadoComensalActivity" />
+        <activity android:name=".MapServiceAvailableActivity" />
+        <activity android:name=".ChefRatingActivity" />
+        <activity android:name=".mapaDireccion" />
+        <activity android:name=".ChefFormActivity" />
+        <activity android:name=".HistoryServiceActivity" />
+        <activity android:name=".UpdateUserProfileActivity" />
+        <activity android:name=".TerminadoChefActivity" />
+        <activity android:name=".PreparandoChefActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".PayMethods" />
+        <activity android:name=".AddPayMethod" />
+    </application>
 
 </manifest>
