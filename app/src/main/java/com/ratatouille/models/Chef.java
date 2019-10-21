@@ -1,0 +1,54 @@
+package com.ratatouille.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Chef extends Usuario {
+
+    private String parrafoDescriptivo;
+    private Boolean estado;
+    private int tiempo;
+    private List<Receta> listaRecetas;
+
+
+    public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, String parrafoDescriptivo, Boolean estado, int tiempo, List<Receta> listaRecetas) {
+        super(nombre, calificacion, correo, documento, clave, telefono, fechaNacimiento, foto, creditos, direccion, listaHerramientas);
+        this.parrafoDescriptivo = parrafoDescriptivo;
+        this.estado = estado;
+        this.tiempo = tiempo;
+        this.listaRecetas = listaRecetas;
+    }
+
+
+    public String getParrafoDescriptivo() {
+        return parrafoDescriptivo;
+    }
+
+    public void setParrafoDescriptivo(String parrafoDescriptivo) {
+        this.parrafoDescriptivo = parrafoDescriptivo;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public int getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(int tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public List<Receta> getListaRecetas() {
+        return listaRecetas;
+    }
+
+    public void setListaRecetas(List<Receta> listaRecetas) {
+        this.listaRecetas = listaRecetas;
+    }
+}

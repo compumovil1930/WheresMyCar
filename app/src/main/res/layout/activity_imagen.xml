@@ -4,44 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="8dp"
-    android:paddingLeft="8dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp"
+    android:padding="16dp"
     tools:context=".ImagenActivity">
 
-    <ImageView
-        android:id="@+id/imageSelected"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView36"
+        tools:layout_editor_absoluteX="8dp">
 
         <Button
             android:id="@+id/buttonSelectImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Seleccionar imagen" />
+            android:background="@drawable/rounded_button"
+            android:text="Seleccionar imagen"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/buttonTakePhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Imagen" />
+            android:background="@drawable/rounded_button"
+            android:text="Tomar foto"
+            android:textAllCaps="false" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageSelected"
+        android:layout_width="237dp"
+        android:layout_height="205dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Escoge una foto para tu pefil"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Escoge solo una de las siguientes opciones"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageSelected"
+        tools:layout_editor_absoluteX="131dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textView39"
+        tools:layout_editor_absoluteX="-12dp">
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Soy chef" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Soy comensal" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="Siguiente"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        tools:layout_editor_absoluteX="165dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
