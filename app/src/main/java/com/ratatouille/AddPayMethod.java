@@ -10,12 +10,13 @@ import android.widget.EditText;
 public class AddPayMethod extends AppCompatActivity {
 
     EditText mmaa;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_metodo_de_pago);
         mmaa = findViewById(R.id.MMAA);
-        mmaa.addTextChangedListener(new TextWatcher(){
+        mmaa.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -29,9 +30,9 @@ public class AddPayMethod extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                boolean first =true;
-                if (editable.length() == 2 && first==true) {
-                    first=false;
+                boolean first = true;
+                if (editable.length() == 2 && first == true) {
+                    first = false;
                     editable.append('/');
                 }
 
