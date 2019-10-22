@@ -21,33 +21,39 @@ public class EscogerTipoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escoger_tipo);
-        mAuth=FirebaseAuth.getInstance();
-        botonChefCasa=findViewById(R.id.buttonChefEnCasa);
-        botonResevaRest=findViewById(R.id.buttonReservarRestaurante);
+        mAuth = FirebaseAuth.getInstance();
+        botonChefCasa = findViewById(R.id.buttonChefEnCasa);
+        botonResevaRest = findViewById(R.id.buttonReservarRestaurante);
         botonChefCasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),EscogerRecetaActivity.class);
+                Intent intent = new Intent(v.getContext(), EscogerRecetaActivity.class);
+                startActivity(intent);
+            }
+        });
+        botonResevaRest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), mapRestaurantes.class);
                 startActivity(intent);
             }
         });
     }
 
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int itemClicked=item.getItemId();
-        if(itemClicked==R.id.itemSignOut){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemClicked = item.getItemId();
+        if (itemClicked == R.id.itemSignOut) {
             mAuth.signOut();
-            Intent intent=new Intent(EscogerTipoActivity.this,MainActivity.class);
+            Intent intent = new Intent(EscogerTipoActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
