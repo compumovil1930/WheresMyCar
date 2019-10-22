@@ -117,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
+                        herramientasAux.add(new Herramienta());
 
                         if (rbChef.isChecked()) {
                             intent.putExtra("tipo", "chef");

@@ -13,6 +13,10 @@ public class Herramienta {
     }
 
 
+    public Herramienta() {
+    }
+
+
     public int getId() {
         return id;
     }
