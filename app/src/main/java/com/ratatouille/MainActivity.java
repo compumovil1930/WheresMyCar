@@ -1,10 +1,15 @@
 package com.ratatouille;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    static final int MY_PERMISSIONS_REQUEST_LOCATION = 100;
     Button ingresar;
     Button nuevaCuenta;
     EditText edMail;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         mAuth=FirebaseAuth.getInstance();
+        requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         edMail=findViewById(R.id.txtEmail);
         edPass=findViewById(R.id.txtPassword);
         nuevaCuenta = findViewById(R.id.buttonCrearCuenta);
@@ -117,5 +123,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
+    private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
+        if (ContextCompat.checkSelfPermission(context, permiso) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(context, justificacion, Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, idCode);
+        }
+    }
 }
