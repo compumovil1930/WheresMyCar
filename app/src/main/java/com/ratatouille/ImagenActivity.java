@@ -69,7 +69,8 @@ public class ImagenActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(ImagenActivity.this,SetLocationDataActivity.class);
+                startActivity(intent);
             }
         });
     }

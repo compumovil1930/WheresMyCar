@@ -125,14 +125,14 @@ public class RegisterActivity extends AppCompatActivity {
                             List<Receta> recetasAux = new ArrayList<Receta>();
                             Chef chefAux = new Chef(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, estAux, recetasAux);
                             String id = mDatabaseChefs.push().getKey();
-                            mDatabaseChefs.child(id).setValue(chefAux);
+                            //mDatabaseChefs.child(id).setValue(chefAux);
                         }
                         if (rbCliente.isChecked()) {
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
                             Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
                             String id = mDatabaseClientes.push().getKey();
-                            mDatabaseClientes.child(id).setValue(clienteAux);
+                            //mDatabaseClientes.child(id).setValue(clienteAux);
                         }
                         registerUser(edMail.getText().toString(), edPassAgain.getText().toString());
                         startActivity(intent);
