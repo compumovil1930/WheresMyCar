@@ -1,9 +1,10 @@
 package com.ratatouille.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chef extends Usuario {
+public class Chef extends Usuario implements Serializable {
 
     private String parrafoDescriptivo;
     private Boolean estado;
