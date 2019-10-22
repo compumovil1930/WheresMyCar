@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="32dp"
     tools:context=".MainActivity">
 
     <Button
@@ -22,137 +22,116 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="741dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSiguienteImagen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.064">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearLayout5"
+
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/textView41"
-                tools:layout_editor_absoluteX="-12dp">
-
-                <CheckBox
-                    android:id="@+id/checkBoxChef"
-                    android:layout_width="172dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Soy chef" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxComensal"
-                    android:layout_width="168dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Soy cliente" />
-            </LinearLayout>
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1.5"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ratatouille_logo" />
 
             <TextView
-                android:id="@+id/textView41"
+                android:id="@+id/textView18"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Escoge solo una de las siguientes opciones"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNacimiento"
-                tools:layout_editor_absoluteX="131dp" />
-
-            <EditText
-                android:id="@+id/editTextTelefono"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="@font/roboto"
-                android:hint="Teléfono"
-                android:inputType="number"
-                android:paddingTop="16sp"
-                android:phoneNumber="true"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCC"
-                tools:layout_editor_absoluteX="0dp" />
-
-            <EditText
-                android:id="@+id/editTextContraseña4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="@font/roboto"
-                android:hint="Repite tu contraseña"
-                android:inputType="textPersonName"
-                android:paddingTop="16sp"
-                android:password="true"
-                app:layout_constraintTop_toBottomOf="@+id/editTextContraseña"
-                tools:layout_editor_absoluteX="16dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Diligencia tus datos para registrarte" />
 
             <EditText
                 android:id="@+id/editTextCC"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Número de identificación"
                 android:inputType="number"
-                android:paddingTop="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextContraseña4"
-                tools:layout_editor_absoluteX="0dp" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_weight="1"/>
 
             <EditText
                 android:id="@+id/editTextNombre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Nombre"
                 android:inputType="textPersonName"
-                app:layout_constraintTop_toBottomOf="@+id/textView18"
-                tools:layout_editor_absoluteX="16dp" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_weight="1"/>
 
             <EditText
                 android:id="@+id/editTextCorreo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Correo"
                 android:inputType="textPersonName"
-                android:paddingTop="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNombre"
-                tools:layout_editor_absoluteX="16dp" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/editTextTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Teléfono"
+                android:inputType="number"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:phoneNumber="true" />
 
             <EditText
                 android:id="@+id/editTextContraseña"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Contraseña"
                 android:inputType="textPersonName"
-                android:paddingTop="16sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:password="true"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCorreo"
-                tools:layout_editor_absoluteX="0dp" />
+                android:layout_weight="1"/>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="395dp"
-                android:layout_height="115dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ratatouille_logo" />
+            <EditText
+                android:id="@+id/editTextContraseña4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Repite tu contraseña"
+                android:inputType="textPersonName"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:password="true"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/editTextNacimiento"
@@ -162,19 +141,43 @@
                 android:ems="10"
                 android:hint="Fecha de nacimiento"
                 android:inputType="date"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTelefono" />
+                android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/textView18"
+            <LinearLayout
+                android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Diligencia tus datos para registrarte"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioComensal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Soy Chef" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Soy usuario" />
+                </RadioGroup>
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

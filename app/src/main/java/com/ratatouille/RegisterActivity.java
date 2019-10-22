@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edName;
     EditText edIdNumber;
     TextView tvNacimiento;
-    CheckBox cbChef;
-    CheckBox cbCliente;
+    RadioButton rbChef;
+    RadioButton rbCliente;
     DatabaseReference mDatabaseChefs;
     DatabaseReference mDatabaseClientes;
 
@@ -70,8 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
         edPassAgain = findViewById(R.id.editTextContraseña4);
         edPhoneNumber = findViewById(R.id.editTextTelefono);
         edName = findViewById(R.id.editTextNombre);
-        cbChef = findViewById(R.id.checkBoxChef);
-        cbCliente = findViewById(R.id.checkBoxComensal);
+        rbChef = findViewById(R.id.radioButtonUser);
+        rbCliente = findViewById(R.id.radioComensal);
         tvNacimiento = findViewById(R.id.editTextNacimiento);
         edIdNumber = findViewById(R.id.editTextCC);
         tvNacimiento.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
 
-                        if (cbChef.isChecked()) {
+                        if (rbChef.isChecked()) {
                             intent.putExtra("tipo", "chef");
                             Boolean estAux = false;
                             List<Receta> recetasAux = new ArrayList<Receta>();
@@ -125,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                             String id = mDatabaseChefs.push().getKey();
                             mDatabaseChefs.child(id).setValue(chefAux);
                         }
-                        if (cbCliente.isChecked()) {
+                        if (rbCliente.isChecked()) {
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
                             Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
@@ -143,10 +144,10 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private boolean validacionTipo() {
-        if (cbChef.isChecked() && cbCliente.isChecked()) {
+        if (rbChef.isChecked() && rbCliente.isChecked()) {
             Toast.makeText(RegisterActivity.this, "Debe seleccionar solo uno", Toast.LENGTH_LONG).show();
             return false;
-        } else if (!cbChef.isChecked() && !cbCliente.isChecked()) {
+        } else if (!rbChef.isChecked() && !rbCliente.isChecked()) {
             Toast.makeText(RegisterActivity.this, "Debe seleccionar solo uno", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -207,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
         if (!edPass.getText().toString().matches(edPassAgain.getText().toString())) {
-            Toast.makeText(RegisterActivity.this, "La contraseñas ingresadas no coinciden", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
             edPass.setText("");
             edPassAgain.setText("");
             return false;
