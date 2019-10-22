@@ -79,8 +79,10 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_restaurantes);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mapFragment.getMapAsync(this);
+        requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
+        txtPlace = findViewById(R.id.txtPlace);
+        btn_menu = findViewById(R.id.btn_menu_rest);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -92,8 +94,6 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                     }
                 }
         );
-        txtPlace = findViewById(R.id.txtPlace);
-        btn_menu = findViewById(R.id.btn_menu_rest);
         txtPlace.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
