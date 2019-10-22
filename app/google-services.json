@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "260897313439-u2jfgh7vneenfn88d9j99e6ct5jp3m9h.apps.googleusercontent.com",
+          "client_id": "260897313439-ikbdptfv42o4616e24s8dv99d58ui65c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ratatouille",
-            "certificate_hash": "4fad1fbcd1c94e6b824ae9b33db41e0391926d66"
+            "certificate_hash": "eb2fe825c357585f745b1395e5c8433741ea2458"
           }
         },
         {
@@ -37,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC3jrn9LVES_rdqJzupqTve58bwMm_Nr5M"
+          "current_key": "AIzaSyCqwTWP0R-UzDf-lJPoIIT4VlhY5Y5rXOA"
         }
       ],
       "services": {
