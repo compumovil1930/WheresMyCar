@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/buttonSiguiente"
+        android:id="@+id/buttonSiguienteImagen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="741dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSiguiente"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSiguienteImagen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +33,39 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/textView41"
+                tools:layout_editor_absoluteX="-12dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxChef"
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Soy chef" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxComensal"
+                    android:layout_width="168dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Soy cliente" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Escoge solo una de las siguientes opciones"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNacimiento"
+                tools:layout_editor_absoluteX="131dp" />
 
             <EditText
                 android:id="@+id/editTextTelefono"

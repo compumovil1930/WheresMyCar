@@ -7,18 +7,13 @@ public class Chef extends Usuario {
 
     private String parrafoDescriptivo;
     private Boolean estado;
-    private int tiempo;
     private List<Receta> listaRecetas;
 
-
-    public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, String parrafoDescriptivo, Boolean estado, int tiempo, List<Receta> listaRecetas) {
+    public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, Boolean estado, List<Receta> listaRecetas) {
         super(nombre, calificacion, correo, documento, clave, telefono, fechaNacimiento, foto, creditos, direccion, listaHerramientas);
-        this.parrafoDescriptivo = parrafoDescriptivo;
         this.estado = estado;
-        this.tiempo = tiempo;
         this.listaRecetas = listaRecetas;
     }
-
 
     public String getParrafoDescriptivo() {
         return parrafoDescriptivo;
@@ -36,13 +31,6 @@ public class Chef extends Usuario {
         this.estado = estado;
     }
 
-    public int getTiempo() {
-        return tiempo;
-    }
-
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
-    }
 
     public List<Receta> getListaRecetas() {
         return listaRecetas;

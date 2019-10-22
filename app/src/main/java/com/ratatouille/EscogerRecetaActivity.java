@@ -15,7 +15,7 @@ public class EscogerRecetaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escoger_receta);
-        botonSig=findViewById(R.id.buttonSiguiente);
+        botonSig=findViewById(R.id.buttonSiguienteImagen);
         botonSig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
