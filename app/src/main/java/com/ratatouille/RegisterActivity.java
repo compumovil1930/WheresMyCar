@@ -35,6 +35,7 @@ import com.ratatouille.models.Herramienta;
 import com.ratatouille.models.Receta;
 import com.ratatouille.models.Usuario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -117,22 +118,32 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
-                        herramientasAux.add(new Herramienta());
+                        //herramientasAux.add(new Herramienta());
+
+                        Bundle bundle=new Bundle();
 
                         if (rbChef.isChecked()) {
                             intent.putExtra("tipo", "chef");
                             Boolean estAux = false;
                             List<Receta> recetasAux = new ArrayList<Receta>();
                             Chef chefAux = new Chef(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, estAux, recetasAux);
-                            String id = mDatabaseChefs.push().getKey();
+                            //String id = mDatabaseChefs.push().getKey();
                             //mDatabaseChefs.child(id).setValue(chefAux);
+                            bundle.putSerializable("datos",(Serializable)chefAux);
+                            //bundle.putString("id",id);
+                            bundle.putString("tipo","chef");
+                            intent.putExtra("bundle",bundle);
                         }
                         if (rbCliente.isChecked()) {
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
                             Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
-                            String id = mDatabaseClientes.push().getKey();
+                            //String id = mDatabaseClientes.push().getKey();
                             //mDatabaseClientes.child(id).setValue(clienteAux);
+                            bundle.putSerializable("datos",(Serializable)clienteAux);
+                            //bundle.putString("id",id);
+                            bundle.putString("tipo","cliente");
+                            intent.putExtra("bundle",bundle);
                         }
                         registerUser(edMail.getText().toString(), edPassAgain.getText().toString());
                         startActivity(intent);

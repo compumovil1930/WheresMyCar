@@ -1,0 +1,10 @@
+{
+  "electrodomesticos": [
+    {
+      "nombre": "Batidora"
+    },
+    {
+      "nombre": "Licuadora"
+    }
+  ]
+}

@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,6 +75,7 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
     EditText txtDir;
     Geocoder mGeocoder;
     private Object values;
+    Button siguiente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
         mAuth = FirebaseAuth.getInstance();
         mGeocoder = new Geocoder(SetLocationDataActivity.this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        siguiente=findViewById(R.id.buttonSiguiente);
         txtDir = findViewById(R.id.txtDir);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -92,6 +96,13 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
                     }
                 }
         );
+        siguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SetLocationDataActivity.this,HerramientasActivity.class);
+                startActivity(intent);
+            }
+        });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);

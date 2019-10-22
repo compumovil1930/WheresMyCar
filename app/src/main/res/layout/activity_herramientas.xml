@@ -1,107 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical"
     tools:context=".HerramientasActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+    <TextView
+        android:id="@+id/textViewTexto"
+        android:layout_width="376dp"
+        android:layout_height="67dp"
+        android:text="Default txt"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewTexto"
-            android:layout_width="376dp"
-            android:layout_height="67dp"
-            android:text="Default txt"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="362dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
         <ScrollView
-            android:id="@+id/scrollView4"
-            android:layout_width="380dp"
-            android:layout_height="308dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+            android:id="@+id/scrollViewUtensilios"
+            android:layout_width="211dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <LinearLayout
+                android:id="@+id/linearUtensilios"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="362dp"
-                    android:orientation="horizontal">
-
-                    <ScrollView
-                        android:id="@+id/scrollViewUtensilios"
-                        android:layout_width="211dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <LinearLayout
-                            android:id="@+id/lnearUtensilios"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" />
-                    </ScrollView>
-
-                    <ScrollView
-                        android:id="@+id/scrollViewElectrodomesticos"
-                        android:layout_width="214dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <LinearLayout
-                            android:id="@+id/linearElectro"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" />
-                    </ScrollView>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
         </ScrollView>
 
-        <Button
-            android:id="@+id/buttonSiguienteImagen"
+        <ScrollView
+            android:id="@+id/scrollViewElectrodomesticos"
+            android:layout_width="214dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/linearElectro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSiguienteImagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:text="Siguiente"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTexto"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TextView
+            android:id="@+id/textView45"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button"
-            android:text="Siguiente"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
+            android:layout_weight="1"
+            android:text="Utensilios"
+            android:textAlignment="center" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout7"
+        <TextView
+            android:id="@+id/textView46"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTexto"
-            tools:layout_editor_absoluteX="1dp">
+            android:layout_weight="1"
+            android:text="Electrodomesticos"
+            android:textAlignment="center" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView45"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Utensilios"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/textView46"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Electrodomesticos"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
