@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,9 +26,11 @@ public class ImagenActivity extends AppCompatActivity {
 
     final int REQUEST_IMAGE_CAPTURE=1;
     final int IMAGE_PICKER_REQUEST=100;
+
     Button select;
     Button useCamera;
     ImageView imgShown;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class ImagenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_imagen);
         imgShown=findViewById(R.id.imageSelected);
         useCamera=findViewById(R.id.buttonTakePhoto);
+        next=findViewById(R.id.buttonSiguienteImagen);
         select=findViewById(R.id.buttonSelectImage);
         select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +64,12 @@ public class ImagenActivity extends AppCompatActivity {
                 else{
                     takePicture();
                 }
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
