@@ -97,7 +97,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                     chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
-                    mDatabaseChefs = database.getReference("chefs");
+                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
                     mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
                 }
