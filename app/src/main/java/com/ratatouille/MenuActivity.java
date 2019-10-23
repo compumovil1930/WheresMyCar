@@ -25,22 +25,25 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         getSupportActionBar().hide();
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         list_menu = findViewById(R.id.list_menu);
         item_profile = findViewById(R.id.item_profile);
         item_payments = findViewById(R.id.item_payments);
         item_services = findViewById(R.id.items_services);
-        bLogOut=findViewById(R.id.buttonLogOut);
+        bLogOut = findViewById(R.id.buttonLogOut);
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         item_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(v.getContext(), HistoryServiceActivity.class);
+                Intent intent = new Intent(v.getContext(), HistoryServiceActivity.class);
                 startActivity(intent);
             }
         });
