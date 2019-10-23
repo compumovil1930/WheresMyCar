@@ -1,28 +1,12 @@
 package com.ratatouille.models;
 
 public class Herramienta {
-    private int id;
     private String nombre;
     private int tipo;
 
-
-    public Herramienta(int id, String nombre, int tipo) {
-        this.id = id;
+    public Herramienta(String nombre, int tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
-    }
-
-
-    public Herramienta() {
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {

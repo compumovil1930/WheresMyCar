@@ -76,11 +76,13 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
     Geocoder mGeocoder;
     private Object values;
     Button siguiente;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_location_data);
+        bundle=getIntent().getBundleExtra("bundle");
         mAuth = FirebaseAuth.getInstance();
         mGeocoder = new Geocoder(SetLocationDataActivity.this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -100,6 +102,7 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(SetLocationDataActivity.this,HerramientasActivity.class);
+                intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
         });

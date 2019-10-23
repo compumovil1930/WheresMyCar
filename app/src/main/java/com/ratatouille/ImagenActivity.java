@@ -31,11 +31,13 @@ public class ImagenActivity extends AppCompatActivity {
     Button useCamera;
     ImageView imgShown;
     Button next;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagen);
+        bundle=getIntent().getBundleExtra("bundle");
         imgShown=findViewById(R.id.imageSelected);
         useCamera=findViewById(R.id.buttonTakePhoto);
         next=findViewById(R.id.buttonSiguienteImagen);
@@ -70,6 +72,7 @@ public class ImagenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ImagenActivity.this,SetLocationDataActivity.class);
+                intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
         });
