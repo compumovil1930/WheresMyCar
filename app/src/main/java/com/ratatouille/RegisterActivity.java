@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton rbChef;
     RadioButton rbCliente;
     DatabaseReference mDatabaseChefs;
-    DatabaseReference mDatabaseClientes;
+
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -66,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
         mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs");
-        mDatabaseClientes = FirebaseDatabase.getInstance().getReference("clientes");
         buttonSiguiente = findViewById(R.id.buttonSiguienteImagen);
         edMail = findViewById(R.id.editTextCorreo);
         edPass = findViewById(R.id.editTextContraseña);
@@ -107,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if (validateForm()) {
                     if (validacionTipo()) {
                         Intent intent = new Intent(v.getContext(), ImagenActivity.class);
-
                         String nomAux = edName.getText().toString();
                         double calAux = 10;
                         String correoAux = edMail.getText().toString();
@@ -119,10 +116,10 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
-                        //herramientasAux.add(new Herramienta());
 
                         Bundle bundle=new Bundle();
-
+                        bundle.putString("email",edMail.getText().toString());
+                        bundle.putString("password",edPassAgain.getText().toString());
                         if (rbChef.isChecked()) {
                             intent.putExtra("tipo", "chef");
                             Boolean estAux = false;
@@ -131,7 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
                             //String id = mDatabaseChefs.push().getKey();
                             //mDatabaseChefs.child(id).setValue(chefAux);
                             bundle.putSerializable("datos",(Serializable)chefAux);
-                            //bundle.putString("id",id);
                             bundle.putString("tipo","chef");
                             intent.putExtra("bundle",bundle);
                         }
@@ -139,21 +135,15 @@ public class RegisterActivity extends AppCompatActivity {
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
                             Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
-                            //String id = mDatabaseClientes.push().getKey();
-                            //mDatabaseClientes.child(id).setValue(clienteAux);
                             bundle.putSerializable("datos",(Serializable)clienteAux);
-                            //bundle.putString("id",id);
                             bundle.putString("tipo","cliente");
                             intent.putExtra("bundle",bundle);
                         }
-
-                            registerUser(edMail.getText().toString(), edPassAgain.getText().toString(), intent);
-
-                        }
-
+                        startActivity(intent);
                     }
                 }
 
+            }
         });
     }
 
@@ -170,72 +160,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void registerUser(String email, String password, final Intent intent) {
-        if (validateForm()) {
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Log.d("NEW USER", "createUserWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                        if (user != null) {
-                            UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
-                            upcrb.setDisplayName(edName.getText().toString());
-                            upcrb.setPhotoUri(Uri.parse("path/to/pic"));
-                            user.updateProfile(upcrb.build());
-                            startActivity(intent);
-                            //updateUI(user);
-                        }
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.i("NEW USER",((FirebaseAuthException)task.getException()).getErrorCode());
-                        switch (((FirebaseAuthException)task.getException()).getErrorCode()){
-                            case "ERROR_EMAIL_ALREADY_IN_USE":
-                                Toast.makeText(RegisterActivity.this, "El email ya se esta usando en otra cuenta   ", Toast.LENGTH_LONG).show();
-                                edMail.setError("El email ya se esta usando en otra cuenta");
-                                edMail.requestFocus();
-                                break;
-                            case "ERROR_WEAK_PASSWORD":
-                                Toast.makeText(RegisterActivity.this, "La contraseña debe tener al menos 6 caracteres",
-                                        Toast.LENGTH_SHORT).show();
-                                edPass.setError("La contraseña debe tener al menos 6 caracteres");
-                                edPass.requestFocus();
-                                break;
-
-                            case "ERROR_INVALID_EMAIL":
-                                Toast.makeText(RegisterActivity.this,  "Email incorrecto",
-                                        Toast.LENGTH_SHORT).show();
-                                edMail.setError("Formato de Email incorrecto");
-                                edMail.requestFocus();
-                                break;
-
-
-
-                        }
-
-                        updateUI(null);
-                    }
-
-                    // ...
-                }
-            });
-        }
-    }
-
-
-    private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
-            Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
-            intent.putExtra("user", currentUser.getEmail());
-            startActivity(intent);
-        }
-    }
-
 
     private boolean validateForm() {
-
-
         boolean valid = true;
         String email = edMail.getText().toString();
         if (TextUtils.isEmpty(email)) {
