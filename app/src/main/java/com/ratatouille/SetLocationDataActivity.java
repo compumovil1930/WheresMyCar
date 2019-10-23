@@ -82,6 +82,7 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
     Bundle bundle;
     String tipo;
     EditText etDetalles;
+    Boolean ubicacionBuscada=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
                     public void onSuccess(Location location) {
                         if (location != null) {
                             place1.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+                            place1.setVisible(false);
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
                         }
                     }
@@ -109,9 +111,14 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SetLocationDataActivity.this,HerramientasActivity.class);
-                intent.putExtra("bundle",bundle);
-                startActivity(intent);
+                if(!ubicacionBuscada){
+                    Toast.makeText(v.getContext(),"Debe seleccionar una ubicación",Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent=new Intent(SetLocationDataActivity.this,HerramientasActivity.class);
+                    intent.putExtra("bundle",bundle);
+                    startActivity(intent);
+                }
+
             }
         });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -147,13 +154,15 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
                                 LatLng pos = new LatLng(dirRes.getLatitude(), dirRes.getLongitude());
                                 if (mMap != null) {
                                     userLocationSearchResult.setPosition(pos);
+                                    userLocationSearchResult.setTitle(txtDir.getText().toString());
+                                    ubicacionBuscada=true;
                                     if(tipo.equals("chef")){
                                         Chef auxChef=(Chef)bundle.getSerializable("datos");
-                                        auxChef.setDireccion(new Direccion(1,"detail",dirRes.getFeatureName(),dirRes.getLatitude(),dirRes.getLongitude()));
+                                        auxChef.setDireccion(new Direccion(1,etDetalles.getText().toString(),dirRes.getAddressLine(0),dirRes.getLatitude(),dirRes.getLongitude()));
                                         bundle.putSerializable("datos",(Serializable)auxChef);
                                     }else{
                                         Cliente auxCliente=(Cliente) bundle.getSerializable("datos");
-                                        auxCliente.setDireccion(new Direccion(1,"detail",dirRes.getFeatureName(),dirRes.getLatitude(),dirRes.getLongitude()));
+                                        auxCliente.setDireccion(new Direccion(1,etDetalles.getText().toString(),dirRes.getAddressLine(0),dirRes.getLatitude(),dirRes.getLongitude()));
                                         bundle.putSerializable("datos",(Serializable)auxCliente);
                                     }
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));

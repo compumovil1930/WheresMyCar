@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".HerramientasActivity">
 
     <TextView
         android:id="@+id/textViewTexto"
-        android:layout_width="376dp"
+        android:layout_width="wrap_content"
         android:layout_height="67dp"
         android:text="Default txt"
         android:textAlignment="viewStart"
@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
-        android:layout_height="362dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
         android:text="Siguiente"
+        android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
         tools:layout_editor_absoluteX="16dp" />
 
