@@ -48,6 +48,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 import com.ratatouille.models.Chef;
 
 import java.util.ArrayList;
@@ -78,10 +79,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa_direccion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
-        database = FirebaseDatabase.getInstance();
-        mDatabaseChefs = database.getReference("chefs");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        showChefs();
         mapFragment.getMapAsync(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -105,7 +103,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         customer.setPosition(new LatLng(latitude, longitude));
-
+                        showChefs();
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                     }
                 }
@@ -237,15 +235,20 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     }
 
     public void showChefs() {
+        database = FirebaseDatabase.getInstance();
+        mDatabaseChefs = database.getReference("chefs");
         mDatabaseChefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
-                    Chef aux = singleSnap.getValue(Chef.class);
-                    if (aux.getEstado())
-                        if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0)
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
-                }
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        Chef aux = singleSnap.getValue(Chef.class);
+                        if (aux.getEstado())
+                            if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
+                                Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
+                            }
+                    }
             }
 
             @Override
