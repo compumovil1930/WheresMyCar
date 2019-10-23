@@ -129,10 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
                             List<Receta> recetasAux = new ArrayList<Receta>();
                             String parrAux="";
                             Chef chefAux = new Chef(nomAux,calAux,correoAux,docAux,claveAux,telAux,birthdayAux,fotoAux,credAux,dirAux,herramientasAux,parrAux,estAux,recetasAux);
-
-
-                            System.out.println("Lo que se a va GUARDAR ES");
-                            System.out.println(chefAux.toString());
+                            
                             bundle.putSerializable("datos",(Serializable)chefAux);
                             bundle.putString("tipo","chef");
                             intent.putExtra("bundle",bundle);

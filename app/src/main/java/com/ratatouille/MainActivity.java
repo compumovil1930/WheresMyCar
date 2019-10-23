@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser){
         if(currentUser!=null){
-            Intent intent=new Intent(getBaseContext(),EscogerTipoActivity.class);
-            intent.putExtra("user",currentUser.getEmail());
-            startActivity(intent);
+                Intent intent=new Intent(getBaseContext(),MapServiceAvailableActivity.class);
+                intent.putExtra("user",currentUser.getEmail());
+                startActivity(intent);
         }
         else{
             edMail.setText("");

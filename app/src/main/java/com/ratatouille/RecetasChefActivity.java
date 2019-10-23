@@ -121,11 +121,7 @@ public class RecetasChefActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(minimaReceta){
-                    Chef chAux=(Chef) bundle.getSerializable("datos");
-                    chAux.setListaRecetas(listaRecetasActuales);
-                    String id = mDatabaseChefs.push().getKey();
                     registerUser(bundle.getString("email"),bundle.getString("password"));
-                    mDatabaseChefs.child(id).setValue(chAux);
                 }
                 else{
                     Toast.makeText(v.getContext(),"Debe añadir almenos una receta para continuar",Toast.LENGTH_LONG).show();
@@ -242,6 +238,10 @@ public class RecetasChefActivity extends AppCompatActivity {
                         UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
                         upcrb.setPhotoUri(Uri.parse("path/to/pic"));
                         user.updateProfile(upcrb.build());
+                        Chef chAux=(Chef) bundle.getSerializable("datos");
+                        chAux.setListaRecetas(listaRecetasActuales);
+                        mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                        mDatabaseChefs.setValue(chAux);
                         updateUI(user);
                     }
                 } else {
