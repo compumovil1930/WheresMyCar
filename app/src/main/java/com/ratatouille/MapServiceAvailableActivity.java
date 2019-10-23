@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -61,10 +62,10 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
     List<Marker> requests;
     private FirebaseAuth mAuth;
     Marker chef;
-    Button accept;
     Button btn_menu;
     FirebaseDatabase database;
     DatabaseReference mDatabaseChefs;
+    Switch swEstado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        swEstado=findViewById(R.id.switch1);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -103,15 +105,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                 }
             }
         };
-        accept = findViewById(R.id.buttonAccept);
+
         btn_menu = findViewById(R.id.btn_menu_chef);
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PreparandoChefActivity.class);
-                startActivity(intent);
-            }
-        });
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +114,25 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                 startActivity(intent);
             }
         });
+        swEstado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(swEstado.isChecked()){
+                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                    mDatabaseChefs.child("estado").setValue(true);
+                }
+            }
+        });
     }
+
+/*
+    @Override
+    public boolean onMarkerClick(final Marker marker){
+        if(marker.equals(chef)){
+
+        }
+    }
+*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -141,6 +154,9 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, idCode);
         }
     }
+
+
+
 
     @Override
     protected void onResume() {

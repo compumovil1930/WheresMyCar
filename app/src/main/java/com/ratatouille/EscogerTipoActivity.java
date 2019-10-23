@@ -35,7 +35,7 @@ public class EscogerTipoActivity extends AppCompatActivity {
         botonChefCasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), EscogerRecetaActivity.class);
+                Intent intent = new Intent(v.getContext(), mapaDireccion.class);
                 startActivity(intent);
             }
         });

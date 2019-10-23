@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -43,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +53,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,17 +74,45 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     Button sel_dir;
     Button btn_menu;
     EditText edTxtDir;
+    LinearLayout myDirecitionsLay;
     FirebaseDatabase database;
+    FirebaseAuth mAuth;
     DatabaseReference mDatabaseChefs;
+    DatabaseReference mDatabaseClientes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_direccion);
+        mAuth = FirebaseAuth.getInstance();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        myDirecitionsLay=findViewById(R.id.linearMyDirections);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mapFragment.getMapAsync(this);
+
+        /*
+        mDatabaseClientes = database.getReference("clientes/"+mAuth.getCurrentUser().getUid());
+        mDatabaseClientes.child("direccion").child("direccion");*/
+
+        FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(Cliente.class) != null) {
+                    Cliente clAux=dataSnapshot.getValue(Cliente.class);
+                    TextView direction=new TextView(mapaDireccion.this);
+                    direction.setText(clAux.getDireccion().getDireccion());
+                    myDirecitionsLay.addView(direction);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
