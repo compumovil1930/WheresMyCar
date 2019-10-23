@@ -1,8 +1,5 @@
 package com.ratatouille;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +24,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ratatouille.models.Chef;
-import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Herramienta;
 import com.ratatouille.models.Ingrediente;
 import com.ratatouille.models.Receta;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +42,11 @@ public class RecetasChefActivity extends AppCompatActivity {
     LinearLayout layUtensilios;
     LinearLayout layElectromesticos;
     LinearLayout layIngredientes;
-    List<CheckBox> listaUtensilios=new ArrayList<CheckBox>();
-    List<CheckBox> listaElectrodomesticos=new ArrayList<CheckBox>();
-    List<CheckBox> listaIngredientes=new ArrayList<CheckBox>();
-    Boolean minimaReceta=false;
-    List<Receta> listaRecetasActuales=new ArrayList<Receta>();
+    List<CheckBox> listaUtensilios = new ArrayList<CheckBox>();
+    List<CheckBox> listaElectrodomesticos = new ArrayList<CheckBox>();
+    List<CheckBox> listaIngredientes = new ArrayList<CheckBox>();
+    Boolean minimaReceta = false;
+    List<Receta> listaRecetasActuales = new ArrayList<Receta>();
     Button bAnadirReceta;
     Button bTerminarRegistro;
     EditText etNombreReceta;
@@ -66,53 +64,54 @@ public class RecetasChefActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recetas_chef);
         mAuth = FirebaseAuth.getInstance();
         mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs");
-        bundle=getIntent().getBundleExtra("bundle");
-        tipo=bundle.getString("tipo");
-        layUtensilios=findViewById(R.id.linearUtensilios);
-        layElectromesticos=findViewById(R.id.linearElectro);
-        layIngredientes=findViewById(R.id.linearIngredientes);
-        bAnadirReceta=findViewById(R.id.buttonAñadirReceta);
-        bTerminarRegistro=findViewById(R.id.buttonTerminarRegistro);
-        etNombreReceta=findViewById(R.id.editTextNombreReceta);
-        etDescripcionReceta=findViewById(R.id.editTextDescripcionReceta);
-        etTiempoReceta=findViewById(R.id.editTextTiempoReceta);
+        bundle = getIntent().getBundleExtra("bundle");
+        tipo = bundle.getString("tipo");
+        layUtensilios = findViewById(R.id.linearUtensilios);
+        layElectromesticos = findViewById(R.id.linearElectro);
+        layIngredientes = findViewById(R.id.linearIngredientes);
+        bAnadirReceta = findViewById(R.id.buttonAñadirReceta);
+        bTerminarRegistro = findViewById(R.id.buttonTerminarRegistro);
+        etNombreReceta = findViewById(R.id.editTextNombreReceta);
+        etDescripcionReceta = findViewById(R.id.editTextDescripcionReceta);
+        etTiempoReceta = findViewById(R.id.editTextTiempoReceta);
         bAnadirReceta.setOnClickListener(new View.OnClickListener() {
-            Boolean unUtensilio=false;
-            Boolean unElectrodomestico=false;
-            Boolean unIngrediente=false;
+            Boolean unUtensilio = false;
+            Boolean unElectrodomestico = false;
+            Boolean unIngrediente = false;
+
             @Override
             public void onClick(View v) {
-                if(validateForm()){
-                    List<Herramienta> auxHerramientas=new ArrayList<Herramienta>();
-                    List<Ingrediente> auxIngredientes=new ArrayList<Ingrediente>();
-                    for(CheckBox check : listaUtensilios){
-                        if(check.isChecked()){
-                            unUtensilio=true;
-                            auxHerramientas.add(new Herramienta(check.getText().toString(),1));
+                if (validateForm()) {
+                    List<Herramienta> auxHerramientas = new ArrayList<Herramienta>();
+                    List<Ingrediente> auxIngredientes = new ArrayList<Ingrediente>();
+                    for (CheckBox check : listaUtensilios) {
+                        if (check.isChecked()) {
+                            unUtensilio = true;
+                            auxHerramientas.add(new Herramienta(check.getText().toString(), 1));
                         }
                     }
-                    for(CheckBox check : listaElectrodomesticos){
-                        if(check.isChecked()){
-                            unElectrodomestico=true;
-                            auxHerramientas.add(new Herramienta(check.getText().toString(),2));
+                    for (CheckBox check : listaElectrodomesticos) {
+                        if (check.isChecked()) {
+                            unElectrodomestico = true;
+                            auxHerramientas.add(new Herramienta(check.getText().toString(), 2));
                         }
                     }
-                    for(CheckBox check : listaIngredientes){
-                        if(check.isChecked()){
-                            unIngrediente=true;
-                            auxIngredientes.add(new Ingrediente(check.getText().toString(),"Dos"));
+                    for (CheckBox check : listaIngredientes) {
+                        if (check.isChecked()) {
+                            unIngrediente = true;
+                            auxIngredientes.add(new Ingrediente(check.getText().toString(), "Dos"));
                         }
                     }
-                    if(!unUtensilio || !unElectrodomestico) {
+                    if (!unUtensilio || !unElectrodomestico) {
                         Toast.makeText(v.getContext(), "Debe escoger almenos un utensilio, un electrodomestico y un ingrediente", Toast.LENGTH_LONG).show();
-                    }else{
-                        String nombreAux=etNombreReceta.getText().toString();
-                        String descAux=etDescripcionReceta.getText().toString();
-                        int tiempoAux=Integer.parseInt(etTiempoReceta.getText().toString());
-                        Receta recetaAux=new Receta(nombreAux,descAux,tiempoAux,auxHerramientas,auxIngredientes);
-                        minimaReceta=true;
+                    } else {
+                        String nombreAux = etNombreReceta.getText().toString();
+                        String descAux = etDescripcionReceta.getText().toString();
+                        int tiempoAux = Integer.parseInt(etTiempoReceta.getText().toString());
+                        Receta recetaAux = new Receta(nombreAux, descAux, tiempoAux, auxHerramientas, auxIngredientes);
+                        minimaReceta = true;
                         listaRecetasActuales.add(recetaAux);
-                        Toast.makeText(v.getContext(),"Receta añadida con éxito",Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "Receta añadida con éxito", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -120,84 +119,82 @@ public class RecetasChefActivity extends AppCompatActivity {
         bTerminarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(minimaReceta){
-                    registerUser(bundle.getString("email"),bundle.getString("password"));
-                }
-                else{
-                    Toast.makeText(v.getContext(),"Debe añadir almenos una receta para continuar",Toast.LENGTH_LONG).show();
+                if (minimaReceta) {
+                    registerUser(bundle.getString("email"), bundle.getString("password"));
+                } else {
+                    Toast.makeText(v.getContext(), "Debe añadir almenos una receta para continuar", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
         //Ingredientes a la lista de checkbox
-        try{
-            JSONObject jsonIngredientes= new JSONObject(loadJSONFromAsset("ingredientes.json"));
-            JSONArray ingredientesJsonArray=jsonIngredientes.getJSONArray("ingredientes");
-            for(int i=0;i<ingredientesJsonArray.length();i++){
-                JSONObject jsonObject=ingredientesJsonArray.getJSONObject(i);
-                String nombre=jsonObject.getString("nombre");
-                CheckBox chAux=new CheckBox(RecetasChefActivity.this);
+        try {
+            JSONObject jsonIngredientes = new JSONObject(loadJSONFromAsset("ingredientes.json"));
+            JSONArray ingredientesJsonArray = jsonIngredientes.getJSONArray("ingredientes");
+            for (int i = 0; i < ingredientesJsonArray.length(); i++) {
+                JSONObject jsonObject = ingredientesJsonArray.getJSONObject(i);
+                String nombre = jsonObject.getString("nombre");
+                CheckBox chAux = new CheckBox(RecetasChefActivity.this);
                 chAux.setText(nombre);
                 listaIngredientes.add(chAux);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         //Utensilios a la lista de checkbox
-        try{
+        try {
             JSONObject jsonUtensilios = new JSONObject(loadJSONFromAsset("utensilios.json"));
-            JSONArray utensiliosJsonArray=jsonUtensilios.getJSONArray("utensilios");
-            for(int i=0;i<utensiliosJsonArray.length();i++){
-                JSONObject jsonObject=utensiliosJsonArray.getJSONObject(i);
-                String nombre=jsonObject.getString("nombre");
-                CheckBox chAux=new CheckBox(RecetasChefActivity.this);
+            JSONArray utensiliosJsonArray = jsonUtensilios.getJSONArray("utensilios");
+            for (int i = 0; i < utensiliosJsonArray.length(); i++) {
+                JSONObject jsonObject = utensiliosJsonArray.getJSONObject(i);
+                String nombre = jsonObject.getString("nombre");
+                CheckBox chAux = new CheckBox(RecetasChefActivity.this);
                 chAux.setText(nombre);
                 listaUtensilios.add(chAux);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         //Electrodomesticos a la lista de checkbox
-        try{
-            JSONObject jsonElectro=new JSONObject(loadJSONFromAsset("electrodomesticos.json"));
-            JSONArray electrodomesticosJsonArray=jsonElectro.getJSONArray("electrodomesticos");
-            for(int i=0;i<electrodomesticosJsonArray.length();i++){
-                JSONObject jsonObject=electrodomesticosJsonArray.getJSONObject(i);
-                String nombre=jsonObject.getString("nombre");
-                CheckBox chAux=new CheckBox(RecetasChefActivity.this);
+        try {
+            JSONObject jsonElectro = new JSONObject(loadJSONFromAsset("electrodomesticos.json"));
+            JSONArray electrodomesticosJsonArray = jsonElectro.getJSONArray("electrodomesticos");
+            for (int i = 0; i < electrodomesticosJsonArray.length(); i++) {
+                JSONObject jsonObject = electrodomesticosJsonArray.getJSONObject(i);
+                String nombre = jsonObject.getString("nombre");
+                CheckBox chAux = new CheckBox(RecetasChefActivity.this);
                 chAux.setText(nombre);
                 listaElectrodomesticos.add(chAux);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         //Adicion de checkbox a la lista ingredientes
-        for(int i=0;i<listaIngredientes.size();i++){
+        for (int i = 0; i < listaIngredientes.size(); i++) {
             layIngredientes.addView(listaIngredientes.get(i));
         }
         //Adicion de checkbox a la lista utensilios
-        for(int i=0;i<listaUtensilios.size();i++){
+        for (int i = 0; i < listaUtensilios.size(); i++) {
             layUtensilios.addView(listaUtensilios.get(i));
         }
         //Adicion de checkbox a la lista electrodomesticos
-        for(int i=0;i<listaElectrodomesticos.size();i++){
+        for (int i = 0; i < listaElectrodomesticos.size(); i++) {
             layElectromesticos.addView(listaElectrodomesticos.get(i));
         }
     }
 
 
-
-    public String loadJSONFromAsset(String filename){
+    public String loadJSONFromAsset(String filename) {
         String json;
-        try{
-            InputStream is=this.getAssets().open(filename);
-            int size=is.available();
-            byte[] buffer=new byte[size];
+        try {
+            InputStream is = this.getAssets().open(filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json=new String(buffer,"UTF-8");
-        }catch (IOException ex){
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -205,7 +202,7 @@ public class RecetasChefActivity extends AppCompatActivity {
     }
 
 
-    private Boolean validateForm(){
+    private Boolean validateForm() {
         boolean valid = true;
         String nombre = etNombreReceta.getText().toString();
         if (TextUtils.isEmpty(nombre)) {
@@ -217,7 +214,7 @@ public class RecetasChefActivity extends AppCompatActivity {
             etDescripcionReceta.setError("Requerido");
             valid = false;
         }
-        String tiempo= etTiempoReceta.getText().toString();
+        String tiempo = etTiempoReceta.getText().toString();
         if (TextUtils.isEmpty(tiempo)) {
             etTiempoReceta.setError("Requerido");
             valid = false;
@@ -238,9 +235,9 @@ public class RecetasChefActivity extends AppCompatActivity {
                         UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
                         upcrb.setPhotoUri(Uri.parse("path/to/pic"));
                         user.updateProfile(upcrb.build());
-                        Chef chAux=(Chef) bundle.getSerializable("datos");
+                        Chef chAux = (Chef) bundle.getSerializable("datos");
                         chAux.setListaRecetas(listaRecetasActuales);
-                        mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                        mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid());
                         mDatabaseChefs.setValue(chAux);
                         updateUI(user);
                     }
