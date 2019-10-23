@@ -22,7 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,19 +76,38 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
 
         if (currentUser != null) {
-            if (FirebaseDatabase.getInstance().getReference("chefs").child(currentUser.getUid()) != null) {
-                Intent intent = new Intent(getBaseContext(), MapServiceAvailableActivity.class);
-                intent.putExtra("user", currentUser.getEmail());
-                startActivity(intent);
-            } else if (FirebaseDatabase.getInstance().getReference("client").child(currentUser.getUid()) != null) {
-                Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
-                intent.putExtra("user", currentUser.getEmail());
-                startActivity(intent);
-            }
+            FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue(Chef.class) != null) {
+                        Intent intent = new Intent(getBaseContext(), MapServiceAvailableActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+            FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue(Cliente.class) != null) {
+                        Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         } else {
             edMail.setText("");
             edPass.setText("");
         }
+
     }
 
 
