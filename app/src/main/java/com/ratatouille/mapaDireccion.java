@@ -43,6 +43,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ratatouille.models.Chef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +69,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     Button sel_dir;
     Button btn_menu;
     EditText edTxtDir;
+    FirebaseDatabase database;
+    DatabaseReference mDatabaseChefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +78,11 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa_direccion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
-        mapFragment.getMapAsync(this);
+        database = FirebaseDatabase.getInstance();
+        mDatabaseChefs = database.getReference("chefs");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        showChefs();
+        mapFragment.getMapAsync(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -94,6 +105,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         customer.setPosition(new LatLng(latitude, longitude));
+
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                     }
                 }
@@ -127,7 +139,6 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
-        chefs = fillChefs();
     }
 
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
@@ -225,12 +236,22 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
-    public List<Marker> fillChefs() {
-        Marker aux;
-        List<Marker> available = new ArrayList<>();
-        // TODO: get the chefs that are at max 5Km
-        //distance(latUsu, longUsu, latChef, longChef);
-        return available;
+    public void showChefs() {
+        mDatabaseChefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                    Chef aux = singleSnap.getValue(Chef.class);
+                    if (aux.getEstado())
+                        if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0)
+                            mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     public double distance(double lat1, double long1, double lat2, double long2) {

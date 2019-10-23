@@ -64,8 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
-
-        bundle=new Bundle();
+        bundle = new Bundle();
         buttonSiguiente = findViewById(R.id.buttonSiguienteImagen);
         edMail = findViewById(R.id.editTextCorreo);
         edPass = findViewById(R.id.editTextContraseña);
@@ -119,9 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
 
 
-
-                        bundle.putString("email",edMail.getText().toString());
-                        bundle.putString("password",edPassAgain.getText().toString());
+                        bundle.putString("email", edMail.getText().toString());
+                        bundle.putString("password", edPassAgain.getText().toString());
                         if (rbChef.isChecked()) {
                             System.out.println("-------------------ENTRA A CHEF------------");
                             intent.putExtra("tipo", "chef");
@@ -129,7 +127,6 @@ public class RegisterActivity extends AppCompatActivity {
                             List<Receta> recetasAux = new ArrayList<Receta>();
                             String parrAux="";
                             Chef chefAux = new Chef(nomAux,calAux,correoAux,docAux,claveAux,telAux,birthdayAux,fotoAux,credAux,dirAux,herramientasAux,parrAux,estAux,recetasAux);
-                            
                             bundle.putSerializable("datos",(Serializable)chefAux);
                             bundle.putString("tipo","chef");
                             intent.putExtra("bundle",bundle);
@@ -138,12 +135,12 @@ public class RegisterActivity extends AppCompatActivity {
                             System.out.println("-------------------ENTRA A CLIENTE------------");
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
-                            Cliente clienteAux = new Cliente(nomAux,calAux,correoAux,docAux,claveAux,telAux,birthdayAux,fotoAux,credAux,dirAux,herramientasAux,primeAux);
+                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
                             //System.out.println("Lo que se a va GUARDAR ES");
                             //System.out.println(clienteAux.toString());
-                            bundle.putSerializable("datos",(Serializable)clienteAux);
-                            bundle.putString("tipo","cliente");
-                            intent.putExtra("bundle",bundle);
+                            bundle.putSerializable("datos", (Serializable) clienteAux);
+                            bundle.putString("tipo", "cliente");
+                            intent.putExtra("bundle", bundle);
                         }
                         startActivity(intent);
                     }
@@ -164,7 +161,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
 
     private boolean validateForm() {

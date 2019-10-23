@@ -40,6 +40,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +59,12 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
     double latitude;
     double longitude;
     List<Marker> requests;
-    Marker chef, place2;
+    private FirebaseAuth mAuth;
+    Marker chef;
     Button accept;
     Button btn_menu;
+    FirebaseDatabase database;
+    DatabaseReference mDatabaseChefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -86,13 +94,12 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                 Location location = locationResult.getLastLocation();
                 Log.i("LOCATION", "Location update in the callback: " + location);
                 if (location != null) {
-                    if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        /*LatLng pos = new LatLng(latitude, longitude);
-                        customer.setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));*/
-                    }
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+                    mDatabaseChefs = database.getReference("chefs");
+                    mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
+                    mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
                 }
             }
         };
@@ -117,7 +124,6 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ///mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -165,8 +171,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1800);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(8000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
