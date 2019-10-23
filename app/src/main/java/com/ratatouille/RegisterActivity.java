@@ -53,7 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tvNacimiento;
     RadioButton rbChef;
     RadioButton rbCliente;
-    DatabaseReference mDatabaseChefs;
     Bundle bundle;
 
 
@@ -65,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs");
+
         bundle=new Bundle();
         buttonSiguiente = findViewById(R.id.buttonSiguienteImagen);
         edMail = findViewById(R.id.editTextCorreo);

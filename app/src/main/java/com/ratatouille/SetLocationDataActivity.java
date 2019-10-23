@@ -49,8 +49,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
+import com.ratatouille.models.Direccion;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 public class SetLocationDataActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -67,7 +71,6 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
-    private Polyline currentPolyline;
     Marker place1, userLocationSearchResult;
     double latitude;
     double longitude;
@@ -77,6 +80,8 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
     private Object values;
     Button siguiente;
     Bundle bundle;
+    String tipo;
+    EditText etDetalles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,10 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
         mGeocoder = new Geocoder(SetLocationDataActivity.this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         siguiente=findViewById(R.id.buttonSiguiente);
+        etDetalles=findViewById(R.id.editTextComentarios);
         txtDir = findViewById(R.id.txtDir);
+        tipo=bundle.getString("tipo");
+
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -139,6 +147,15 @@ public class SetLocationDataActivity extends AppCompatActivity implements OnMapR
                                 LatLng pos = new LatLng(dirRes.getLatitude(), dirRes.getLongitude());
                                 if (mMap != null) {
                                     userLocationSearchResult.setPosition(pos);
+                                    if(tipo.equals("chef")){
+                                        Chef auxChef=(Chef)bundle.getSerializable("datos");
+                                        auxChef.setDireccion(new Direccion(1,"detail",dirRes.getFeatureName(),dirRes.getLatitude(),dirRes.getLongitude()));
+                                        bundle.putSerializable("datos",(Serializable)auxChef);
+                                    }else{
+                                        Cliente auxCliente=(Cliente) bundle.getSerializable("datos");
+                                        auxCliente.setDireccion(new Direccion(1,"detail",dirRes.getFeatureName(),dirRes.getLatitude(),dirRes.getLongitude()));
+                                        bundle.putSerializable("datos",(Serializable)auxCliente);
+                                    }
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
                                 }
                             } else {

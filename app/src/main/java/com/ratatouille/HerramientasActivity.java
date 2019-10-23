@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Herramienta;
-import com.ratatouille.models.Receta;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +42,10 @@ public class HerramientasActivity extends AppCompatActivity {
     Button next;
     LinearLayout layUtensilios;
     LinearLayout layElectromesticos;
-    TextView txt;
-    String tipo;
     List<CheckBox> listaUtensilios=new ArrayList<CheckBox>();
     List<CheckBox> listaElectrodomesticos=new ArrayList<CheckBox>();
+    TextView txt;
+    String tipo;
     DatabaseReference mDatabaseClientes;
     Bundle bundle;
 
@@ -135,7 +133,7 @@ public class HerramientasActivity extends AppCompatActivity {
                         chAux.toString();
                         chAux.setListaHerramientas(auxHerramientas);
                         bundle.putSerializable("datos",(Serializable)chAux);
-                        Intent intent=new Intent(v.getContext(),RecetasChefActivity.class);
+                        Intent intent=new Intent(v.getContext(), DetallesChefActivity.class);
                         intent.putExtra("bundle",bundle);
                         startActivity(intent);
 
