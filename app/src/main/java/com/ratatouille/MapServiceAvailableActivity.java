@@ -90,8 +90,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         /*LatLng pos = new LatLng(latitude, longitude);
-                        chef.setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(chef.getPosition()));*/
+                        customer.setPosition(pos);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));*/
                     }
                 }
             }

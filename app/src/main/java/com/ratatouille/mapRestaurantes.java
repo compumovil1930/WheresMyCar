@@ -29,6 +29,7 @@ import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
@@ -49,7 +50,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
 import java.util.List;
 
 public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
@@ -57,10 +57,10 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 100;
     static final int REQUEST_CHECK_SETTINGS = 200;
     static final double RADIUS_OF_EARTH_KM = 6371.01;
-    public static final double lowerLeftLatitude = 1.396967;
-    public static final double lowerLeftLongitude = -78.903968;
-    public static final double upperRightLatitude = 11.983639;
-    public static final double upperRigthLongitude = -71.869905;
+    public static final double lowerLeftLatitude = 4.579131;
+    public static final double lowerLeftLongitude = -74.250243;
+    public static final double upperRightLatitude = 4.768837;
+    public static final double upperRightLongitude = -74.022898;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -83,6 +83,7 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         txtPlace = findViewById(R.id.txtPlace);
         btn_menu = findViewById(R.id.btn_menu_rest);
+        mGeocoder = new Geocoder(mapRestaurantes.this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -94,6 +95,22 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                     }
                 }
         );
+        mLocationRequest = createLocationRequest();
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Location location = locationResult.getLastLocation();
+                Log.i("LOCATION", "Location update in the callback: " + location);
+                if (location != null) {
+                    if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        LatLng pos = new LatLng(latitude, longitude);
+                        customer.setPosition(pos);
+                    }
+                }
+            }
+        };
         txtPlace.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -101,24 +118,25 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                     String dir = txtPlace.getText().toString();
                     if (!dir.isEmpty()) {
                         try {
-                            List<Address> dirs = mGeocoder.getFromLocationName(dir, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRigthLongitude);
+                            List<Address> dirs = mGeocoder.getFromLocationName(dir, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude);
                             if (dirs != null && !dirs.isEmpty()) {
                                 Address dirRes = dirs.get(0);
                                 LatLng pos = new LatLng(dirRes.getLatitude(), dirRes.getLongitude());
                                 if (mMap != null) {
                                     restaurant.setPosition(pos);
+                                    restaurant.setTitle(dirRes.getFeatureName());
                                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                                     builder.include(customer.getPosition());
                                     builder.include(restaurant.getPosition());
-                                    LatLngBounds bounds = builder.build();
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 75));
                                     new FetchURL(mapRestaurantes.this).execute(getUrl(customer.getPosition(), restaurant.getPosition(), "driving"), "driving");
+                                    LatLngBounds bounds = builder.build();
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 125));
                                     Toast.makeText(mapRestaurantes.this, "Distancia a " + txtPlace.getText().toString() + ": " + distance(customer.getPosition().latitude, customer.getPosition().longitude, restaurant.getPosition().latitude, customer.getPosition().longitude) + "Km.", Toast.LENGTH_LONG).show();
                                 }
                             } else {
                                 Toast.makeText(mapRestaurantes.this, "Dirección no encontrada", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     } else {
@@ -144,7 +162,8 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
-        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
+        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)).title("Tu ubicación")); //TODO: add snippet with name
+        restaurant = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant)).title("Restaurante"));
     }
 
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
@@ -267,6 +286,18 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLocationUpdates();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
     }
 
     @Override

@@ -93,9 +93,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                     if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
-                        LatLng pos = new LatLng(latitude + 0.005, longitude + 0.005);
-                        chefs.get(0).setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(chefs.get(0).getPosition()));
+                        customer.setPosition(new LatLng(latitude, longitude));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                     }
                 }
             }
@@ -123,14 +122,12 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ///mMap.setMyLocationEnabled(true);
+        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
         chefs = fillChefs();
-        // TODO: add style(?)
     }
 
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
@@ -159,8 +156,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1800);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(8000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
