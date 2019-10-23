@@ -69,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateUI(FirebaseUser currentUser) {
-        if (FirebaseDatabase.getInstance().getReference("chefs").child(currentUser.getUid()) != null) {
-            Intent intent = new Intent(getBaseContext(), MapServiceAvailableActivity.class);
-            intent.putExtra("user", currentUser.getEmail());
-            startActivity(intent);
-        } else if (FirebaseDatabase.getInstance().getReference("client").child(currentUser.getUid()) != null) {
-            Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
-            intent.putExtra("user", currentUser.getEmail());
-            startActivity(intent);
+
+        if (currentUser != null) {
+            if (FirebaseDatabase.getInstance().getReference("chefs").child(currentUser.getUid()) != null) {
+                Intent intent = new Intent(getBaseContext(), MapServiceAvailableActivity.class);
+                intent.putExtra("user", currentUser.getEmail());
+                startActivity(intent);
+            } else if (FirebaseDatabase.getInstance().getReference("client").child(currentUser.getUid()) != null) {
+                Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
+                intent.putExtra("user", currentUser.getEmail());
+                startActivity(intent);
+            }
         } else {
             edMail.setText("");
             edPass.setText("");
