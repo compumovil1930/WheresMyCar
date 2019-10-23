@@ -10,6 +10,9 @@ public class Receta implements Serializable {
     private List<Herramienta> listaHerramientas;
     private List<Ingrediente> listaIngredientes;
 
+    public Receta() {
+        
+    }
 
     public Receta(String nombre, String descripcion, int tiempo, List<Herramienta> listaHerramientas, List<Ingrediente> listaIngredientes) {
         this.nombre = nombre;

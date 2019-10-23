@@ -10,6 +10,10 @@ public class Chef extends Usuario implements Serializable {
     private Boolean estado;
     private List<Receta> listaRecetas;
 
+    public Chef(){
+
+    }
+
     public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, String parrafoDescriptivo, Boolean estado, List<Receta> listaRecetas) {
         super(nombre, calificacion, correo, documento, clave, telefono, fechaNacimiento, foto, creditos, direccion, listaHerramientas);
         this.parrafoDescriptivo = parrafoDescriptivo;

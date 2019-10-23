@@ -6,6 +6,10 @@ public class Ingrediente implements Serializable {
     private String nombre;
     private String cantidad;
 
+    public Ingrediente() {
+
+    }
+
     public Ingrediente(String nombre, String cantidad) {
         this.nombre = nombre;
         this.cantidad = cantidad;

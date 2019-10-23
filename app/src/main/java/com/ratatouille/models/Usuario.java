@@ -18,6 +18,10 @@ public class Usuario implements Serializable {
     protected Direccion direccion;
     protected List<Herramienta> listaHerramientas;
 
+    public Usuario(){
+
+    }
+
     public Usuario(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas) {
         this.nombre = nombre;
         this.calificacion = calificacion;
