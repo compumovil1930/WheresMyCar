@@ -1,8 +1,9 @@
 package com.ratatouille.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Receta {
+public class Receta implements Serializable {
     private String nombre;
     private String descripcion;
     private int tiempo;

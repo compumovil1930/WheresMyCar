@@ -10,11 +10,13 @@ public class Chef extends Usuario implements Serializable {
     private Boolean estado;
     private List<Receta> listaRecetas;
 
-    public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, Boolean estado, List<Receta> listaRecetas) {
+    public Chef(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas, String parrafoDescriptivo, Boolean estado, List<Receta> listaRecetas) {
         super(nombre, calificacion, correo, documento, clave, telefono, fechaNacimiento, foto, creditos, direccion, listaHerramientas);
+        this.parrafoDescriptivo = parrafoDescriptivo;
         this.estado = estado;
         this.listaRecetas = listaRecetas;
     }
+
 
     public String getParrafoDescriptivo() {
         return parrafoDescriptivo;
@@ -32,12 +34,31 @@ public class Chef extends Usuario implements Serializable {
         this.estado = estado;
     }
 
-
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }
 
     public void setListaRecetas(List<Receta> listaRecetas) {
         this.listaRecetas = listaRecetas;
+    }
+
+    @Override
+    public String toString() {
+        return "Chef{" +
+                "parrafoDescriptivo='" + parrafoDescriptivo + '\'' +
+                ", estado=" + estado +
+                ", listaRecetas=" + listaRecetas +
+                ", nombre='" + nombre + '\'' +
+                ", calificacion=" + calificacion +
+                ", correo='" + correo + '\'' +
+                ", documento=" + documento +
+                ", clave='" + clave + '\'' +
+                ", telefono=" + telefono +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", foto='" + foto + '\'' +
+                ", creditos=" + creditos +
+                ", direccion=" + direccion +
+                ", listaHerramientas=" + listaHerramientas +
+                '}';
     }
 }

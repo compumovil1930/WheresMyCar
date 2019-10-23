@@ -16,6 +16,24 @@ public class Cliente extends Usuario implements Serializable {
         return prime;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "prime=" + prime +
+                ", nombre='" + nombre + '\'' +
+                ", calificacion=" + calificacion +
+                ", correo='" + correo + '\'' +
+                ", documento=" + documento +
+                ", clave='" + clave + '\'' +
+                ", telefono=" + telefono +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", foto='" + foto + '\'' +
+                ", creditos=" + creditos +
+                ", direccion=" + direccion +
+                ", listaHerramientas=" + listaHerramientas +
+                '}';
+    }
+
     public void setPrime(Boolean prime) {
         this.prime = prime;
     }

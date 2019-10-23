@@ -49,6 +49,7 @@ public class HerramientasActivity extends AppCompatActivity {
     List<CheckBox> listaUtensilios=new ArrayList<CheckBox>();
     List<CheckBox> listaElectrodomesticos=new ArrayList<CheckBox>();
     DatabaseReference mDatabaseClientes;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +57,13 @@ public class HerramientasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_herramientas);
         mAuth = FirebaseAuth.getInstance();
         mDatabaseClientes = FirebaseDatabase.getInstance().getReference("clientes");
-        final Bundle bundle=getIntent().getBundleExtra("bundle");
+        bundle=getIntent().getBundleExtra("bundle");
         layUtensilios=findViewById(R.id.linearUtensilios);
         layElectromesticos=findViewById(R.id.linearElectro);
         next=findViewById(R.id.buttonSiguienteImagen);
         txt=findViewById(R.id.textViewTexto);
         //Extracion de tipo, puede ser chef o cliente
-        tipo=getIntent().getBundleExtra("bundle").getString("tipo");
+        tipo=bundle.getString("tipo");
         if(!tipo.equals("chef")){
             txt.setText("De las siguientes listas de utensilios y electrodomesticos selecciona los cuales posees");
         }else{
@@ -131,6 +132,7 @@ public class HerramientasActivity extends AppCompatActivity {
                 }else{
                     if(tipo.equals("chef")){
                         Chef chAux=(Chef) bundle.getSerializable("datos");
+                        chAux.toString();
                         chAux.setListaHerramientas(auxHerramientas);
                         bundle.putSerializable("datos",(Serializable)chAux);
                         Intent intent=new Intent(v.getContext(),RecetasChefActivity.class);
@@ -140,6 +142,7 @@ public class HerramientasActivity extends AppCompatActivity {
                     }
                     else{
                         Cliente clAux=(Cliente) bundle.getSerializable("datos");
+                        clAux.toString();
                         clAux.setListaHerramientas(auxHerramientas);
                         String id = mDatabaseClientes.push().getKey();
                         registerUser(bundle.getString("email"),bundle.getString("password"));

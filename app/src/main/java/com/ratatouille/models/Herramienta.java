@@ -1,8 +1,15 @@
 package com.ratatouille.models;
 
-public class Herramienta {
+import java.io.Serializable;
+
+public class Herramienta implements Serializable {
     private String nombre;
     private int tipo;
+
+
+    public Herramienta() {
+    }
+
 
     public Herramienta(String nombre, int tipo) {
         this.nombre = nombre;
@@ -23,5 +30,14 @@ public class Herramienta {
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Herramienta{" +
+                "nombre='" + nombre + '\'' +
+                ", tipo=" + tipo +
+                '}';
     }
 }
