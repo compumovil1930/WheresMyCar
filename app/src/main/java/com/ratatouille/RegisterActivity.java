@@ -33,6 +33,7 @@ import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Direccion;
 import com.ratatouille.models.Herramienta;
 import com.ratatouille.models.Receta;
+import com.ratatouille.models.Reserva;
 import com.ratatouille.models.Usuario;
 
 import java.io.Serializable;
@@ -116,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
+                        List<Reserva> reservasAux=new ArrayList<Reserva>();
 
 
                         bundle.putString("email", edMail.getText().toString());
@@ -135,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                             System.out.println("-------------------ENTRA A CLIENTE------------");
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
-                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
+                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux,reservasAux);
                             //System.out.println("Lo que se a va GUARDAR ES");
                             //System.out.println(clienteAux.toString());
                             bundle.putSerializable("datos", (Serializable) clienteAux);

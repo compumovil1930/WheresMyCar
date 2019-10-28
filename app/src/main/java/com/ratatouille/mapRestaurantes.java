@@ -71,8 +71,11 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
     double longitude;
     double height;
     Button btn_menu;
+    Button btnEscogerRestaurante;
     EditText txtPlace;
     Geocoder mGeocoder;
+    Boolean choosen=false;
+    Address dirRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         txtPlace = findViewById(R.id.txtPlace);
         btn_menu = findViewById(R.id.btn_menu_rest);
+        btnEscogerRestaurante=findViewById(R.id.buttonEcogerRestauranteReserva);
         mGeocoder = new Geocoder(mapRestaurantes.this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -111,6 +115,20 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                 }
             }
         };
+        btnEscogerRestaurante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(choosen){
+                    Intent intent=new Intent(v.getContext(),DetallesReservaActivity.class);
+                    intent.putExtra("direccion",dirRes.getFeatureName().toString());
+                    intent.putExtra("latitud",dirRes.getLatitude());
+                    intent.putExtra("longitud",dirRes.getLongitude());
+                    intent.putExtra("nombreRes",txtPlace.getText().toString());
+                    startActivity(intent);
+                }
+
+            }
+        });
         txtPlace.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -120,7 +138,7 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                         try {
                             List<Address> dirs = mGeocoder.getFromLocationName(dir, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude);
                             if (dirs != null && !dirs.isEmpty()) {
-                                Address dirRes = dirs.get(0);
+                                dirRes = dirs.get(0);
                                 LatLng pos = new LatLng(dirRes.getLatitude(), dirRes.getLongitude());
                                 if (mMap != null) {
                                     restaurant.setPosition(pos);
@@ -132,6 +150,7 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
                                     LatLngBounds bounds = builder.build();
                                     mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 125));
                                     Toast.makeText(mapRestaurantes.this, "Distancia a " + txtPlace.getText().toString() + ": " + distance(customer.getPosition().latitude, customer.getPosition().longitude, restaurant.getPosition().latitude, customer.getPosition().longitude) + "Km.", Toast.LENGTH_LONG).show();
+                                    choosen=true;
                                 }
                             } else {
                                 Toast.makeText(mapRestaurantes.this, "Dirección no encontrada", Toast.LENGTH_SHORT).show();
