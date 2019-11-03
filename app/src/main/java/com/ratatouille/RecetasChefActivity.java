@@ -1,6 +1,8 @@
 package com.ratatouille;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Herramienta;
 import com.ratatouille.models.Ingrediente;
@@ -32,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -54,16 +63,20 @@ public class RecetasChefActivity extends AppCompatActivity {
     EditText etTiempoReceta;
     String tipo;
     Bundle bundle;
+
     DatabaseReference mDatabaseChefs;
     FirebaseAuth mAuth;
-
+    StorageReference mStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recetas_chef);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs");
+        mStorage = FirebaseStorage.getInstance().getReference();
+
         bundle = getIntent().getBundleExtra("bundle");
         tipo = bundle.getString("tipo");
         layUtensilios = findViewById(R.id.linearUtensilios);
@@ -239,6 +252,7 @@ public class RecetasChefActivity extends AppCompatActivity {
                         chAux.setListaRecetas(listaRecetasActuales);
                         mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid());
                         mDatabaseChefs.setValue(chAux);
+                        chargeImage();
                         updateUI(user);
                     }
                 } else {
@@ -261,6 +275,41 @@ public class RecetasChefActivity extends AppCompatActivity {
             intent.putExtra("user", currentUser.getEmail());
             startActivity(intent);
         }
+    }
+
+    private void chargeImage (){
+        Bitmap image = (Bitmap) bundle.getParcelable("userProfile");
+
+        StorageReference filePath = mStorage.child(mAuth.getCurrentUser().getUid()).child("userProfile");
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        bmOptions.inSampleSize = 1;
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        bmOptions.inJustDecodeBounds = false;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        final byte[] photo = baos.toByteArray();
+
+        UploadTask uploadTask = filePath.putBytes(photo);
+
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(),"progress",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"failure",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 
