@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -43,6 +45,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,15 +74,45 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     Button sel_dir;
     Button btn_menu;
     EditText edTxtDir;
+    LinearLayout myDirecitionsLay;
+    FirebaseDatabase database;
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabaseChefs;
+    DatabaseReference mDatabaseClientes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_direccion);
+        mAuth = FirebaseAuth.getInstance();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        myDirecitionsLay=findViewById(R.id.linearMyDirections);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
-        mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mapFragment.getMapAsync(this);
+
+        /*
+        mDatabaseClientes = database.getReference("clientes/"+mAuth.getCurrentUser().getUid());
+        mDatabaseClientes.child("direccion").child("direccion");*/
+
+        FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(Cliente.class) != null) {
+                    Cliente clAux=dataSnapshot.getValue(Cliente.class);
+                    TextView direction=new TextView(mapaDireccion.this);
+                    direction.setText(clAux.getDireccion().getDireccion());
+                    myDirecitionsLay.addView(direction);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -93,9 +134,9 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                     if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
-                        LatLng pos = new LatLng(latitude + 0.005, longitude + 0.005);
-                        chefs.get(0).setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(chefs.get(0).getPosition()));
+                        customer.setPosition(new LatLng(latitude, longitude));
+                        showChefs();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                     }
                 }
             }
@@ -106,8 +147,10 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), mapaTipoServicio.class);
+                Intent intent = new Intent(view.getContext(),ChefCercanosActivity.class);
                 intent.putExtra("direccion", edTxtDir.getText().toString());
+                intent.putExtra("latitud",latitude);
+                intent.putExtra("longitud",longitude);
                 startActivity(intent);
             }
         });
@@ -123,14 +166,11 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ///mMap.setMyLocationEnabled(true);
+        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
-        chefs = fillChefs();
-        // TODO: add style(?)
     }
 
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
@@ -159,8 +199,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1800);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(8000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
@@ -228,12 +268,27 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
-    public List<Marker> fillChefs() {
-        Marker aux;
-        List<Marker> available = new ArrayList<>();
-        // TODO: get the chefs that are at max 5Km
-        //distance(latUsu, longUsu, latChef, longChef);
-        return available;
+    public void showChefs() {
+        database = FirebaseDatabase.getInstance();
+        mDatabaseChefs = database.getReference("chefs");
+        mDatabaseChefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        Chef aux = singleSnap.getValue(Chef.class);
+                        if (aux.getEstado())
+                            if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
+                                Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
+                            }
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     public double distance(double lat1, double long1, double lat2, double long2) {

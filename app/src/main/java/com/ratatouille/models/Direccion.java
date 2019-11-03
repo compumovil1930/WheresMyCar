@@ -1,11 +1,17 @@
 package com.ratatouille.models;
 
-public class Direccion {
+import java.io.Serializable;
+
+public class Direccion implements Serializable {
     private int tipo;
     private String detalles;
     private String direccion;
     private double latitud;
     private double longitud;
+
+    public Direccion() {
+
+    }
 
     public Direccion(int tipo, String detalles, String direccion, double latitud, double longitud) {
         this.tipo = tipo;

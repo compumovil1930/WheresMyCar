@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -40,6 +41,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +60,12 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
     double latitude;
     double longitude;
     List<Marker> requests;
-    Marker chef, place2;
-    Button accept;
+    private FirebaseAuth mAuth;
+    Marker chef;
     Button btn_menu;
+    FirebaseDatabase database;
+    DatabaseReference mDatabaseChefs;
+    Switch swEstado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,9 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        swEstado=findViewById(R.id.switch1);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -86,25 +96,17 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                 Location location = locationResult.getLastLocation();
                 Log.i("LOCATION", "Location update in the callback: " + location);
                 if (location != null) {
-                    if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        /*LatLng pos = new LatLng(latitude, longitude);
-                        chef.setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(chef.getPosition()));*/
-                    }
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                    mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
+                    mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
                 }
             }
         };
-        accept = findViewById(R.id.buttonAccept);
+
         btn_menu = findViewById(R.id.btn_menu_chef);
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PreparandoChefActivity.class);
-                startActivity(intent);
-            }
-        });
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,12 +114,29 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                 startActivity(intent);
             }
         });
+        swEstado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(swEstado.isChecked()){
+                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                    mDatabaseChefs.child("estado").setValue(true);
+                }
+            }
+        });
     }
+
+/*
+    @Override
+    public boolean onMarkerClick(final Marker marker){
+        if(marker.equals(chef)){
+
+        }
+    }
+*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ///mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -135,6 +154,9 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, idCode);
         }
     }
+
+
+
 
     @Override
     protected void onResume() {
@@ -165,8 +187,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1800);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(8000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }

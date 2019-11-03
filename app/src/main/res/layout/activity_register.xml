@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <Button
@@ -61,26 +61,26 @@
                 android:id="@+id/editTextCC"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Número de identificación"
                 android:inputType="number"
                 android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:layout_weight="1"/>
+                android:paddingBottom="15dp" />
 
             <EditText
                 android:id="@+id/editTextNombre"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Nombre"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:layout_weight="1"/>
+                android:paddingBottom="15dp" />
 
             <EditText
                 android:id="@+id/editTextCorreo"
@@ -111,55 +111,55 @@
                 android:id="@+id/editTextContraseña"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Contraseña"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:password="true"
-                android:layout_weight="1"/>
+                android:password="true" />
 
             <EditText
                 android:id="@+id/editTextContraseña4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Repite tu contraseña"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:password="true"
-                android:layout_weight="1"/>
+                android:password="true" />
 
             <TextView
                 android:id="@+id/editTextNacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_weight="1"
                 android:ems="10"
                 android:hint="Fecha de nacimiento"
                 android:inputType="date"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:textSize="18sp"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:orientation="horizontal"
                     android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:orientation="horizontal">
+                    android:paddingBottom="15dp">
 
                     <RadioButton
                         android:id="@+id/radioComensal"

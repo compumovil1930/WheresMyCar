@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,8 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecetasChefActivity"></activity>
+        <activity android:name=".DetallesReservaActivity"></activity>
+        <activity android:name=".ChefCercanosActivity" />
+        <activity android:name=".RecetasChefActivity" />
+        <activity android:name=".DetallesChefActivity" />
         <activity android:name=".HerramientasActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -29,6 +35,7 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,7 +61,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".PayMethods" />
         <activity android:name=".AddPayMethod" />
-        <activity android:name=".SetLocationDataActivity"/>
+        <activity android:name=".SetLocationDataActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -63,10 +70,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
 </manifest>

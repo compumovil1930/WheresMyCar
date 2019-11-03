@@ -33,6 +33,7 @@ import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Direccion;
 import com.ratatouille.models.Herramienta;
 import com.ratatouille.models.Receta;
+import com.ratatouille.models.Reserva;
 import com.ratatouille.models.Usuario;
 
 import java.io.Serializable;
@@ -53,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tvNacimiento;
     RadioButton rbChef;
     RadioButton rbCliente;
-    DatabaseReference mDatabaseChefs;
+    Bundle bundle;
 
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -64,15 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseChefs = FirebaseDatabase.getInstance().getReference("chefs");
+        bundle = new Bundle();
         buttonSiguiente = findViewById(R.id.buttonSiguienteImagen);
         edMail = findViewById(R.id.editTextCorreo);
         edPass = findViewById(R.id.editTextContraseña);
         edPassAgain = findViewById(R.id.editTextContraseña4);
         edPhoneNumber = findViewById(R.id.editTextTelefono);
         edName = findViewById(R.id.editTextNombre);
-        rbChef = findViewById(R.id.radioButtonUser);
-        rbCliente = findViewById(R.id.radioComensal);
+        rbChef = (RadioButton) findViewById(R.id.radioComensal);
+        rbCliente = (RadioButton) findViewById(R.id.radioButtonUser);
         tvNacimiento = findViewById(R.id.editTextNacimiento);
         edIdNumber = findViewById(R.id.editTextCC);
         tvNacimiento.setOnClickListener(new View.OnClickListener() {
@@ -116,28 +117,32 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
+                        List<Reserva> reservasAux=new ArrayList<Reserva>();
 
-                        Bundle bundle=new Bundle();
-                        bundle.putString("email",edMail.getText().toString());
-                        bundle.putString("password",edPassAgain.getText().toString());
+
+                        bundle.putString("email", edMail.getText().toString());
+                        bundle.putString("password", edPassAgain.getText().toString());
                         if (rbChef.isChecked()) {
+                            System.out.println("-------------------ENTRA A CHEF------------");
                             intent.putExtra("tipo", "chef");
                             Boolean estAux = false;
                             List<Receta> recetasAux = new ArrayList<Receta>();
-                            Chef chefAux = new Chef(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, estAux, recetasAux);
-                            //String id = mDatabaseChefs.push().getKey();
-                            //mDatabaseChefs.child(id).setValue(chefAux);
+                            String parrAux="";
+                            Chef chefAux = new Chef(nomAux,calAux,correoAux,docAux,claveAux,telAux,birthdayAux,fotoAux,credAux,dirAux,herramientasAux,parrAux,estAux,recetasAux);
                             bundle.putSerializable("datos",(Serializable)chefAux);
                             bundle.putString("tipo","chef");
                             intent.putExtra("bundle",bundle);
                         }
                         if (rbCliente.isChecked()) {
+                            System.out.println("-------------------ENTRA A CLIENTE------------");
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
-                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux);
-                            bundle.putSerializable("datos",(Serializable)clienteAux);
-                            bundle.putString("tipo","cliente");
-                            intent.putExtra("bundle",bundle);
+                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux,reservasAux);
+                            //System.out.println("Lo que se a va GUARDAR ES");
+                            //System.out.println(clienteAux.toString());
+                            bundle.putSerializable("datos", (Serializable) clienteAux);
+                            bundle.putString("tipo", "cliente");
+                            intent.putExtra("bundle", bundle);
                         }
                         startActivity(intent);
                     }
@@ -158,7 +163,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
 
     private boolean validateForm() {
