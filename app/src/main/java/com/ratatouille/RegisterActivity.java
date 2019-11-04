@@ -117,13 +117,13 @@ public class RegisterActivity extends AppCompatActivity {
                         int credAux = 10;
                         Direccion dirAux = new Direccion(0, "", "", 0, 0);
                         List<Herramienta> herramientasAux = new ArrayList<Herramienta>();
-                        List<Reserva> reservasAux=new ArrayList<Reserva>();
+
 
 
                         bundle.putString("email", edMail.getText().toString());
                         bundle.putString("password", edPassAgain.getText().toString());
                         if (rbChef.isChecked()) {
-                            System.out.println("-------------------ENTRA A CHEF------------");
+
                             intent.putExtra("tipo", "chef");
                             Boolean estAux = false;
                             List<Receta> recetasAux = new ArrayList<Receta>();
@@ -134,12 +134,11 @@ public class RegisterActivity extends AppCompatActivity {
                             intent.putExtra("bundle",bundle);
                         }
                         if (rbCliente.isChecked()) {
-                            System.out.println("-------------------ENTRA A CLIENTE------------");
+
                             intent.putExtra("tipo", "cliente");
                             Boolean primeAux = false;
-                            Cliente clienteAux = new Cliente(nomAux, calAux, correoAux, docAux, claveAux, telAux, birthdayAux, fotoAux, credAux, dirAux, herramientasAux, primeAux,reservasAux);
-                            //System.out.println("Lo que se a va GUARDAR ES");
-                            //System.out.println(clienteAux.toString());
+                            Cliente clienteAux = new Cliente(nomAux,calAux,correoAux,docAux,claveAux,telAux,birthdayAux,fotoAux,credAux,dirAux,herramientasAux,primeAux);
+
                             bundle.putSerializable("datos", (Serializable) clienteAux);
                             bundle.putString("tipo", "cliente");
                             intent.putExtra("bundle", bundle);

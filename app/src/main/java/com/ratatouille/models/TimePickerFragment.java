@@ -9,9 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class TimePickerFragment extends DialogFragment {
+public class TimePickerFragment extends DialogFragment implements Serializable {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

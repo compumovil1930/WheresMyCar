@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetallesReservaActivity"></activity>
+        <activity android:name=".ReservasAdapter"></activity>
+        <activity android:name=".MisReservasActivity" />
+        <activity android:name=".DetallesReservaActivity" />
         <activity android:name=".ChefCercanosActivity" />
         <activity android:name=".RecetasChefActivity" />
         <activity android:name=".DetallesChefActivity" />
