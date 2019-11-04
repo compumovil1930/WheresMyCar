@@ -24,9 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Direccion;
-import com.ratatouille.models.Receta;
 import com.ratatouille.models.Reserva;
 import com.ratatouille.models.TimePickerFragment;
 
@@ -56,7 +54,7 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
         final String nomRes=getIntent().getStringExtra("nombreRes");
         tvFechaReserva =findViewById(R.id.editTextFechaReserva);
         reserva=findViewById(R.id.buttonTerminarReserva);
-        txTime=findViewById(R.id.textViewHoraReserva);
+        txTime=findViewById(R.id.textViewHoraMisReserva);
         etAsistentes=findViewById(R.id.editTextAsistentes);
         nRes=findViewById(R.id.textViewNombreRest);
         nRes.setText("Estás realizando una reserva en el restaurante "+nomRes);
@@ -83,15 +81,8 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
                 String timeAux=txTime.getText().toString();
                 int asisAux=Integer.parseInt(etAsistentes.getText().toString());
                 Reserva reserva=new Reserva(mAuth.getCurrentUser().getUid(),nomRes,dirAux,fechaAux,timeAux,asisAux);
-                /*
-                String id=mDatabaseReservations.push().getKey();
-                mDatabaseReservations.child(id).setValue(reserva);*/
-
-                mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mAuth.getCurrentUser().getUid());
+                mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mDatabaseReservations.push().getKey());
                 mDatabaseReservations.setValue(reserva);
-
-
-
                 Toast.makeText(v.getContext(),"Reserva realizada",Toast.LENGTH_LONG).show();
                 Intent intent=new Intent(v.getContext(),EscogerTipoActivity.class);
                 startActivity(intent);

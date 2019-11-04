@@ -22,31 +22,25 @@
         android:paddingLeft="8dp">
 
         <TextView
-            android:id="@+id/textViewNombreLugarReserva"
+            android:id="@+id/textViewNombreMisReservas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Restaurante: " />
 
         <TextView
-            android:id="@+id/textViewDireccionReserva"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dirección:" />
-
-        <TextView
-            android:id="@+id/textViewHoraReserva"
+            android:id="@+id/textViewHoraMisReserva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hora:" />
 
         <TextView
-            android:id="@+id/textViewDiaDeReserva"
+            android:id="@+id/textViewDiaMisReservas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Día:" />
 
         <TextView
-            android:id="@+id/textViewParticipantesReserva"
+            android:id="@+id/textViewParticipantesMisReservas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Puestos reservados:" />
