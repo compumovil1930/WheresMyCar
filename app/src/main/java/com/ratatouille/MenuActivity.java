@@ -17,6 +17,7 @@ public class MenuActivity extends AppCompatActivity {
     TextView item_profile;
     TextView item_payments;
     TextView item_services;
+    TextView item_reservas;
     Button bLogOut;
     FirebaseAuth mAuth;
 
@@ -28,6 +29,7 @@ public class MenuActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         list_menu = findViewById(R.id.list_menu);
         item_profile = findViewById(R.id.item_profile);
+        item_reservas=findViewById(R.id.item_reservas);
         item_payments = findViewById(R.id.item_payments);
         item_services = findViewById(R.id.items_services);
         bLogOut = findViewById(R.id.buttonLogOut);
@@ -58,6 +60,13 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), UpdateUserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        item_reservas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),MisReservasActivity.class);
                 startActivity(intent);
             }
         });

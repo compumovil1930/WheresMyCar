@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Cliente;
+import com.ratatouille.models.Direccion;
 import com.ratatouille.models.Herramienta;
+import com.ratatouille.models.Reserva;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +38,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HerramientasActivity extends AppCompatActivity {
+public class HerramientasActivity extends AppCompatActivity implements Serializable{
 
     FirebaseAuth mAuth;
     Button next;
@@ -45,6 +47,7 @@ public class HerramientasActivity extends AppCompatActivity {
     List<CheckBox> listaUtensilios = new ArrayList<CheckBox>();
     List<CheckBox> listaElectrodomesticos = new ArrayList<CheckBox>();
     List<Herramienta> auxHerramientas = new ArrayList<Herramienta>();
+    //List<Reserva> auxReservas= new ArrayList<>();
     TextView txt;
     String tipo;
     DatabaseReference mDatabaseClientes;
@@ -160,6 +163,8 @@ public class HerramientasActivity extends AppCompatActivity {
                         user.updateProfile(upcrb.build());
                         Cliente clAux = (Cliente) bundle.getSerializable("datos");
                         clAux.setListaHerramientas(auxHerramientas);
+                        
+
                         mDatabaseClientes = FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid());
                         mDatabaseClientes.setValue(clAux);
                         updateUI(user);
