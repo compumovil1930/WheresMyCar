@@ -1,62 +1,61 @@
 package com.ratatouille;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ratatouille.models.Reserva;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ReservasAdapter extends ArrayAdapter<Reserva> implements Serializable {
+public class ReservasAdapter extends BaseAdapter {
 
-    /*
-    private static final int NOMBRE_RESERVA=0;
-    private static final int HORA_RESERVA=1;
-    private static final int FECHA_RESERVA=2;
-    private static final int PARTICIPANTES_RESERVA=3;
-    */
-    private int resourceLayout;
+
     private Context mContext;
+    private List<Reserva> mReservas;
 
-    public ReservasAdapter(Context context, int resource, ArrayList<Reserva> items){
-        super(context,resource,items);
-        this.resourceLayout=resource;
-        this.mContext=context;
+    public ReservasAdapter(Context mContext, List<Reserva> mReservas) {
+        this.mContext = mContext;
+        this.mReservas = mReservas;
     }
-
 
     @Override
-    public View getView(int position,View convertView,ViewGroup parent) {
-        View mView=convertView;
-        if(mView==null){
-            LayoutInflater mLayInflater;
-            mLayInflater=LayoutInflater.from(mContext);
-            mView=mLayInflater.inflate(resourceLayout,null);
-        }
-        Reserva resAux=getItem(position);
-        if(resAux!=null){
-            TextView txNombre=(TextView)mView.findViewById(R.id.textViewNombreRest);
-            TextView txHora =(TextView)mView.findViewById(R.id.textViewHoraReserva);
-            TextView txFecha=(TextView)mView.findViewById(R.id.editTextFechaReserva);
-            TextView txPuestos=(TextView)mView.findViewById(R.id.textViewParticipantesReserva);
-            TextView txDireccion=(TextView)mView.findViewById(R.id.textViewDireccionReserva);
-            //int idnum=cursor.getString(NOMBRE_RESERVA)
-
-            txNombre.setText(resAux.getNombre());
-            txHora.setText(resAux.getHora());
-            txFecha.setText(resAux.getFechaReserva());
-            txPuestos.setText(resAux.getCantidadInvitados());
-            txDireccion.setText(String.valueOf(resAux.getDireccion()));
-        }
-        return mView;
+    public int getCount() {
+        return mReservas.size();
     }
 
+    @Override
+    public Object getItem(int position) {
+        return mReservas.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v=View.inflate(mContext,R.layout.adapter_reservas,null);
+        TextView tvName=(TextView)v.findViewById(R.id.textViewNombreMisReservas);
+        //TextView tvDireccion=(TextView)v.findViewById(R.id.textViewDireccionMisResevas);
+        TextView tvHora=(TextView)v.findViewById(R.id.textViewHoraMisReserva);
+        TextView tvDia=(TextView)v.findViewById(R.id.textViewDiaMisReservas);
+        TextView tvParticipantes=(TextView)v.findViewById(R.id.textViewParticipantesMisReservas);
+
+        tvName.setText(mReservas.get(position).getNombre());
+        //tvDireccion.setText(mReservas.get(position).getDireccion().getDireccion());
+        tvHora.setText(mReservas.get(position).getHora());
+        tvDia.setText(mReservas.get(position).getFechaReserva());
+        tvParticipantes.setText(String.valueOf(mReservas.get(position).getCantidadInvitados())+" puestos reservados");
+        //v.setTag(mReservas.get(position).get);
+
+        return v;
+    }
 }
