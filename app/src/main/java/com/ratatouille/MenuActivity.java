@@ -19,8 +19,14 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -50,6 +56,35 @@ public class MenuActivity extends AppCompatActivity {
         profile_img = findViewById(R.id.user_img);
         user_name = findViewById(R.id.user_name);
         user_rate = findViewById(R.id.user_rating);
+        FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(Chef.class) != null) {
+                    Chef chAux=dataSnapshot.getValue(Chef.class);
+                    user_name.setText(chAux.getNombre());
+                    user_rate.setText(Double.toString(chAux.getCalificacion()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(Cliente.class) != null) {
+                    Cliente clAux=dataSnapshot.getValue(Cliente.class);
+                    user_name.setText(clAux.getNombre());
+                    user_rate.setText(Double.toString(clAux.getCalificacion()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ratatouille-d6acf.appspot.com/" + mAuth.getUid() + "/userProfile");
         mStorageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
