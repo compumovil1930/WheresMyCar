@@ -22,6 +22,7 @@
             android:layout_width="152dp"
             android:layout_height="152dp"
             android:contentDescription="user profile picture"
+            android:scaleType="fitCenter"
             tools:srcCompat="@drawable/username" />
 
         <LinearLayout
