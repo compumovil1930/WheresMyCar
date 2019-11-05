@@ -36,8 +36,8 @@ public class ChefCercanosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chef_cercanos);
         mAuth = FirebaseAuth.getInstance();
         myLay=findViewById(R.id.linearChefs);
-        clientLatitude=getIntent().getLongExtra("latitud",0);
-        clientLongitude=getIntent().getLongExtra("longitud",0);
+        clientLatitude=getIntent().getDoubleExtra("latitud",0);
+        clientLongitude=getIntent().getDoubleExtra("longitud",0);
         nearbyChefs();
 
     }

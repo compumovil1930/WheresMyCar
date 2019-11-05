@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -23,19 +24,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ratatouille.models.Cliente;
 import com.ratatouille.models.Direccion;
-import com.ratatouille.models.Receta;
 import com.ratatouille.models.Reserva;
 import com.ratatouille.models.TimePickerFragment;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class DetallesReservaActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class DetallesReservaActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, Serializable {
 
     FirebaseDatabase database;
     FirebaseAuth mAuth;
-    DatabaseReference mDatabaseClientes;
+    DatabaseReference mDatabaseReservations;
     Button reserva;
     TextView nRes;
     TextView txTime;
@@ -48,13 +48,17 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_reserva);
         mAuth = FirebaseAuth.getInstance();
+
+        mDatabaseReservations=FirebaseDatabase.getInstance().getReference("reservas");
+
         final String nomRes=getIntent().getStringExtra("nombreRes");
         tvFechaReserva =findViewById(R.id.editTextFechaReserva);
         reserva=findViewById(R.id.buttonTerminarReserva);
-        txTime=findViewById(R.id.textViewHoraReserva);
+        txTime=findViewById(R.id.textViewHoraMisReserva);
         etAsistentes=findViewById(R.id.editTextAsistentes);
         nRes=findViewById(R.id.textViewNombreRest);
         nRes.setText("Estás realizando una reserva en el restaurante "+nomRes);
+
         txTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,14 +73,19 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
                 UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
                 upcrb.setPhotoUri(Uri.parse("path/to/pic"));
                 user.updateProfile(upcrb.build());
-                String nAux=getIntent().getStringExtra("direccion");
-                double lauAux=getIntent().getDoubleExtra("latitud",0);
-                double lonAux=getIntent().getDoubleExtra("longitud",0);
-                Direccion dirAux=new Direccion(1,"",nAux,lauAux,lonAux);
-                Reserva reserva=new Reserva(nomRes,dirAux,tvFechaReserva.getText().toString(),txTime.getText().toString(),Integer.parseInt(etAsistentes.getText().toString()));
-                mDatabaseClientes = FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).child("listaReservas");
-                mDatabaseClientes.setValue(reserva);
+                String dirResAux=getIntent().getStringExtra("direccion");
+                Double latAux=getIntent().getDoubleExtra("latitud",0);
+                Double lonAux=getIntent().getDoubleExtra("longitud", 0);
+                Direccion dirAux=new Direccion(1,"",dirResAux,latAux,lonAux);
+                String fechaAux=tvFechaReserva.getText().toString();
+                String timeAux=txTime.getText().toString();
+                int asisAux=Integer.parseInt(etAsistentes.getText().toString());
+                Reserva reserva=new Reserva(mAuth.getCurrentUser().getUid(),nomRes,dirAux,fechaAux,timeAux,asisAux);
+                mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mDatabaseReservations.push().getKey());
+                mDatabaseReservations.setValue(reserva);
                 Toast.makeText(v.getContext(),"Reserva realizada",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(v.getContext(),EscogerTipoActivity.class);
+                startActivity(intent);
             }
         });
         tvFechaReserva.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +119,8 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         txTime.setText(hourOfDay+":"+minute);
     }
+
+
 
 
     /*

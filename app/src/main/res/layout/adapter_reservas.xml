@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:context=".ReservasAdapter">
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:src="@drawable/reservation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:orientation="vertical"
+        android:paddingLeft="8dp">
+
+        <TextView
+            android:id="@+id/textViewNombreMisReservas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restaurante: " />
+
+        <TextView
+            android:id="@+id/textViewHoraMisReserva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hora:" />
+
+        <TextView
+            android:id="@+id/textViewDiaMisReservas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Día:" />
+
+        <TextView
+            android:id="@+id/textViewParticipantesMisReservas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Puestos reservados:" />
+    </LinearLayout>
+</LinearLayout>
