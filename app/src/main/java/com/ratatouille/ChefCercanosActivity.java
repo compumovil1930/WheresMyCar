@@ -3,10 +3,13 @@ package com.ratatouille;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
@@ -77,10 +80,23 @@ public class ChefCercanosActivity extends AppCompatActivity {
                                 Log.i("Chef cercano:", aux.getNombre());
                             }
                         }
+
                     }
                 }
                 adapter = new AvailableChefAdapter(getApplicationContext(), chefs);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getBaseContext(), DescripcionChefsCercanos.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("ChefSeleccionado", chefs.get(position));
+                        intent.putExtra("bundle", bundle);
+                        startActivity(intent);
+                    }
+                });
+
             }
 
             @Override
