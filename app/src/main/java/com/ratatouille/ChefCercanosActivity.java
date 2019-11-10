@@ -3,8 +3,14 @@ package com.ratatouille;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Cliente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChefCercanosActivity extends AppCompatActivity {
 
     static final double RADIUS_OF_EARTH_KM = 6371.01;
@@ -30,14 +39,22 @@ public class ChefCercanosActivity extends AppCompatActivity {
     double clientLatitude;
     double clientLongitude;
 
+    ListView listView;
+    AvailableChefAdapter adapter;
+    List<Chef> chefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_cercanos);
         mAuth = FirebaseAuth.getInstance();
-        myLay=findViewById(R.id.linearChefs);
+        //myLay=findViewById(R.id.linearChefs);
         clientLatitude=getIntent().getDoubleExtra("latitud",0);
         clientLongitude=getIntent().getDoubleExtra("longitud",0);
+
+        listView = findViewById(R.id.listViewAvailableChef);
+        chefs = new ArrayList<>();
+
         nearbyChefs();
 
     }
@@ -50,17 +67,20 @@ public class ChefCercanosActivity extends AppCompatActivity {
         mDatabaseChefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildrenCount() != 0)
+                if (dataSnapshot.getChildrenCount() != 0) {
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         Chef aux = singleSnap.getValue(Chef.class);
-                        if (aux.getEstado())
+                        if (aux.getEstado()) {
                             if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), clientLatitude, clientLongitude) <= 5.0) {
-                                Toast.makeText(ChefCercanosActivity.this,"Se encontró uno",Toast.LENGTH_LONG).show();
-                                TextView tvAux=new TextView(ChefCercanosActivity.this);
-                                tvAux.setText(aux.getNombre());
-                                myLay.addView(tvAux);
+                                Toast.makeText(getApplicationContext(), "Se encontró uno", Toast.LENGTH_LONG).show();
+                                chefs.add(aux);
+                                Log.i("Chef cercano:", aux.getNombre());
                             }
+                        }
                     }
+                }
+                adapter = new AvailableChefAdapter(getApplicationContext(), chefs);
+                listView.setAdapter(adapter);
             }
 
             @Override
