@@ -75,7 +75,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView50"
+                android:id="@+id/textView52"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -91,7 +91,7 @@
                 android:orientation="vertical"></LinearLayout>
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/textView52"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
