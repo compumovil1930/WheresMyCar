@@ -22,6 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ratatouille.models.Chef;
+import com.ratatouille.models.Cliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
-        edMail=findViewById(R.id.txtEmail);
-        edPass=findViewById(R.id.txtPassword);
+        edMail = findViewById(R.id.txtEmail);
+        edPass = findViewById(R.id.txtPassword);
         nuevaCuenta = findViewById(R.id.buttonCrearCuenta);
         nuevaCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,74 +59,97 @@ public class MainActivity extends AppCompatActivity {
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signInUser(edMail.getText().toString(),edPass.getText().toString());
+                signInUser(edMail.getText().toString(), edPass.getText().toString());
             }
         });
     }
 
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
 
 
+    private void updateUI(FirebaseUser currentUser) {
 
-    private void updateUI(FirebaseUser currentUser){
-        if(currentUser!=null){
-            Intent intent=new Intent(getBaseContext(),EscogerTipoActivity.class);
-            intent.putExtra("user",currentUser.getEmail());
-            startActivity(intent);
-        }
-        else{
+        if (currentUser != null) {
+            FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue(Chef.class) != null) {
+                        Intent intent = new Intent(getBaseContext(), MapServiceAvailableActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+            FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue(Cliente.class) != null) {
+                        Intent intent = new Intent(getBaseContext(), EscogerTipoActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        } else {
             edMail.setText("");
             edPass.setText("");
         }
+
     }
 
 
-    private boolean validateForm(){
-        boolean valid=true;
-        String email=edMail.getText().toString();
-        if(TextUtils.isEmpty(email)){
+    private boolean validateForm() {
+        boolean valid = true;
+        String email = edMail.getText().toString();
+        if (TextUtils.isEmpty(email)) {
             edMail.setError("Requerido");
-            valid=false;
-        }
-        else{
+            valid = false;
+        } else {
             edMail.setError(null);
         }
-        String password=edPass.getText().toString();
-        if(TextUtils.isEmpty(password)){
+        String password = edPass.getText().toString();
+        if (TextUtils.isEmpty(password)) {
             edPass.setError("Requerido");
-            valid=false;
-        }
-        else{
+            valid = false;
+        } else {
             edPass.setError(null);
         }
         return valid;
     }
 
 
-    private void signInUser(String email,String password){
-        if(validateForm()){
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    private void signInUser(String email, String password) {
+        if (validateForm()) {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Log.d("INICIOSESION","signInWithEmail:success");
-                        FirebaseUser user=mAuth.getCurrentUser();
+                    if (task.isSuccessful()) {
+                        Log.d("INICIOSESION", "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                    }else{
-                        Log.w("FALLOSESION","signInWithEmail:failure",task.getException());
-                        Toast.makeText(MainActivity.this,"Authenticacion failed",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.w("FALLOSESION", "signInWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authenticacion failed", Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
                 }
             });
         }
     }
+
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
         if (ContextCompat.checkSelfPermission(context, permiso) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {

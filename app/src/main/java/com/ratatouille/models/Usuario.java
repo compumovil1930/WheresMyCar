@@ -1,8 +1,9 @@
 package com.ratatouille.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
 
     protected String nombre;
@@ -15,7 +16,11 @@ public class Usuario {
     protected String foto;
     protected int creditos;
     protected Direccion direccion;
-    private List<Herramienta> listaHerramientas;
+    protected List<Herramienta> listaHerramientas;
+
+    public Usuario(){
+
+    }
 
     public Usuario(String nombre, double calificacion, String correo, Long documento, String clave, int telefono, String fechaNacimiento, String foto, int creditos, Direccion direccion, List<Herramienta> listaHerramientas) {
         this.nombre = nombre;

@@ -88,6 +88,7 @@ public class ImagenActivity extends AppCompatActivity {
                         final Uri imageUri=data.getData();
                         final InputStream imageStream=getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage= BitmapFactory.decodeStream(imageStream);
+                        bundle.putParcelable("userProfile", selectedImage);
                         imgShown.setImageBitmap(selectedImage);
                     }
                     catch (FileNotFoundException e){
@@ -99,6 +100,7 @@ public class ImagenActivity extends AppCompatActivity {
                 if(resultCode==RESULT_OK){
                     Bundle extras=data.getExtras();
                     Bitmap imageBitmap=(Bitmap)extras.get("data");
+                    bundle.putParcelable("userProfile", imageBitmap);
                     imgShown.setImageBitmap(imageBitmap);
                 }
         }
