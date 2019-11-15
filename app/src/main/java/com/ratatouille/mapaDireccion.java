@@ -94,8 +94,10 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         LatLng pos = new LatLng(latitude + 0.005, longitude + 0.005);
-                        chefs.get(0).setPosition(pos);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(chefs.get(0).getPosition()));
+                        if(!chefs.isEmpty()) {
+                            chefs.get(0).setPosition(pos);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(chefs.get(0).getPosition()));
+                        }
                     }
                 }
             }

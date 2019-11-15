@@ -31,7 +31,8 @@
             android:layout_gravity="bottom"
             android:layout_margin="16dp"
             android:hint="Ingresa un restaurante"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:imeOptions="actionDone" />
 
     </LinearLayout>
 
