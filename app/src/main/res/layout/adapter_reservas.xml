@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnCanReservas"
         android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
