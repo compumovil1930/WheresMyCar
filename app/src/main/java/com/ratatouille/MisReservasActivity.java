@@ -62,7 +62,7 @@ public class MisReservasActivity extends AppCompatActivity {
                         }
                     }
                 }
-                adapter = new ReservasAdapter(getApplicationContext(), listaReservasAux);
+                adapter = new ReservasAdapter(getApplicationContext(), listaReservasAux, mAuth.getCurrentUser().getUid());
                 listViewReservas.setAdapter(adapter);
             }
 
