@@ -11,10 +11,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -38,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -55,6 +60,7 @@ import com.google.firebase.database.annotations.NotNull;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Cliente;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +86,15 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     DatabaseReference mDatabaseChefs;
     DatabaseReference mDatabaseClientes;
 
+    public static final double lowerLeftLatitude = 4.515144;
+    public static final double lowerLeftLongitude= -74.226309;
+    public static final double upperRightLatitude= 4.758701;
+    public static final double upperRigthLongitude= -74.023228;
+
+    Geocoder mGeocoder;
+    double mainLatitude;
+    double mainLongitude;
+    boolean found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +106,9 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mapFragment.getMapAsync(this);
+
+        edTxtDir = findViewById(R.id.edTxtDir);
+        found = false;
 
         /*
         mDatabaseClientes = database.getReference("clientes/"+mAuth.getCurrentUser().getUid());
@@ -113,12 +131,29 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
             }
         });
 
+        edTxtDir.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (!edTxtDir.getText().toString().trim().equalsIgnoreCase("")){
+                    if (actionId == EditorInfo.IME_ACTION_DONE){
+                        String addressString = edTxtDir.getText().toString();
+                        findAddress(addressString, mGeocoder);
+                    }
+                }
+                return false;
+            }
+        });
+
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            Log.i("FLOCATION", "First Location update in the callback: " + location);
-                            customer.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+                    public void onSuccess(Location locationN) {
+
+                        mGeocoder  = new Geocoder(getBaseContext());
+                        if (locationN != null) {
+                            Log.i("FLOCATION", "First Location update in the callback: " + locationN);
+
+                            customer.setPosition(new LatLng(locationN.getLatitude(), locationN.getLongitude()));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                         }
                     }
@@ -131,27 +166,52 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                 Location location = locationResult.getLastLocation();
                 Log.i("LOCATION", "Location update in the callback: " + location);
                 if (location != null) {
-                    if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        customer.setPosition(new LatLng(latitude, longitude));
-                        showChefs();
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
+                    if (edTxtDir.getText().toString().trim().equalsIgnoreCase("")) {
+                        if (location.getLatitude() != latitude || location.getLongitude() != longitude) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            customer.setPosition(new LatLng(latitude, longitude));
+                            showChefs();
+                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
+                            moveCamera(latitude, longitude, 15);
+                            //Toast.makeText(getApplicationContext(),"Estoy vacio", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        if (found) {
+                            //Toast.makeText(getApplicationContext(), "NO estoy vacio", Toast.LENGTH_LONG).show();
+                            customer.setPosition(new LatLng(mainLatitude, mainLongitude));
+                            showChefs();
+                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
+                            moveCamera(mainLatitude, mainLongitude, 15);
+                        }
                     }
                 }
             }
         };
         sel_dir = findViewById(R.id.btnDir);
         btn_menu = findViewById(R.id.btn_menu_dir);
-        edTxtDir = findViewById(R.id.edTxtDir);
+
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),ChefCercanosActivity.class);
+
                 intent.putExtra("direccion", edTxtDir.getText().toString());
-                intent.putExtra("latitud",latitude);
-                intent.putExtra("longitud",longitude);
-                startActivity(intent);
+
+                if (edTxtDir.getText().toString().trim().equalsIgnoreCase("")) {
+                    intent.putExtra("latitud", latitude);
+                    intent.putExtra("longitud", longitude);
+                    startActivity(intent);
+                }
+                else{
+                    if (found) {
+                        intent.putExtra("latitud", mainLatitude);
+                        intent.putExtra("longitud", mainLatitude);
+                        startActivity(intent);
+                    }
+                }
+
             }
         });
         btn_menu.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +230,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
-        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)));
+        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
     }
 
     private void requestPermission(Activity context, String permiso, String justificacion, int idCode) {
@@ -199,8 +260,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(8000);
+        mLocationRequest.setInterval(30000);
+        mLocationRequest.setFastestInterval(25000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
@@ -280,7 +341,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                             Chef aux = singleSnap.getValue(Chef.class);
                             if (aux.getEstado()) {
                                 if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
-                                    Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
                                     mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
                                 }
                             }
@@ -301,6 +362,54 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double result = RADIUS_OF_EARTH_KM * c;
         return Math.round(result * 100.0) / 100.0;
+    }
+
+    public void findAddress (String addressString, Geocoder mGeocoder){
+
+        if (!addressString.isEmpty()) {
+            try {
+                List<Address> addresses = mGeocoder.getFromLocationName( addressString, 2,
+                        lowerLeftLatitude,
+                        lowerLeftLongitude,
+                        upperRightLatitude,
+                        upperRigthLongitude
+                );
+
+                if (addresses != null && !addresses.isEmpty()) {
+                    Address addressResult = addresses.get(0);
+                    double latitudeDes = addressResult.getLatitude();
+                    double longitudeDes = addressResult.getLongitude();
+
+                    mainLatitude = addressResult.getLatitude();
+                    mainLongitude = addressResult.getLongitude();
+                    found = true;
+
+                    LatLng position = new LatLng(latitudeDes, longitudeDes);
+
+                    if (mMap != null) {
+                        MarkerOptions myMarkerOptions = new MarkerOptions();
+                        myMarkerOptions.position(position);
+                        edTxtDir.getText().toString();
+                        myMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                        mMap.addMarker(myMarkerOptions);
+
+                        moveCamera(latitudeDes, longitudeDes, 15);
+
+                    }
+                } else {Toast.makeText(getApplicationContext(), "Dirección no encontrada", Toast.LENGTH_SHORT).show();}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {Toast.makeText(getApplicationContext(), "La dirección esta vacía", Toast.LENGTH_SHORT).show();}
+
+    }
+
+    private void moveCamera(double latitude, double longitude, int zoom){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(latitude, longitude))
+                .zoom(zoom)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
