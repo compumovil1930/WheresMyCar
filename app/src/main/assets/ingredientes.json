@@ -5,6 +5,51 @@
     },
     {
       "nombre": "Yuca"
+    },
+    {
+      "nombre": "Platano"
+    },
+    {
+      "nombre": "Arroz"
+    },
+    {
+      "nombre": "Frijol"
+    },
+    {
+      "nombre": "Garbanzo"
+    },
+    {
+      "nombre": "Lenteja"
+    },
+    {
+      "nombre": "Arbeja"
+    },
+    {
+      "nombre": "Tomate"
+    },
+    {
+      "nombre": "Lechuga"
+    },
+    {
+      "nombre": "Espinaca"
+    },
+    {
+      "nombre": "Zanahoria"
+    },
+    {
+      "nombre": "Aguacate"
+    },
+    {
+      "nombre": "Carne"
+    },
+    {
+      "nombre": "Pescado"
+    },
+    {
+      "nombre": "Cerdo"
+    },
+    {
+      "nombre": "Pollo"
     }
   ]
 }
