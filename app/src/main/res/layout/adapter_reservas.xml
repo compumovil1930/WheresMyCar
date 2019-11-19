@@ -45,4 +45,15 @@
             android:layout_height="wrap_content"
             android:text="Puestos reservados:" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCanReservas"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.3"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="#E53935"
+        android:text="Cancelar"
+        android:textSize="14sp" />
 </LinearLayout>

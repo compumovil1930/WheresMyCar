@@ -4,7 +4,43 @@
       "nombre": "Rallador"
     },
     {
-      "nombre": "Cuchillo de pan"
+      "nombre": "Cuchillo"
+    },
+    {
+      "nombre": "Espatula"
+    },
+    {
+      "nombre": "Termometro Digital"
+    },
+    {
+      "nombre": "Molino de grano"
+    },
+    {
+      "nombre": "Abrelatas"
+    },
+    {
+      "nombre": "Minirodillo"
+    },
+    {
+      "nombre": "Molde Arepas"
+    },
+    {
+      "nombre": "Colador"
+    },
+    {
+      "nombre": "Pinzas"
+    },
+    {
+      "nombre": "Taza Medidora"
+    },
+    {
+      "nombre": "Espumadora"
+    },
+    {
+      "nombre": "Pelador Vertical"
+    },
+    {
+      "nombre": "Brocha"
     }
   ]
 }

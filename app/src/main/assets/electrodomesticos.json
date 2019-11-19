@@ -5,6 +5,21 @@
     },
     {
       "nombre": "Licuadora"
+    },
+    {
+      "nombre": "Olla Arrocera"
+    },
+    {
+      "nombre": "MicroOndas"
+    },
+    {
+      "nombre": "Sanduchera"
+    },
+    {
+      "nombre": "Exprimidor"
+    },
+    {
+      "nombre": "Mezclador"
     }
   ]
 }

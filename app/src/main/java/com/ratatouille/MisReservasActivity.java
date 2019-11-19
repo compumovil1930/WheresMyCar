@@ -33,7 +33,6 @@ public class MisReservasActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference mDatabaseReservas;
     TextView txvacio;
-
     ListView listViewReservas;
     ReservasAdapter adapter;
     List<Reserva> listaReservasAux;
@@ -42,61 +41,31 @@ public class MisReservasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_reservas);
-
-        mAuth=FirebaseAuth.getInstance();
-        txvacio=findViewById(R.id.textViewVacio);
-
-
-        listViewReservas=findViewById(R.id.listViewReservas);
-        listaReservasAux=new ArrayList<>();
-
-
+        mAuth = FirebaseAuth.getInstance();
+        txvacio = findViewById(R.id.textViewVacio);
+        listViewReservas = findViewById(R.id.listViewReservas);
+        listaReservasAux = new ArrayList<>();
         loadReservations();
-
-        /*
-        if(listaReservasMostrar.size()==0){
-            txvacio.setText("No tienes ninguna reserva");
-            txvacio.setVisibility(View.VISIBLE);
-        }else{
-            for (int i=0;i<listaReservasMostrar.size();i++){
-                ReservasAdapter resAux=new ReservasAdapter(MisReservasActivity.this,null,0);
-                resAux.setNombre(listaReservasMostrar.get(i).getNombre());
-                resAux.setHora(listaReservasMostrar.get(i).getHora());
-                resAux.setFecha(listaReservasMostrar.get(i).getFechaReserva());
-                resAux.setPuestos(String.valueOf(listaReservasMostrar.get(i).getCantidadInvitados()));
-                resAux.setPuestos(String.valueOf(listaReservasMostrar.get(i).getDireccion().getDireccion()));
-                layReservas.addView(resAux);
-            }
-        }*/
-
     }
-
-
 
     public void loadReservations() {
         database = FirebaseDatabase.getInstance();
-        mDatabaseReservas= database.getReference("reservas");
+        mDatabaseReservas = database.getReference("reservas");
         mDatabaseReservas.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildrenCount() != 0){
+                if (dataSnapshot.getChildrenCount() != 0) {
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         Reserva resAux = singleSnap.getValue(Reserva.class);
-                        if (resAux.getIdUsuario().equals(mAuth.getCurrentUser().getUid())){
+                        if (resAux.getIdUsuario().equals(mAuth.getCurrentUser().getUid())) {
                             listaReservasAux.add(resAux);
                         }
                     }
                 }
-
-                //Toast.makeText(MisReservasActivity.this,"Found "+ listaReservasAux.size(),Toast.LENGTH_SHORT).show();
-                adapter=new ReservasAdapter(getApplicationContext(),listaReservasAux);
+                adapter = new ReservasAdapter(getApplicationContext(), listaReservasAux, mAuth.getCurrentUser().getUid());
                 listViewReservas.setAdapter(adapter);
-
-                /*listViewReservas.setOnLongClickListener(new AdapterView.OnLongClickListener()
-                @Override
-
-                ){;*/
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
