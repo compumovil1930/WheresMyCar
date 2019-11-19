@@ -118,7 +118,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
     private void findImageChefInStorage(String key) {
         storage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ratatouille-d6acf.appspot.com/" + key + "/userProfile");
-        imageViewChef = (ImageView) findViewById(R.id.imageViewUser);
+        imageViewChef = findViewById(R.id.imageViewUser);
 
         storage.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
