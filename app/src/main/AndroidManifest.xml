@@ -51,7 +51,6 @@
         <activity android:name=".ResumenServicioPedido" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".PreparandoComensalActivity" />
-        <activity android:name=".mapaTipoServicio" />
         <activity android:name=".TerminadoComensalActivity" />
         <activity android:name=".MapServiceAvailableActivity" />
         <activity android:name=".ChefRatingActivity" />

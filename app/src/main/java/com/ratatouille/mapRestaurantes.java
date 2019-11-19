@@ -83,6 +83,8 @@ public class mapRestaurantes extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_map_restaurantes);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         txtPlace = findViewById(R.id.txtPlace);
         btn_menu = findViewById(R.id.btn_menu_rest);
