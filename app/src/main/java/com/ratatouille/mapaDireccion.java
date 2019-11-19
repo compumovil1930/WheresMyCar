@@ -276,12 +276,15 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() != 0)
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
-                        Chef aux = singleSnap.getValue(Chef.class);
-                        if (aux.getEstado())
-                            if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
-                                Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
-                                mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
+                        if (singleSnap != null) {
+                            Chef aux = singleSnap.getValue(Chef.class);
+                            if (aux.getEstado()) {
+                                if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
+                                    Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
+                                    mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
+                                }
                             }
+                        }
                     }
             }
 
