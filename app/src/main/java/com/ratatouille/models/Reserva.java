@@ -1,11 +1,9 @@
 package com.ratatouille.models;
 
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Reserva implements Serializable {
-    private  static final AtomicInteger count = new AtomicInteger(0);
-    private int id;
+    private String id;
     private String idUsuario;
     private String nombre;
     private Direccion direccion;
@@ -18,7 +16,6 @@ public class Reserva implements Serializable {
     }
 
     public Reserva(String idUsuario, String nombre, Direccion direccion, String fechaReserva, String hora, int cantidadInvitados) {
-        this.id = count.incrementAndGet();
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -27,7 +24,11 @@ public class Reserva implements Serializable {
         this.cantidadInvitados = cantidadInvitados;
     }
 
-    public int getId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
         return id;
     }
 
