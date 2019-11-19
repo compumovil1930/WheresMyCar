@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 
