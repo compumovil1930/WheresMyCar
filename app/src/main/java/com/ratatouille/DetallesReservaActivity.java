@@ -48,22 +48,19 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_reserva);
         mAuth = FirebaseAuth.getInstance();
-
-        mDatabaseReservations=FirebaseDatabase.getInstance().getReference("reservas");
-
-        final String nomRes=getIntent().getStringExtra("nombreRes");
-        tvFechaReserva =findViewById(R.id.editTextFechaReserva);
-        reserva=findViewById(R.id.buttonTerminarReserva);
-        txTime=findViewById(R.id.textViewHoraMisReserva);
-        etAsistentes=findViewById(R.id.editTextAsistentes);
-        nRes=findViewById(R.id.textViewNombreRest);
-        nRes.setText("Estás realizando una reserva en el restaurante "+nomRes);
-
+        mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas");
+        final String nomRes = getIntent().getStringExtra("nombreRes");
+        tvFechaReserva = findViewById(R.id.editTextFechaReserva);
+        reserva = findViewById(R.id.buttonTerminarReserva);
+        txTime = findViewById(R.id.textViewHoraMisReserva);
+        etAsistentes = findViewById(R.id.editTextAsistentes);
+        nRes = findViewById(R.id.textViewNombreRest);
+        nRes.setText("Estás realizando una reserva en el restaurante " + nomRes);
         txTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timePicker=new TimePickerFragment();
-                timePicker.show(getSupportFragmentManager(),"time picker");
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
         reserva.setOnClickListener(new View.OnClickListener() {
@@ -73,18 +70,19 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
                 UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
                 upcrb.setPhotoUri(Uri.parse("path/to/pic"));
                 user.updateProfile(upcrb.build());
-                String dirResAux=getIntent().getStringExtra("direccion");
-                Double latAux=getIntent().getDoubleExtra("latitud",0);
-                Double lonAux=getIntent().getDoubleExtra("longitud", 0);
-                Direccion dirAux=new Direccion(1,"",dirResAux,latAux,lonAux);
-                String fechaAux=tvFechaReserva.getText().toString();
-                String timeAux=txTime.getText().toString();
-                int asisAux=Integer.parseInt(etAsistentes.getText().toString());
-                Reserva reserva=new Reserva(mAuth.getCurrentUser().getUid(),nomRes,dirAux,fechaAux,timeAux,asisAux);
+                String dirResAux = getIntent().getStringExtra("direccion");
+                Double latAux = getIntent().getDoubleExtra("latitud", 0);
+                Double lonAux = getIntent().getDoubleExtra("longitud", 0);
+                Direccion dirAux = new Direccion(1, "", dirResAux, latAux, lonAux);
+                String fechaAux = tvFechaReserva.getText().toString();
+                String timeAux = txTime.getText().toString();
+                int asisAux = Integer.parseInt(etAsistentes.getText().toString());
+                Reserva reserva = new Reserva(mAuth.getCurrentUser().getUid(), nomRes, dirAux, fechaAux, timeAux, asisAux);
                 mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mDatabaseReservations.push().getKey());
+                reserva.setId(mDatabaseReservations.push().getKey());
                 mDatabaseReservations.setValue(reserva);
-                Toast.makeText(v.getContext(),"Reserva realizada",Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(v.getContext(),EscogerTipoActivity.class);
+                Toast.makeText(v.getContext(), "Reserva realizada", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), EscogerTipoActivity.class);
                 startActivity(intent);
             }
         });
@@ -114,36 +112,8 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
         };
     }
 
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        txTime.setText(hourOfDay+":"+minute);
+        txTime.setText("Hora de la reserva: " + hourOfDay + ":" + minute);
     }
-
-
-
-
-    /*
-    public void showChefs() {
-        database = FirebaseDatabase.getInstance();
-        mDatabaseChefs = database.getReference("chefs");
-        mDatabaseChefs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildrenCount() != 0)
-                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
-                        Chef aux = singleSnap.getValue(Chef.class);
-                        if (aux.getEstado())
-                            if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), latitude, longitude) <= 5.0) {
-                                Toast.makeText(mapaDireccion.this, "nuevo chef", Toast.LENGTH_SHORT).show();
-                                mMap.addMarker(new MarkerOptions().position(new LatLng(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud())).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)));
-                            }
-                    }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }*/
 }

@@ -3,6 +3,7 @@ package com.ratatouille.models;
 import java.io.Serializable;
 
 public class Reserva implements Serializable {
+    private String id;
     private String idUsuario;
     private String nombre;
     private Direccion direccion;
@@ -10,7 +11,7 @@ public class Reserva implements Serializable {
     private String hora;
     private int cantidadInvitados;
 
-    public Reserva(){
+    public Reserva() {
 
     }
 
@@ -21,6 +22,14 @@ public class Reserva implements Serializable {
         this.fechaReserva = fechaReserva;
         this.hora = hora;
         this.cantidadInvitados = cantidadInvitados;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getIdUsuario() {
