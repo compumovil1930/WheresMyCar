@@ -1,6 +1,9 @@
 package com.ratatouille.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Servicio {
@@ -9,8 +12,8 @@ public class Servicio {
     private String keyClient;
     private String keyChef;
     private String comments;
-    private Calendar initialDate;
-    private Calendar finalDate;
+    private Date initialDate;
+    private Date finalDate;
     private double cost_hour;
     private double calification;
     private String status;
@@ -18,7 +21,7 @@ public class Servicio {
     private  static final AtomicInteger count = new AtomicInteger(0);
     private int id;
 
-    public Servicio(String keyClient, String keyChef, String comments, Calendar initialDate, Calendar finalDate, double cost_hour, double calification) {
+    public Servicio(String keyClient, String keyChef, String comments, Date initialDate, Date finalDate, double cost_hour, double calification) {
         this.keyClient = keyClient;
         this.keyChef = keyChef;
         this.comments = comments;
@@ -29,7 +32,7 @@ public class Servicio {
         this.id = count.incrementAndGet();
     }
 
-    public Servicio(String keyClient, String keyChef, Calendar initialDate, double cost_hour) {
+    public Servicio(String keyClient, String keyChef, Date initialDate, double cost_hour) {
         this.keyClient = keyClient;
         this.keyChef = keyChef;
         this.comments = "";
@@ -39,6 +42,10 @@ public class Servicio {
         this.calification = -1;
         this.status = "Solicitado";
         this.id = count.incrementAndGet();
+    }
+
+    public Servicio (){
+
     }
 
     public String getKeyClient() {
@@ -65,19 +72,19 @@ public class Servicio {
         this.comments = comments;
     }
 
-    public Calendar getInitialDate() {
+    public Date getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(Calendar initialDate) {
+    public void setInitialDate(Date initialDate) {
         this.initialDate = initialDate;
     }
 
-    public Calendar getFinalDate() {
+    public Date getFinalDate() {
         return finalDate;
     }
 
-    public void setFinalDate(Calendar finalDate) {
+    public void setFinalDate(Date finalDate) {
         this.finalDate = finalDate;
     }
 

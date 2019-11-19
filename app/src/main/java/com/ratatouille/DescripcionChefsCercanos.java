@@ -19,6 +19,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +39,12 @@ import com.ratatouille.models.Direccion;
 import com.ratatouille.models.Reserva;
 import com.ratatouille.models.Servicio;
 
+import net.steamcrafted.loadtoast.LoadToast;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DescripcionChefsCercanos extends AppCompatActivity {
 
@@ -53,12 +61,14 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
     StorageReference storage;
     DatabaseReference myRef;
     DatabaseReference mDatabaseReservations;
+    DatabaseReference mDatabaseServices;
     private FirebaseAuth mAuth;
 
     String keyClient;
     String keyChef;
 
     public static final String PATH_CHEFS="chefs/";
+    public LoadToast lt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas");
+        mDatabaseReservations = FirebaseDatabase.getInstance().getReference("Servicio/");
 
         bundle = getIntent().getBundleExtra("bundle");
         Chef chefSeleccionado = (Chef) bundle.getSerializable("ChefSeleccionado");
@@ -168,7 +178,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
     private void createService(Context v){
 
         keyClient = mAuth.getUid();
-        Calendar initialDate = Calendar.getInstance();
+        Date initialDate = new Date();
 
         Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
 
@@ -184,8 +194,39 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         servicioAceptado();
     }
 
-    private boolean servicioAceptado(){
-        return false;
+    private void servicioAceptado(){
+
+        lt = new LoadToast(DescripcionChefsCercanos.this);
+        lt.setText("Esperando al Chef... ");
+        lt.setTranslationY(90);
+        lt.show();
+
+        myRef = database.getReference("Servicio/");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        if (singleSnap != null) {
+                            Servicio service = singleSnap.getValue(Servicio.class);
+                            if (service.getKeyChef().equals(keyChef) && service.getKeyClient().equals(keyClient)){
+                                Log.i("StatusBien", service.getStatus());
+                                if (service.getStatus().equalsIgnoreCase("Aceptado")){
+                                    lt.success();
+                                }
+                                else if (service.getStatus().equalsIgnoreCase("Cancelado")){
+                                    lt.error();
+                                }
+                            }
+                        }
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
 
 
