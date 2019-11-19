@@ -27,9 +27,9 @@ public class AddPayMethod extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser fireUser = mAuth.getCurrentUser();
     String idUser = fireUser.getUid();
+    long numtarjetas;
     DatabaseReference userReference;
     DatabaseReference payMethodsReference;
-    String tipousuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,21 @@ public class AddPayMethod extends AppCompatActivity {
         mmaa = findViewById(R.id.MMAA);
         numberCard = findViewById(R.id.Number);
         CCV = findViewById(R.id.CCV);
-        userReference = FirebaseDatabase.getInstance().getReference().child("chefs");
+        userReference = FirebaseDatabase.getInstance().getReference();
+        userReference.child("MetodosPago").child(idUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    numtarjetas = dataSnapshot.getChildrenCount();
+                    Log.i("Numero de Tarjetas", String.valueOf(numtarjetas));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         mmaa.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -87,6 +101,7 @@ public class AddPayMethod extends AppCompatActivity {
     }
 
     public void AgregarMetododePago(View v) {
+        if(mmaa.getText()!=null && numberCard.getText()!=null && CCV.getText()!=null)
         if(luhnTest(numberCard.getText().toString())==true){
             String primerosnumeros = numberCard.getText().toString().substring(0,4);
             int tarjeta = Integer.parseInt(primerosnumeros);
@@ -111,8 +126,9 @@ public class AddPayMethod extends AppCompatActivity {
                 System.out.println("La tarjeta es palacio del hierro");
                 tipoTarjeta = "Palacio del Hierro";
             }
-            payMethodsReference = userReference.child(idUser).child("Metodos de pago");
-            payMethodsReference.child(tipoTarjeta).setValue(numberCard.getText().toString());
+            payMethodsReference = userReference.child("MetodosPago").child(idUser).child(String.valueOf(numtarjetas));
+            payMethodsReference.child("Proveedor").setValue(tipoTarjeta);
+            payMethodsReference.child("Numero").setValue(numberCard.getText().toString());
             finish();
         }
         else
