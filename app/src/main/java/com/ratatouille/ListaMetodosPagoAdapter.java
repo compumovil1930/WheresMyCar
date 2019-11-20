@@ -83,13 +83,12 @@ public class ListaMetodosPagoAdapter extends BaseAdapter implements ListAdapter 
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot DS : dataSnapshot.getChildren()) {
-                                if (DS.exists()) {
+                                if (DS.child("Seleccionado").getValue()!=null) {
                                     String seleccionado = DS.child("Seleccionado").getValue().toString();
-                                    String padre = DS.getKey();
-                                    Log.i("Seleccionado", seleccionado + " " + padre);
+                                    //Log.i("Seleccionado", seleccionado + " " + padre);
                                     if (seleccionado.equalsIgnoreCase("true")) {
                                         mDatabase.child("MetodosPago").child(idU).child(DS.getKey()).child("Seleccionado").setValue("false");
-                                        Log.i("Seleccionado Cambiado a", "false");
+                                        //Log.i("Seleccionado Cambiado a", "false");
                                     }
 
 
@@ -105,7 +104,10 @@ public class ListaMetodosPagoAdapter extends BaseAdapter implements ListAdapter 
                     }
                 });
                 mDatabase.child("MetodosPago").child(idU).child(String.valueOf(position)).child("Seleccionado").setValue("true");
-                notifyDataSetChanged();
+                Intent i = new Intent(context, addCreditos.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                context.startActivity(i);
+                //notifyDataSetChanged();
 
             }
         });
@@ -120,13 +122,16 @@ public class ListaMetodosPagoAdapter extends BaseAdapter implements ListAdapter 
                         if (dataSnapshot.getChildrenCount() != 0) {
                             for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                                 String mpAux = singleSnap.getKey();
-                                Log.i("IDLIST", mpAux + " " + position);
-                                if (Integer.valueOf(mpAux) == position) {
-                                    singleSnap.getRef().removeValue();
-                                    /*Intent intent = new Intent(v.getContext(), MisReservasActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    context.startActivity(intent);*/
+                                //Log.i("IDLIST", mpAux + " " + position);
+                                if(mpAux.equalsIgnoreCase("Efectivo")==false){
+                                    if (Integer.valueOf(mpAux) == position) {
+                                        singleSnap.getRef().removeValue();
+                                        Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        context.startActivity(intent);
+                                    }
                                 }
+
                             }
                         }
                     }
@@ -136,7 +141,7 @@ public class ListaMetodosPagoAdapter extends BaseAdapter implements ListAdapter 
                     }
                 });
                 //do something
-                //list.remove(position); //or some other task
+                list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
         });

@@ -93,6 +93,13 @@
             android:text="Historial de servicios"
             android:textSize="24sp" />
 
+        <TextView
+            android:id="@+id/items_updatePerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actualizar Datos"
+            android:textSize="24sp" />
+
     </LinearLayout>
 
     <Button

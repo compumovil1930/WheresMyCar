@@ -48,33 +48,35 @@ public class PayMethods extends AppCompatActivity {
 
 
     private void cargarMetodosDePago() {
-        mDatabase.child("MetodosPago").child(idU).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if (ds.exists()) {
-                            String proveedor = ds.child("Proveedor").getValue().toString();
-                            String numero = ds.child("Numero").getValue().toString();
-                            listaMetodos.add(proveedor + " " + numero.substring(0, 4));
-                            Log.i("Provedor y numero :", proveedor + " " + numero);
+        if(mDatabase.child("MetodosPago").child(idU)!=null) {
+            mDatabase.child("MetodosPago").child(idU).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getChildren()!=null) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if (ds.child("Proveedor").getValue()!=null  &&  ds.child("Numero").getValue()!=null) {
+                                String proveedor = ds.child("Proveedor").getValue().toString();
+                                String numero = ds.child("Numero").getValue().toString();
+                                listaMetodos.add(proveedor + " " + numero.substring(0, 4));
+                                Log.i("Provedor y numero :", proveedor + " " + numero);
+                            }
                         }
                     }
+                    ListaMetodosPagoAdapter adapter = new ListaMetodosPagoAdapter(listaMetodos, getApplicationContext());
+
+                    //handle listview and assign adapter
+                    listItem = (ListView) findViewById(R.id.listView);
+                    listItem.setAdapter(adapter);
+
                 }
-                ListaMetodosPagoAdapter adapter = new ListaMetodosPagoAdapter(listaMetodos, getApplicationContext());
-
-                //handle listview and assign adapter
-                listItem = (ListView)findViewById(R.id.listView);
-                listItem.setAdapter(adapter);
-
-            }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     public void addPayMethod(View v){
@@ -84,6 +86,7 @@ public class PayMethods extends AppCompatActivity {
 
     public void onClickEfectivo(View v){
         mDatabase.child("MetodosPago").child(idU).child("Efectivo").setValue("true");
+        finish();
 
     }
 }

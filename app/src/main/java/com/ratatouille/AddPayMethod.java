@@ -1,5 +1,6 @@
 package com.ratatouille;
 
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -27,7 +28,7 @@ public class AddPayMethod extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser fireUser = mAuth.getCurrentUser();
     String idUser = fireUser.getUid();
-    long numtarjetas;
+    long numtarjetas=0;
     DatabaseReference userReference;
     DatabaseReference payMethodsReference;
 
@@ -39,11 +40,14 @@ public class AddPayMethod extends AppCompatActivity {
         numberCard = findViewById(R.id.Number);
         CCV = findViewById(R.id.CCV);
         userReference = FirebaseDatabase.getInstance().getReference();
-        userReference.child("MetodosPago").child(idUser).addValueEventListener(new ValueEventListener() {
+        userReference.child("MetodosPago").child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    if(dataSnapshot.child("Efectivo")==null)
                     numtarjetas = dataSnapshot.getChildrenCount();
+                    else
+                        numtarjetas = dataSnapshot.getChildrenCount()-1;
                     Log.i("Numero de Tarjetas", String.valueOf(numtarjetas));
                 }
             }
@@ -129,7 +133,8 @@ public class AddPayMethod extends AppCompatActivity {
             payMethodsReference = userReference.child("MetodosPago").child(idUser).child(String.valueOf(numtarjetas));
             payMethodsReference.child("Proveedor").setValue(tipoTarjeta);
             payMethodsReference.child("Numero").setValue(numberCard.getText().toString());
-            finish();
+            Intent i = new Intent(this, PayMethods.class);
+            startActivity(i);
         }
         else
             numberCard.setError("Ingrese un numero de tarjeta valido");
