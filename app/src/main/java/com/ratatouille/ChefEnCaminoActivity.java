@@ -81,10 +81,8 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-
                             customer.setPosition(new LatLng(latitude, longitude));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-                            chef.setPosition(new LatLng(location.getLatitude()-0.05, location.getLongitude()-0.05)); // TODO: bring chef address from firebase
                             chef.setTitle("Tu chef"); //TODO: add snippet with name
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
                             builder.include(customer.getPosition());
@@ -97,8 +95,6 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                     }
                 }
         );
-        //TODO: move chef marker with onDataChange callback
-        //keyServicio = putExtraData("keyService");
 
         bundle = getIntent().getBundleExtra("bundle");
 
@@ -112,13 +108,15 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                             Log.i("KeyChef", bundle.get("keyChef").toString());
                             if (bundle.get("keyChef").toString().equals(singleSnap.getKey())){
                                 Chef chefEncontrado = singleSnap.getValue(Chef.class);
-
-                                //chef.remove();
                                 latitude = chefEncontrado.getDireccion().getLatitud();
                                 longitude = chefEncontrado.getDireccion().getLongitud();
                                 chef.setPosition(new LatLng(latitude, longitude));
-                                //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-                                moveCamera(latitude, longitude, 15);
+                                new FetchURL(ChefEnCaminoActivity.this).execute(getUrl(customer.getPosition(), chef.getPosition(), "driving"), "driving");
+                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                builder.include(customer.getPosition());
+                                builder.include(chef.getPosition());
+                                LatLngBounds bounds = builder.build();
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 125));
                             }
                         }
                     }
@@ -138,7 +136,7 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
-        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)).title("Tu ubicación")); //TODO: add snippet with name
+        customer = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.anton)).title("Tu ubicación"));
         chef = mMap.addMarker(new MarkerOptions().position(new LatLng(4, -72)).icon(BitmapDescriptorFactory.fromResource(R.drawable.remy)).title("Tu chef"));
     }
 
