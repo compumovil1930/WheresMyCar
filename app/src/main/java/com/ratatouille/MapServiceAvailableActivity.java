@@ -106,6 +106,38 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
             }
         };
 
+
+
+        //-----------------------------------------------------------------------------------------------------------------------------
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
+        SettingsClient client = LocationServices.getSettingsClient(MapServiceAvailableActivity.this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+        task.addOnFailureListener(this, new OnFailureListener() {
+
+
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                int statusCode = ((ApiException) e).getStatusCode();
+                switch (statusCode) {
+                    case CommonStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+
+                            ResolvableApiException resolvable = (ResolvableApiException) e;
+                            resolvable.startResolutionForResult(MapServiceAvailableActivity.this, REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException sendEx) {
+
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        break;
+                }
+            }
+        });
+        //-----------------------------------------------------------------------------------------------------------------------------
+
+
         btn_menu = findViewById(R.id.btn_menu_chef);
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
