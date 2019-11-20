@@ -110,7 +110,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                Intent intent = new Intent(v.getContext(), MenuActivityChef.class);
                 startActivity(intent);
             }
         });
