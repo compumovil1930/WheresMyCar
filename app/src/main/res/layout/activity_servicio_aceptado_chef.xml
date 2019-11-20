@@ -12,7 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".mapaServicio" />
+        tools:context=".ServicioAceptadoChef" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,10 +23,10 @@
         android:padding="32dp">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnLlegar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/rounded_button"
             android:text="llegue al comensal"
             android:textColor="#111111" />
     </LinearLayout>
@@ -34,9 +34,10 @@
     <TextView
         android:id="@+id/textView31"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:text="Sigue la Siguiente Ruta para preparar deliciosa comida a Johnny"
-        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Sigue la ruta para llegar a tu comensal"
+        android:textColor="#000000"
         android:textSize="24sp" />
 
 </FrameLayout>

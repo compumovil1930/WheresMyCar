@@ -87,9 +87,9 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
     DatabaseReference mDatabaseClientes;
 
     public static final double lowerLeftLatitude = 4.515144;
-    public static final double lowerLeftLongitude= -74.226309;
-    public static final double upperRightLatitude= 4.758701;
-    public static final double upperRigthLongitude= -74.023228;
+    public static final double lowerLeftLongitude = -74.226309;
+    public static final double upperRightLatitude = 4.758701;
+    public static final double upperRigthLongitude = -74.023228;
 
     Geocoder mGeocoder;
     double mainLatitude;
@@ -102,7 +102,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa_direccion);
         mAuth = FirebaseAuth.getInstance();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        myDirecitionsLay=findViewById(R.id.linearMyDirections);
+        myDirecitionsLay = findViewById(R.id.linearMyDirections);
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mapFragment.getMapAsync(this);
@@ -118,8 +118,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(Cliente.class) != null) {
-                    Cliente clAux=dataSnapshot.getValue(Cliente.class);
-                    TextView direction=new TextView(mapaDireccion.this);
+                    Cliente clAux = dataSnapshot.getValue(Cliente.class);
+                    TextView direction = new TextView(mapaDireccion.this);
                     direction.setText(clAux.getDireccion().getDireccion());
                     myDirecitionsLay.addView(direction);
                 }
@@ -135,8 +135,8 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (!edTxtDir.getText().toString().trim().equalsIgnoreCase("")){
-                    if (actionId == EditorInfo.IME_ACTION_DONE){
+                if (!edTxtDir.getText().toString().trim().equalsIgnoreCase("")) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
                         String addressString = edTxtDir.getText().toString();
                         findAddress(addressString, mGeocoder);
                     }
@@ -149,10 +149,9 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                     @Override
                     public void onSuccess(Location locationN) {
 
-                        mGeocoder  = new Geocoder(getBaseContext());
+                        mGeocoder = new Geocoder(getBaseContext());
                         if (locationN != null) {
                             Log.i("FLOCATION", "First Location update in the callback: " + locationN);
-
                             customer.setPosition(new LatLng(locationN.getLatitude(), locationN.getLongitude()));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(customer.getPosition()));
                         }
@@ -176,8 +175,7 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                             moveCamera(latitude, longitude, 15);
                             //Toast.makeText(getApplicationContext(),"Estoy vacio", Toast.LENGTH_LONG).show();
                         }
-                    }
-                    else {
+                    } else {
                         if (found) {
                             //Toast.makeText(getApplicationContext(), "NO estoy vacio", Toast.LENGTH_LONG).show();
                             customer.setPosition(new LatLng(mainLatitude, mainLongitude));
@@ -226,17 +224,21 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         sel_dir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),ChefCercanosActivity.class);
-
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clientes/"+mAuth.getUid()+"/direccion");
+                Intent intent = new Intent(view.getContext(), ChefCercanosActivity.class);
                 intent.putExtra("direccion", edTxtDir.getText().toString());
-
+                ref.child("latitud").setValue(latitude);
+                ref.child("longitud").setValue(longitude);
                 if (edTxtDir.getText().toString().trim().equalsIgnoreCase("")) {
+                    ref.child("latitud").setValue(latitude);
+                    ref.child("longitud").setValue(longitude);
                     intent.putExtra("latitud", latitude);
                     intent.putExtra("longitud", longitude);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     if (found) {
+                        ref.child("latitud").setValue(latitude);
+                        ref.child("longitud").setValue(longitude);
                         intent.putExtra("latitud", mainLatitude);
                         intent.putExtra("longitud", mainLatitude);
                         startActivity(intent);
@@ -395,11 +397,11 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
         return Math.round(result * 100.0) / 100.0;
     }
 
-    public void findAddress (String addressString, Geocoder mGeocoder){
+    public void findAddress(String addressString, Geocoder mGeocoder) {
 
         if (!addressString.isEmpty()) {
             try {
-                List<Address> addresses = mGeocoder.getFromLocationName( addressString, 2,
+                List<Address> addresses = mGeocoder.getFromLocationName(addressString, 2,
                         lowerLeftLatitude,
                         lowerLeftLongitude,
                         upperRightLatitude,
@@ -427,15 +429,19 @@ public class mapaDireccion extends FragmentActivity implements OnMapReadyCallbac
                         moveCamera(latitudeDes, longitudeDes, 15);
 
                     }
-                } else {Toast.makeText(getApplicationContext(), "Dirección no encontrada", Toast.LENGTH_SHORT).show();}
+                } else {
+                    Toast.makeText(getApplicationContext(), "Dirección no encontrada", Toast.LENGTH_SHORT).show();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {Toast.makeText(getApplicationContext(), "La dirección esta vacía", Toast.LENGTH_SHORT).show();}
+        } else {
+            Toast.makeText(getApplicationContext(), "La dirección esta vacía", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
-    private void moveCamera(double latitude, double longitude, int zoom){
+    private void moveCamera(double latitude, double longitude, int zoom) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude))
                 .zoom(zoom)

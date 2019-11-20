@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +43,7 @@ public class ChefCercanosActivity extends AppCompatActivity {
     AvailableChefAdapter adapter;
     List<Chef> chefs;
     List<Chef> chefsOr;
-    Map<Double,Chef> distanciasChef = new HashMap<>();
+    Map<Double, Chef> distanciasChef = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,8 @@ public class ChefCercanosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_cercanos);
         mAuth = FirebaseAuth.getInstance();
-        //myLay=findViewById(R.id.linearChefs);
-        clientLatitude=getIntent().getDoubleExtra("latitud",0);
-        clientLongitude=getIntent().getDoubleExtra("longitud",0);
+        clientLatitude = getIntent().getDoubleExtra("latitud", 0);
+        clientLongitude = getIntent().getDoubleExtra("longitud", 0);
 
         listView = findViewById(R.id.listViewAvailableChef);
         chefs = new ArrayList<>();
@@ -75,7 +75,7 @@ public class ChefCercanosActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Se encontró uno", Toast.LENGTH_LONG).show();
                                 //chefs.add(aux);
                                 double dis = distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), clientLatitude, clientLongitude);
-                                distanciasChef.put(dis,aux);
+                                distanciasChef.put(dis, aux);
                                 Log.i("Chef cercano:", aux.getNombre());
                             }
                         }
@@ -111,30 +111,21 @@ public class ChefCercanosActivity extends AppCompatActivity {
         double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double result = RADIUS_OF_EARTH_KM * c;
-        Toast.makeText(ChefCercanosActivity.this,"Resultado de distancias "+String.valueOf(result),Toast.LENGTH_LONG).show();
         return Math.round(result * 100.0) / 100.0;
     }
 
-    public List<Chef> ordenarChefs (Map<Double,Chef>listChefs)
-    {
+    public List<Chef> ordenarChefs(Map<Double, Chef> listChefs) {
         List<Chef> chefListSort = new ArrayList<>();
         List<Double> ordenar = new ArrayList<>(listChefs.keySet());
         Collections.sort(ordenar);
-
-
         Set<Double> ordenChef = listChefs.keySet();
-        for(Double d:ordenChef)
-        {
-
-            if (listChefs.get(d) != null)
-            {
+        for (Double d : ordenChef) {
+            if (listChefs.get(d) != null) {
                 Chef c = listChefs.get(d);
-
                 chefListSort.add(c);
             }
 
         }
-
         return chefListSort;
     }
 

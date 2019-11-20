@@ -113,6 +113,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                     chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(chef.getPosition()));
                     mDatabaseChefs = database.getReference("chefs/" + mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
                     mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
@@ -329,7 +330,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                         if (singleSnap != null) {
                             Servicio service = singleSnap.getValue(Servicio.class);
                             if (service.getKeyChef().equals(mAuth.getUid()) && service.getStatus().equalsIgnoreCase("Solicitado")) {
-                                mostrarDialogoBasico(service.getId());
+                                mostrarDialogoBasico(service.getId(),service.getKeyClient());
                             }
                         }
                     }
@@ -341,7 +342,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         });
     }
 
-    private void mostrarDialogoBasico(final String Servid) {
+    private void mostrarDialogoBasico(final String Servid, final String clientkey) {
         AlertDialog alertDialog = new AlertDialog.Builder(MapServiceAvailableActivity.this).create();
         alertDialog.setTitle("Nuevo Servicio");
         alertDialog.setMessage("Un nuevo cliente desea que prepares su comida");
@@ -352,6 +353,10 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                         status = "Aceptado";
                         DatabaseReference refService = FirebaseDatabase.getInstance().getReference().child("Servicio").child(Servid).child("status");
                         refService.setValue(status);
+                        Intent intent = new Intent(MapServiceAvailableActivity.this, ServicioAceptadoChef.class);
+                        intent.putExtra("service_key",Servid);
+                        intent.putExtra("client_key", clientkey);
+                        startActivity(intent);
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",

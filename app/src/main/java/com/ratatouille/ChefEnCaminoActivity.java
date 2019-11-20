@@ -157,7 +157,7 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         if (singleSnap != null) {
                             Log.i("KeyChef", bundle.get("keyChef").toString());
-                            if (bundle.get("keyChef").toString().equals(singleSnap.getKey())){
+                            if (bundle.get("keyChef").toString().equals(singleSnap.getKey())) {
                                 Chef chefEncontrado = singleSnap.getValue(Chef.class);
                                 latitude = chefEncontrado.getDireccion().getLatitud();
                                 longitude = chefEncontrado.getDireccion().getLongitud();
@@ -172,9 +172,29 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                         }
                     }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        final DatabaseReference service = FirebaseDatabase.getInstance().getReference("Service/"+bundle.getBundle("keyServicio"));
+        service.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        if (singleSnap != null) {
+                            Servicio aux = singleSnap.getValue(Servicio.class);
+                            if(aux.getStatus().equals("En curso")){
+                                Intent intent = new Intent(ChefEnCaminoActivity.this, PreparandoComensalActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -233,11 +253,11 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
         currentPolyline.setColor(0xFFF44336);
     }
 
-    private void cambiarEstadoDeReserva(){
+    private void cambiarEstadoDeReserva() {
         //Ingresar a firebase y cambiar el estado de la reserva a cancelado
     }
 
-    private void moveCamera(double latitude, double longitude, int zoom){
+    private void moveCamera(double latitude, double longitude, int zoom) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude))
                 .zoom(zoom)
