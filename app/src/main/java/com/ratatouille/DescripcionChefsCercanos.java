@@ -66,6 +66,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
     String keyClient;
     String keyChef;
+    String keyServicio;
 
     public static final String PATH_CHEFS="chefs/";
     public LoadToast lt;
@@ -180,14 +181,16 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         keyClient = mAuth.getUid();
         Date initialDate = new Date();
 
-        Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
-
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
         upcrb.setPhotoUri(Uri.parse("path/to/pic"));
         user.updateProfile(upcrb.build());
 
+        Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
+
         mDatabaseReservations = FirebaseDatabase.getInstance().getReference("Servicio/" + mDatabaseReservations.push().getKey());
+        keyServicio = mDatabaseReservations.push().getKey();
+        servicioSolicitado.setId(keyServicio);
         mDatabaseReservations.setValue(servicioSolicitado);
         Toast.makeText(v, "Servicio creado", Toast.LENGTH_LONG).show();
 
@@ -209,7 +212,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         if (singleSnap != null) {
                             Servicio service = singleSnap.getValue(Servicio.class);
-                            if (service.getKeyChef().equals(keyChef) && service.getKeyClient().equals(keyClient)){
+                            if (service.getId().equals(keyServicio)){
                                 Log.i("StatusBien", service.getStatus());
                                 if (service.getStatus().equalsIgnoreCase("Aceptado")){
                                     lt.success();

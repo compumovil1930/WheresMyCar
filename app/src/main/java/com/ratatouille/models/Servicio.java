@@ -1,13 +1,8 @@
 package com.ratatouille.models;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Servicio {
-
 
     private String keyClient;
     private String keyChef;
@@ -17,11 +12,9 @@ public class Servicio {
     private double cost_hour;
     private double calification;
     private String status;
+    private String id;
 
-    private  static final AtomicInteger count = new AtomicInteger(0);
-    private int id;
-
-    public Servicio(String keyClient, String keyChef, String comments, Date initialDate, Date finalDate, double cost_hour, double calification) {
+    public Servicio(String keyClient, String keyChef, String comments, Date initialDate, Date finalDate, double cost_hour, double calification, String status, String id) {
         this.keyClient = keyClient;
         this.keyChef = keyChef;
         this.comments = comments;
@@ -29,7 +22,8 @@ public class Servicio {
         this.finalDate = finalDate;
         this.cost_hour = cost_hour;
         this.calification = calification;
-        this.id = count.incrementAndGet();
+        this.status = status;
+        this.id = id;
     }
 
     public Servicio(String keyClient, String keyChef, Date initialDate, double cost_hour) {
@@ -41,11 +35,9 @@ public class Servicio {
         this.cost_hour = cost_hour;
         this.calification = -1;
         this.status = "Solicitado";
-        this.id = count.incrementAndGet();
     }
 
     public Servicio (){
-
     }
 
     public String getKeyClient() {
@@ -104,10 +96,6 @@ public class Servicio {
         this.calification = calification;
     }
 
-    public static AtomicInteger getCount() {
-        return count;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -116,11 +104,11 @@ public class Servicio {
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
