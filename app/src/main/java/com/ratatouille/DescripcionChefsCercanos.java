@@ -188,7 +188,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         user.updateProfile(upcrb.build());
         Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
         mDatabaseReservations = FirebaseDatabase.getInstance().getReference("Servicio/" + mDatabaseReservations.push().getKey());
-        servicioSolicitado.setId(mDatabaseReservations.push().getKey());
+        servicioSolicitado.setId(mDatabaseReservations.getKey());
         mDatabaseReservations.setValue(servicioSolicitado);
         Toast.makeText(v, "Servicio creado", Toast.LENGTH_LONG).show();
 
