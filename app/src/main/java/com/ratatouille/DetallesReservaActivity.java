@@ -79,7 +79,7 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
                 int asisAux = Integer.parseInt(etAsistentes.getText().toString());
                 Reserva reserva = new Reserva(mAuth.getCurrentUser().getUid(), nomRes, dirAux, fechaAux, timeAux, asisAux);
                 mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mDatabaseReservations.push().getKey());
-                reserva.setId(mDatabaseReservations.push().getKey());
+                reserva.setId(mDatabaseReservations.getKey());
                 mDatabaseReservations.setValue(reserva);
                 Toast.makeText(v.getContext(), "Reserva realizada", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(v.getContext(), EscogerTipoActivity.class);
