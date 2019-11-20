@@ -189,6 +189,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
         mDatabaseReservations = FirebaseDatabase.getInstance().getReference("Servicio/" + mDatabaseReservations.push().getKey());
         servicioSolicitado.setId(mDatabaseReservations.getKey());
+        keyServicio = mDatabaseReservations.getKey();
         mDatabaseReservations.setValue(servicioSolicitado);
         Toast.makeText(v, "Servicio creado", Toast.LENGTH_LONG).show();
 
@@ -202,10 +203,12 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         lt.setTranslationY(90);
         lt.show();
 
+        Log.i("esperando", "al chefff");
         myRef = FirebaseDatabase.getInstance().getReference("Servicio/");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("DataSnap", dataSnapshot.getKey());
                 if (dataSnapshot.getChildrenCount() != 0)
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         if (singleSnap != null) {
@@ -218,6 +221,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
                                 } else if (service.getStatus().equalsIgnoreCase("Cancelado")) {
                                     lt.error();
                                 }
+
                             }
                         }
                     }

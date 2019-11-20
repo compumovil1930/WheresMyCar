@@ -52,7 +52,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.ratatouille.models.Servicio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapServiceAvailableActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -295,9 +297,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                         if (singleSnap != null) {
                             Servicio service = singleSnap.getValue(Servicio.class);
                             if (service.getKeyChef().equals(mAuth.getUid()) && service.getStatus().equalsIgnoreCase("Solicitado")) {
-                                mostrarDialogoBasico();
-                                DatabaseReference refService = FirebaseDatabase.getInstance().getReference("Servicio/" + service.getId());
-                                refService.child("status").setValue(status);
+                                mostrarDialogoBasico(service.getId());
                             }
                         }
                     }
@@ -309,7 +309,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         });
     }
 
-    private void mostrarDialogoBasico() {
+    private void mostrarDialogoBasico(final String Servid) {
         AlertDialog alertDialog = new AlertDialog.Builder(MapServiceAvailableActivity.this).create();
         alertDialog.setTitle("Nuevo Servicio");
         alertDialog.setMessage("Un nuevo cliente desea que prepares su comida");
@@ -318,6 +318,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         status = "Aceptado";
+                        DatabaseReference refService = FirebaseDatabase.getInstance().getReference().child("Servicio").child(Servid).child("status");
+                        refService.setValue(status);
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
@@ -326,6 +328,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         status = "Cancelado";
+                        DatabaseReference refService = FirebaseDatabase.getInstance().getReference().child("Servicio").child(Servid).child("status");
+                        refService.setValue(status);
                     }
                 });
         alertDialog.show();
