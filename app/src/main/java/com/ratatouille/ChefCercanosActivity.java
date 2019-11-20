@@ -20,7 +20,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.ratatouille.models.Chef;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ChefCercanosActivity extends AppCompatActivity {
 
@@ -35,9 +41,12 @@ public class ChefCercanosActivity extends AppCompatActivity {
     ListView listView;
     AvailableChefAdapter adapter;
     List<Chef> chefs;
+    List<Chef> chefsOr;
+    Map<Double,Chef> distanciasChef = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_cercanos);
         mAuth = FirebaseAuth.getInstance();
@@ -64,12 +73,15 @@ public class ChefCercanosActivity extends AppCompatActivity {
                         if (aux.getEstado()) {
                             if (distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), clientLatitude, clientLongitude) <= 5.0) {
                                 Toast.makeText(getApplicationContext(), "Se encontró uno", Toast.LENGTH_LONG).show();
-                                chefs.add(aux);
+                                //chefs.add(aux);
+                                double dis = distance(aux.getDireccion().getLatitud(), aux.getDireccion().getLongitud(), clientLatitude, clientLongitude);
+                                distanciasChef.put(dis,aux);
                                 Log.i("Chef cercano:", aux.getNombre());
                             }
                         }
 
                     }
+                    chefs = ordenarChefs(distanciasChef);
                 }
                 adapter = new AvailableChefAdapter(getApplicationContext(), chefs);
                 listView.setAdapter(adapter);
@@ -103,6 +115,27 @@ public class ChefCercanosActivity extends AppCompatActivity {
         return Math.round(result * 100.0) / 100.0;
     }
 
+    public List<Chef> ordenarChefs (Map<Double,Chef>listChefs)
+    {
+        List<Chef> chefListSort = new ArrayList<>();
+        List<Double> ordenar = new ArrayList<>(listChefs.keySet());
+        Collections.sort(ordenar);
 
+
+        Set<Double> ordenChef = listChefs.keySet();
+        for(Double d:ordenChef)
+        {
+
+            if (listChefs.get(d) != null)
+            {
+                Chef c = listChefs.get(d);
+
+                chefListSort.add(c);
+            }
+
+        }
+
+        return chefListSort;
+    }
 
 }
