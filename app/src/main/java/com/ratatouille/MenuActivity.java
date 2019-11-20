@@ -34,8 +34,10 @@ public class MenuActivity extends AppCompatActivity {
     TextView item_payments;
     TextView item_services;
     TextView item_reservas;
+    TextView item_updatePerfil;
     TextView user_name;
     TextView user_rate;
+
     Button bLogOut;
     FirebaseAuth mAuth;
     private StorageReference mStorageRef;
@@ -51,6 +53,7 @@ public class MenuActivity extends AppCompatActivity {
         item_reservas = findViewById(R.id.item_reservas);
         item_payments = findViewById(R.id.item_payments);
         item_services = findViewById(R.id.items_services);
+        item_updatePerfil = findViewById(R.id.items_updatePerfil);
         profile_img = findViewById(R.id.user_img);
         user_name = findViewById(R.id.user_name);
         user_rate = findViewById(R.id.user_rating);
@@ -71,7 +74,7 @@ public class MenuActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue(Cliente.class) != null) {
+                if (dataSnapshot.getValue(Cliente.class) != null ) {
                     Cliente clAux=dataSnapshot.getValue(Cliente.class);
                     user_name.setText(clAux.getNombre());
                     user_rate.setText(Double.toString(clAux.getCalificacion()));
@@ -124,7 +127,7 @@ public class MenuActivity extends AppCompatActivity {
         item_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), UpdateUserProfileActivity.class);
+                Intent intent = new Intent(v.getContext(), Perfil.class);
                 startActivity(intent);
             }
         });
@@ -132,6 +135,13 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MisReservasActivity.class);
+                startActivity(intent);
+            }
+        });
+        item_updatePerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), UpdateUserProfileActivity.class);
                 startActivity(intent);
             }
         });

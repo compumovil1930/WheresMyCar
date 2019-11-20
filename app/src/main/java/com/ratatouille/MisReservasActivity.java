@@ -56,9 +56,11 @@ public class MisReservasActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() != 0) {
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
-                        Reserva resAux = singleSnap.getValue(Reserva.class);
-                        if (resAux.getIdUsuario().equals(mAuth.getCurrentUser().getUid())) {
-                            listaReservasAux.add(resAux);
+                        if (singleSnap.getValue(Reserva.class)!=null) {
+                            Reserva resAux = singleSnap.getValue(Reserva.class);
+                            if (resAux.getIdUsuario().equals(mAuth.getCurrentUser().getUid())) {
+                                listaReservasAux.add(resAux);
+                            }
                         }
                     }
                 }
