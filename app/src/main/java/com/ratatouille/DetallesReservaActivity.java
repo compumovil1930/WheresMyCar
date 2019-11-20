@@ -78,6 +78,7 @@ public class DetallesReservaActivity extends AppCompatActivity implements TimePi
                 String timeAux = txTime.getText().toString();
                 int asisAux = Integer.parseInt(etAsistentes.getText().toString());
                 Reserva reserva = new Reserva(mAuth.getCurrentUser().getUid(), nomRes, dirAux, fechaAux, timeAux, asisAux);
+
                 mDatabaseReservations = FirebaseDatabase.getInstance().getReference("reservas/" + mDatabaseReservations.push().getKey());
                 reserva.setId(mDatabaseReservations.getKey());
                 mDatabaseReservations.setValue(reserva);
