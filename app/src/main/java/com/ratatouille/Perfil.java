@@ -1,13 +1,13 @@
 package com.ratatouille;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,10 +25,14 @@ import com.google.firebase.storage.StorageReference;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Cliente;
 
-public class UpdateUserProfileActivity extends AppCompatActivity {
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
+public class Perfil extends AppCompatActivity {
     ImageView profile_img;
-    EditText name, mail, phone;
+    TextView name, mail, edad, phone, direccion;
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
     StorageReference mStorageRef;
@@ -36,13 +40,15 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_user_profile);
+        setContentView(R.layout.activity_perfil);
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ratatouille-d6acf.appspot.com/" + mAuth.getUid() + "/userProfile");
         profile_img = findViewById(R.id.img_update);
         name = findViewById(R.id.editTextName);
         mail = findViewById(R.id.editTextEmail);
+        edad = findViewById(R.id.editTextEdad);
         phone = findViewById(R.id.editTextPhone);
+        direccion = findViewById(R.id.editTextDireccion);
         FirebaseDatabase.getInstance().getReference("chefs/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,6 +65,7 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
             }
         });
         FirebaseDatabase.getInstance().getReference("clientes/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(Cliente.class) != null) {
@@ -67,6 +74,12 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
                     mail.setText(clAux.getCorreo());
                     //TODO: Show password or change password?
                     phone.setText(Integer.toString(clAux.getTelefono()));
+                    try {
+                        edad.setText(calcularEdad(clAux.getFechaNacimiento()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    direccion.setText(clAux.getDireccion().getDireccion());
                 }
             }
 
@@ -88,5 +101,16 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String calcularEdad(String fechaNacimiento) throws ParseException {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaNac = LocalDate.parse(fechaNacimiento, fmt);
+        LocalDate ahora = LocalDate.now();
+
+        Period periodo = Period.between(fechaNac, ahora);
+        return String.valueOf(periodo.getYears());
     }
 }
