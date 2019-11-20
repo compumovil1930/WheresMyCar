@@ -4,11 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,12 +34,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.ratatouille.models.Chef;
 import com.ratatouille.models.Servicio;
 
@@ -48,14 +55,18 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
     private Polyline currentPolyline;
     Marker chef, customer;
     Button btnCancelar;
+    ImageView imageViewProfile;
     double latitude;
     double longitude;
+    TextView textViewChef;
 
     String keyServicio;
     Bundle bundle;
 
     FirebaseDatabase database;
     DatabaseReference mDatabaseChefs;
+    DatabaseReference mDatabase;
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +76,7 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        database = FirebaseDatabase.getInstance();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         btnCancelar = findViewById(R.id.buttonCancelar);
         btnCancelar.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +87,47 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                 startActivity(intent);
             }
         });
+
+        bundle = getIntent().getBundleExtra("bundle");
+
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ratatouille-d6acf.appspot.com/" + bundle.get("keyChef") + "/userProfile");
+        mStorageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imageViewProfile = findViewById(R.id.imageViewProfile);
+                imageViewProfile.setImageBitmap(bmp);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //.....//
+        mDatabase = database.getReference("chefs/");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        if (singleSnap != null) {
+                            Chef chef = singleSnap.getValue(Chef.class);
+                            if (bundle.get("keyChef").equals(singleSnap.getKey())){
+                                textViewChef = findViewById(R.id.textViewChef);
+                                textViewChef.setText(chef.getNombre());
+                            }
+                        }
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -95,8 +148,6 @@ public class ChefEnCaminoActivity extends AppCompatActivity implements OnMapRead
                     }
                 }
         );
-
-        bundle = getIntent().getBundleExtra("bundle");
 
         mDatabaseChefs = database.getInstance().getReference("chefs");
         mDatabaseChefs.addValueEventListener(new ValueEventListener() {
