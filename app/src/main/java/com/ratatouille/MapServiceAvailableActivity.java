@@ -88,7 +88,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        swEstado=findViewById(R.id.switch1);
+        swEstado = findViewById(R.id.switch1);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -111,7 +111,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                     chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
-                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                    mDatabaseChefs = database.getReference("chefs/" + mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
                     mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
                 }
@@ -129,8 +129,8 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         swEstado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(swEstado.isChecked()){
-                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                if (swEstado.isChecked()) {
+                    mDatabaseChefs = database.getReference("chefs/" + mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("estado").setValue(true);
                 }
             }
@@ -168,8 +168,6 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, idCode);
         }
     }
-
-
 
 
     @Override
@@ -287,7 +285,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         return Math.round(result * 100.0) / 100.0;
     }
 
-    public void buscarServicios(){
+    public void buscarServicios() {
         myRef = database.getReference("Servicio/");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -296,14 +294,10 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         if (singleSnap != null) {
                             Servicio service = singleSnap.getValue(Servicio.class);
-                            if (service.getKeyChef().equals(mAuth.getUid()) && service.getStatus().equalsIgnoreCase("Solicitado")){
+                            if (service.getKeyChef().equals(mAuth.getUid()) && service.getStatus().equalsIgnoreCase("Solicitado")) {
                                 mostrarDialogoBasico();
-
-                                //myRef = FirebaseDatabase.getInstance().getReference("Servicio/" + myRef.push().getKey());
-                                //keyServicio = mDatabaseReservations.push().getKey();
-                                service.setStatus(status);
-                                myRef.setValue(service);
-
+                                DatabaseReference refService = FirebaseDatabase.getInstance().getReference("Servicio/" + service.getId());
+                                refService.child("status").setValue(status);
                             }
                         }
                     }
