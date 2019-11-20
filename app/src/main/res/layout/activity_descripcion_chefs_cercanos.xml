@@ -21,6 +21,7 @@
         android:id="@+id/ratingBarChef"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="true"
         android:max="10"
         android:progressTint="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSolicitarServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -55,22 +56,23 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="347dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSolicitarServicio"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarChef">
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarChef"
+        app:layout_constraintVertical_bias="0.078">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_margin="10dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView50"
+                android:id="@+id/textView52"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -86,7 +88,7 @@
                 android:orientation="vertical"></LinearLayout>
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/textView53"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

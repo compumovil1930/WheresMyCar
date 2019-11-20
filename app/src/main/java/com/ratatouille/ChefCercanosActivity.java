@@ -62,8 +62,6 @@ public class ChefCercanosActivity extends AppCompatActivity {
 
     }
 
-
-
     public void nearbyChefs() {
         database = FirebaseDatabase.getInstance();
         mDatabaseChefs = database.getReference("chefs");
