@@ -68,7 +68,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
     String keyChef;
     String keyServicio;
 
-    public static final String PATH_CHEFS="chefs/";
+    public static final String PATH_CHEFS = "chefs/";
     public LoadToast lt;
 
     @Override
@@ -107,13 +107,13 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
         linearLayoutRecetas = (LinearLayout) findViewById(R.id.LinearLayoutRecetas);
 
-        for (int i = 0; i < chef.getListaRecetas().size(); i++){
+        for (int i = 0; i < chef.getListaRecetas().size(); i++) {
 
             TextView textViewReceta = new TextView(getApplicationContext());
 
             textViewReceta.setText(chef.getListaRecetas().get(i).getNombre());
             textViewReceta.append("\n" + chef.getListaRecetas().get(i).getTiempo() + " minutos");
-            textViewReceta.setPadding(15,10, 15,10);
+            textViewReceta.setPadding(15, 10, 15, 10);
 
             linearLayoutRecetas.addView(textViewReceta);
         }
@@ -123,12 +123,12 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
         linearLayoutRecetas = (LinearLayout) findViewById(R.id.LinearLayoutHerramientas);
 
-        for (int i = 0; i < chef.getListaRecetas().size(); i++){
+        for (int i = 0; i < chef.getListaRecetas().size(); i++) {
 
             TextView textViewHerramienta = new TextView(getApplicationContext());
 
             textViewHerramienta.setText(chef.getListaHerramientas().get(i).getNombre());
-            textViewHerramienta.setPadding(15,10, 15,10);
+            textViewHerramienta.setPadding(15, 10, 15, 10);
 
             linearLayoutRecetas.addView(textViewHerramienta);
         }
@@ -142,7 +142,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
 
                     Chef chef = singleSnapshot.getValue(Chef.class);
-                    if (wantedChef.getCorreo().equals(chef.getCorreo())){
+                    if (wantedChef.getCorreo().equals(chef.getCorreo())) {
                         Log.i("ID wanted chef", singleSnapshot.getKey());
                         keyChef = singleSnapshot.getKey();
                         findImageChefInStorage(singleSnapshot.getKey());
@@ -150,6 +150,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
 
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("Firebase chef not found", "error en la consulta", databaseError.toException());
@@ -165,7 +166,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    imageViewChef.setImageBitmap(bmp);
+                imageViewChef.setImageBitmap(bmp);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -176,7 +177,7 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         });
     }
 
-    private void createService(Context v){
+    private void createService(Context v) {
 
         keyClient = mAuth.getUid();
         Date initialDate = new Date();
@@ -185,41 +186,42 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
         UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
         upcrb.setPhotoUri(Uri.parse("path/to/pic"));
         user.updateProfile(upcrb.build());
-
         Servicio servicioSolicitado = new Servicio(keyClient, keyChef, initialDate, 0);
-
         mDatabaseReservations = FirebaseDatabase.getInstance().getReference("Servicio/" + mDatabaseReservations.push().getKey());
-        keyServicio = mDatabaseReservations.push().getKey();
-        servicioSolicitado.setId(keyServicio);
+        servicioSolicitado.setId(mDatabaseReservations.getKey());
+        keyServicio = mDatabaseReservations.getKey();
         mDatabaseReservations.setValue(servicioSolicitado);
         Toast.makeText(v, "Servicio creado", Toast.LENGTH_LONG).show();
 
         servicioAceptado();
     }
 
-    private void servicioAceptado(){
+    private void servicioAceptado() {
 
         lt = new LoadToast(DescripcionChefsCercanos.this);
         lt.setText("Esperando al Chef... ");
         lt.setTranslationY(90);
         lt.show();
 
-        myRef = database.getReference("Servicio/");
+        Log.i("esperando", "al chefff");
+        myRef = FirebaseDatabase.getInstance().getReference("Servicio/");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("DataSnap", dataSnapshot.getKey());
                 if (dataSnapshot.getChildrenCount() != 0)
                     for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
                         if (singleSnap != null) {
+                            Log.i("ACEPTAR", singleSnap.toString());
                             Servicio service = singleSnap.getValue(Servicio.class);
-                            if (service.getId().equals(keyServicio)){
+                            if (service.getId().equals(keyServicio)) {
                                 Log.i("StatusBien", service.getStatus());
-                                if (service.getStatus().equalsIgnoreCase("Aceptado")){
+                                if (service.getStatus().equalsIgnoreCase("Aceptado")) {
                                     lt.success();
-                                }
-                                else if (service.getStatus().equalsIgnoreCase("Cancelado")){
+                                } else if (service.getStatus().equalsIgnoreCase("Cancelado")) {
                                     lt.error();
                                 }
+
                             }
                         }
                     }

@@ -14,6 +14,12 @@
         tools:context=".mapaDireccion" />
 
 
+    <Button
+        android:id="@+id/btn_menu_chef"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/menu_icon" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,77 +38,6 @@
             android:background="@drawable/rounded_button"
             android:text="Estado" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="157dp"
-        android:padding="15dp">
-
-        <Button
-            android:id="@+id/btn_menu_chef"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/menu_icon" />
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:src="@drawable/username" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Estado:" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:popupBackground="#fff" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Calificación: 4.5/5" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Disponible como:" />
-
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-
-        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

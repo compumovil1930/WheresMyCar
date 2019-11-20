@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -42,11 +44,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ratatouille.models.Servicio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapServiceAvailableActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -57,15 +65,21 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
+
     double latitude;
     double longitude;
     List<Marker> requests;
-    private FirebaseAuth mAuth;
+
     Marker chef;
     Button btn_menu;
+    private String status;
     FirebaseDatabase database;
     DatabaseReference mDatabaseChefs;
     Switch swEstado;
+    Servicio servicioNuevo;
+
+    private FirebaseAuth mAuth;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +90,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "Para ver ubicación", MY_PERMISSIONS_REQUEST_LOCATION);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        swEstado=findViewById(R.id.switch1);
+        swEstado = findViewById(R.id.switch1);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -99,7 +113,7 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                     chef.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
-                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                    mDatabaseChefs = database.getReference("chefs/" + mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("direccion").child("latitud").setValue(latitude);
                     mDatabaseChefs.child("direccion").child("longitud").setValue(longitude);
                 }
@@ -117,12 +131,14 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         swEstado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(swEstado.isChecked()){
-                    mDatabaseChefs = database.getReference("chefs/"+mAuth.getCurrentUser().getUid());
+                if (swEstado.isChecked()) {
+                    mDatabaseChefs = database.getReference("chefs/" + mAuth.getCurrentUser().getUid());
                     mDatabaseChefs.child("estado").setValue(true);
                 }
             }
         });
+
+        buscarServicios();
     }
 
 /*
@@ -154,8 +170,6 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, idCode);
         }
     }
-
-
 
 
     @Override
@@ -271,5 +285,53 @@ public class MapServiceAvailableActivity extends FragmentActivity implements OnM
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double result = RADIUS_OF_EARTH_KM * c;
         return Math.round(result * 100.0) / 100.0;
+    }
+
+    public void buscarServicios() {
+        myRef = database.getReference("Servicio/");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() != 0)
+                    for (DataSnapshot singleSnap : dataSnapshot.getChildren()) {
+                        if (singleSnap != null) {
+                            Servicio service = singleSnap.getValue(Servicio.class);
+                            if (service.getKeyChef().equals(mAuth.getUid()) && service.getStatus().equalsIgnoreCase("Solicitado")) {
+                                mostrarDialogoBasico(service.getId());
+                            }
+                        }
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void mostrarDialogoBasico(final String Servid) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MapServiceAvailableActivity.this).create();
+        alertDialog.setTitle("Nuevo Servicio");
+        alertDialog.setMessage("Un nuevo cliente desea que prepares su comida");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        status = "Aceptado";
+                        DatabaseReference refService = FirebaseDatabase.getInstance().getReference().child("Servicio").child(Servid).child("status");
+                        refService.setValue(status);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        status = "Cancelado";
+                        DatabaseReference refService = FirebaseDatabase.getInstance().getReference().child("Servicio").child(Servid).child("status");
+                        refService.setValue(status);
+                    }
+                });
+        alertDialog.show();
     }
 }
