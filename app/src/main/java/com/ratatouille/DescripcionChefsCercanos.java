@@ -219,6 +219,10 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
                                 if (service.getStatus().equalsIgnoreCase("Aceptado")) {
                                     lt.success();
                                     Intent intent = new Intent(getApplicationContext(), ChefEnCaminoActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("keyService", keyServicio);
+                                    bundle.putString("keyChef", keyChef);
+                                    intent.putExtra("bundle", bundle);
                                     startActivity(intent);
                                 } else if (service.getStatus().equalsIgnoreCase("Cancelado")) {
                                     lt.error();
