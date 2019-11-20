@@ -151,6 +151,4 @@ public class ChefCercanosActivity extends AppCompatActivity {
         return chefListSort;
     }
 
-
-
 }
