@@ -218,8 +218,12 @@ public class DescripcionChefsCercanos extends AppCompatActivity {
                                 Log.i("StatusBien", service.getStatus());
                                 if (service.getStatus().equalsIgnoreCase("Aceptado")) {
                                     lt.success();
+                                    Intent intent = new Intent(getApplicationContext(), ChefEnCaminoActivity.class);
+                                    startActivity(intent);
                                 } else if (service.getStatus().equalsIgnoreCase("Cancelado")) {
                                     lt.error();
+                                    Intent intent = new Intent(getApplicationContext(), mapaDireccion.class);
+                                    startActivity(intent);
                                 }
 
                             }
